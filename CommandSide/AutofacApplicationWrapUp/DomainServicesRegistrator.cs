@@ -1,11 +1,8 @@
 using System.Collections.Generic;
 using System.Reflection;
-using Aggregate.Student.Shared;
 using Autofac;
 using AutofacMessageBus;
-using Domain.StudentDomain;
 using DomainServices;
-using DomainServices.StudentHandlers.Commands;
 using Module = Autofac.Module;
 
 namespace AutofacApplicationWrapup
@@ -23,12 +20,9 @@ namespace AutofacApplicationWrapup
             containerBuilder.RegisterModule(new AutofacMessagingRegistrator(
                 new List<Assembly>
                 {
-                    typeof(Student).Assembly,
-                    typeof(StudentCreated).Assembly
                 },
                 new List<Assembly>()
-                {
-                    typeof(AddNewStudentHandler).Assembly
+                {   
                 }));
         }
 

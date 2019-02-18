@@ -1,13 +1,8 @@
 using System;
-using System.Linq;
-using Aggregate.Student.Shared;
-using FluentAssertions;
 using Mongo2Go;
 using MongoDbEventStore;
 using Ports.EventStore;
-using Xunit;
 using static System.Guid;
-using static Tests.StudentsValues;
 
 namespace Tests.IntegrationTests.EventStore
 {
@@ -26,21 +21,6 @@ namespace Tests.IntegrationTests.EventStore
         public void Dispose()
         {
             _runner.Dispose();
-        }
-
-        [Fact]
-        public void _1()
-        {
-            _eventStore.Append(StankoCreated);
-            _eventStore.Append(StankoMovedToNoviSad);
-            _eventStore.Append(StankoHired);
-
-            var allEvents =  _eventStore.LoadAllFor<StudentEventSubscription>().ToList();
-
-            allEvents.Should().BeEquivalentTo(
-                StankoCreated,
-                StankoMovedToNoviSad,
-                StankoHired);
         }
     }
 }

@@ -1,10 +1,8 @@
 using System.Collections.Generic;
 using System.Reflection;
-using Aggregate.Student.Shared;
 using Autofac;
 using AutofacMessageBus;
 using Services;
-using Services.EventHandlers;
 using Module = Autofac.Module;
 
 namespace AutofacApplicationWrapup
@@ -22,11 +20,9 @@ namespace AutofacApplicationWrapup
             containerBuilder.RegisterModule(new AutofacMessagingRegistrator(
                 new List<Assembly>
                 {
-                    typeof(StudentEvent).Assembly
                 },
                 new List<Assembly>()
                 {
-                    typeof(ViewRefreshFromStudentEventHandler).Assembly
                 }));
         }
 

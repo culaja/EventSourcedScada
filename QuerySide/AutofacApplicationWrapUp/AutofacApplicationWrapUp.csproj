@@ -15,7 +15,6 @@
       <ProjectReference Include="..\QueryCommon\QueryCommon.csproj" />
       <ProjectReference Include="..\RabbitMqAdapter\RabbitMqAdapter.csproj" />
       <ProjectReference Include="..\Services\Services.csproj" />
-      <ProjectReference Include="..\Views\StudentViews\StudentViews.csproj" />
     </ItemGroup>
 
 </Project>

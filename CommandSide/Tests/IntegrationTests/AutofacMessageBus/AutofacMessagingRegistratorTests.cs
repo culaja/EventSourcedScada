@@ -1,10 +1,5 @@
-using System.Linq;
 using Autofac;
 using AutofacApplicationWrapup;
-using AutofacMessageBus;
-using FluentAssertions;
-using Xunit;
-using static Tests.StudentsValues;
 
 namespace Tests.IntegrationTests.AutofacMessageBus
 {
@@ -18,11 +13,5 @@ namespace Tests.IntegrationTests.AutofacMessageBus
             containerBuilder.RegisterModule<MainRegistrator>();
             _container = containerBuilder.Build();
         }
-        
-        [Fact]
-        public void _1() => new AutofacMessageResolver(_container)
-            .GetMessageHandlersFor(StankoMovedToNoviSad)
-                .Select(h => h.GetType())
-                .Should().OnlyHaveUniqueItems();
     }
 }

@@ -3,7 +3,6 @@ using System.Linq;
 using Common.Messaging;
 using Common.Messaging.Serialization;
 using MongoDB.Driver;
-using MongoDB.Driver.Linq;
 using Ports;
 
 namespace EventStore

@@ -23,4 +23,9 @@
       <ProjectReference Include="..\Ports\Ports.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="IntegrationTests\InMemoryRepository" />
+      <Folder Include="UnitTests" />
+    </ItemGroup>
+
 </Project>

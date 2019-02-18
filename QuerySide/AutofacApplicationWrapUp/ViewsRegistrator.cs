@@ -1,5 +1,4 @@
 using Autofac;
-using StudentViews;
 
 namespace AutofacApplicationWrapup
 {
@@ -7,7 +6,6 @@ namespace AutofacApplicationWrapup
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<StudentsPerCityView>().SingleInstance();
         }
     }
 }

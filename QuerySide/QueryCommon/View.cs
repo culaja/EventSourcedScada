@@ -1,5 +1,4 @@
-﻿using System;
-using Common.Messaging;
+﻿using Common.Messaging;
 
 namespace QueryCommon
 {

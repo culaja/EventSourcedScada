@@ -1,14 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Shared.Aggregate.Student\Shared.Aggregate.Student.csproj" />
       <ProjectReference Include="..\Ports\Ports.csproj" />
       <ProjectReference Include="..\QueryCommon\QueryCommon.csproj" />
-      <ProjectReference Include="..\Views\StudentViews\StudentViews.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="EventHandlers" />
     </ItemGroup>
 
 </Project>
