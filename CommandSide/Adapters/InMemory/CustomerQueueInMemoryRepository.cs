@@ -6,6 +6,7 @@ using Domain;
 using Ports.Repositories;
 using Shared.CustomerQueue;
 using static Common.Result;
+using static Domain.AvailableCounters;
 using static Domain.QueuedTickets;
 
 namespace InMemory
@@ -20,7 +21,7 @@ namespace InMemory
             new CustomerQueue(
                 customerQueueCreated.AggregateRootId,
                 customerQueueCreated.Version,
-                new List<Counter>(),
+                NoAvailableCounters,
                 EmptyQueuedTickets);
 
         public Result<CustomerQueue> BorrowSingle(Func<CustomerQueue, Result<CustomerQueue>> transformer) =>

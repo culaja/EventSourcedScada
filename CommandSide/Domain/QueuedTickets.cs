@@ -50,5 +50,7 @@ namespace Domain
             return new QueuedTickets(new List<Ticket>(Tickets
                 .Where(t => t.Id != ticketId)));
         }
+
+        public Ticket GetWithId(Guid ticketId) => Tickets.First(t => t.Id == ticketId);
     }
 }

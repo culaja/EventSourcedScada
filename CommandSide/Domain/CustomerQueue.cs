@@ -1,36 +1,34 @@
 using System;
-using System.Collections.Generic;
 using Common;
 using Shared.CustomerQueue;
 using static Common.Result;
 using static Domain.QueuedTickets;
+using static Domain.AvailableCounters;
 
 namespace Domain
 {
     public sealed class CustomerQueue : AggregateRoot
     {
+        public AvailableCounters AvailableCounters { get; private set; }
         public QueuedTickets QueuedTickets { get; private set; }
-        
-        private readonly List<Counter> _counters;
-        public IReadOnlyList<Counter> Counters => _counters;
         
         public CustomerQueue(
             Guid id,
             ulong version,
-            IReadOnlyList<Counter> counters,
+            AvailableCounters availableCounters,
             QueuedTickets queuedTickets) : base(id, version)
         {
-            _counters = new List<Counter>(counters);
+            AvailableCounters = availableCounters;
             QueuedTickets = queuedTickets;
         }
-
+        
         public static CustomerQueue NewCustomerQueueFrom(
             Guid id)
         {
             var customerQueue = new CustomerQueue(
                 id,
                 0,
-                new List<Counter>(),
+                NoAvailableCounters,
                 EmptyQueuedTickets);
             customerQueue.ApplyChange(new CustomerQueueCreated(
                 customerQueue.Id));
@@ -39,21 +37,14 @@ namespace Domain
 
         private CustomerQueue Apply(CustomerQueueCreated _) => this;
 
-        public Result<CustomerQueue> AddCounter(Guid counterId, string counterName)
-        {
-            if (Counters.ContainsEntityWith(counterId))
-            {
-                return Fail<CustomerQueue>($"{nameof(Counter)} with Id {counterId} already exist in {nameof(CustomerQueue)}.");
-            }
-            
-            ApplyChange(new CounterAdded(Id, counterId, counterName));
-            
-            return Ok(this);
-        }
+        public Result<CustomerQueue> AddCounter(Guid counterId, string counterName) =>
+            AvailableCounters.CheckIfCounterIsAvailableWith(counterId)
+                .OnSuccess(() => ApplyChange(new CounterAdded(Id, counterId, counterName)))
+                .ToTypedResult(this);
 
         private CustomerQueue Apply(CounterAdded e)
         {
-            _counters.Add(new Counter(e.CounterId, e.CounterName));
+            AvailableCounters = AvailableCounters.AddNewWith(e.CounterId, e.CounterName);
             return this;
         }
 
@@ -71,18 +62,21 @@ namespace Domain
             return this;
         }
 
-        public Result<CustomerQueue> TakeNextCustomer(Guid counterId)
-        {
-            if (QueuedTickets.MaybeNextTicket.HasValue)
-            {
-                ApplyChange(new CustomerTaken(Id, counterId, QueuedTickets.MaybeNextTicket.Value.Id));
-            }   
-            
-            return Fail<CustomerQueue>($"All tickets are already taken");
-        }
-        
+        public Result<CustomerQueue> TakeNextCustomer(Guid counterId) => AvailableCounters
+            .IsCounterAlreadyServingTicket(counterId)
+                .OnSuccess(isServingTicket => isServingTicket.OnBoth(
+                    () => Fail<CustomerQueue>($"{nameof(Counter)} is already serving a ticket."),
+                    () => QueuedTickets.MaybeNextTicket.Unwrap(
+                        ticket =>
+                        {
+                            ApplyChange(new CustomerTaken(Id, counterId, QueuedTickets.MaybeNextTicket.Value.Id));
+                            return Ok(this);
+                        },
+                        () => Fail<CustomerQueue>($"All tickets are already taken"))));
+
         private CustomerQueue Apply(CustomerTaken e)
         {
+            AvailableCounters.ServeTicket(e.CounterId, QueuedTickets.GetWithId(e.TickedId));
             QueuedTickets = QueuedTickets.RemoveWithId(e.TickedId);
             return this;
         }
