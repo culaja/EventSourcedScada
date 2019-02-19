@@ -5,7 +5,7 @@ using DomainServices;
 using FluentAssertions;
 using Shared.CustomerQueue;
 using Xunit;
-using static Tests.Specifications.CustomerQueueSpecifications.CustomerQueueTestValues;
+using static Tests.CustomerQueueTestValues;
 
 namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpecifications
 {

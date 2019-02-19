@@ -4,9 +4,11 @@ using FluentAssertions;
 using Mongo2Go;
 using MongoDbEventStore;
 using Ports.EventStore;
+using Shared.CustomerQueue;
 using Tests.Specifications.CustomerQueueSpecifications;
 using Xunit;
 using static System.Guid;
+using static Tests.CustomerQueueTestValues;
 
 namespace Tests.IntegrationTests.EventStore
 {
@@ -30,7 +32,20 @@ namespace Tests.IntegrationTests.EventStore
         [Fact]
         public void _1()
         {
+            _eventStore.Append(SingleCustomerQueueCreated);
+            _eventStore.Append(CounterA_Added);
+            _eventStore.Append(Ticket1_Added);
+            _eventStore.Append(CustomerWithTicket1_Added);
+            _eventStore.Append(CustomerWithTicket1_Served);
            
+            var allEvents =  _eventStore.LoadAllFor<CustomerQueueSubscription>().ToList();
+
+            allEvents.Should().BeEquivalentTo(
+                SingleCustomerQueueCreated,
+                CounterA_Added,
+                Ticket1_Added,
+                CustomerWithTicket1_Added,
+                CustomerWithTicket1_Served);
         }
     }
 }
