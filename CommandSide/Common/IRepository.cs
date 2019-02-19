@@ -12,5 +12,7 @@ namespace Common
         Result<T> AddNew(T aggregateRoot);
         
         Result<T> BorrowBy(Guid aggregateRootId, Func<T, T> transformer);
+
+        Maybe<T> MaybeFirst { get; }
     }
 }

@@ -25,7 +25,6 @@
 
     <ItemGroup>
       <Folder Include="IntegrationTests\InMemoryRepository" />
-      <Folder Include="UnitTests" />
     </ItemGroup>
 
 </Project>

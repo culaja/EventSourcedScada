@@ -48,6 +48,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Views", "Views", "{29703358
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleQueryApp", "QuerySide\SimpleQueryApp\SimpleQueryApp.csproj", "{AC85A20B-D091-485A-845E-AA9BCFB17527}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.CustomerQueue", "Shared.CustomerQueue\Shared.CustomerQueue.csproj", "{64FE6D46-E4A6-4ACE-ADCA-1004346F4D3D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -126,6 +128,10 @@ Global
 		{AC85A20B-D091-485A-845E-AA9BCFB17527}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC85A20B-D091-485A-845E-AA9BCFB17527}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC85A20B-D091-485A-845E-AA9BCFB17527}.Release|Any CPU.Build.0 = Release|Any CPU
+		{64FE6D46-E4A6-4ACE-ADCA-1004346F4D3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{64FE6D46-E4A6-4ACE-ADCA-1004346F4D3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{64FE6D46-E4A6-4ACE-ADCA-1004346F4D3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{64FE6D46-E4A6-4ACE-ADCA-1004346F4D3D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{77542D59-B757-4601-B21D-6E97DB306568} = {DD8DC3BF-CDFA-4CF7-AC84-E42947C4AB44}

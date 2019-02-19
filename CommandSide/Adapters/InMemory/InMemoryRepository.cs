@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Common;
 using Common.Messaging;
 using static Common.Result;
@@ -60,6 +61,8 @@ namespace InMemory
 
         public Result<T> BorrowBy(Guid aggregateRootId, Func<T, T> transformer) => ReadAggregateFromCash(aggregateRootId)
             .OnSuccess(t => ExecuteTransformerAndPurgeEvents(t, transformer));
+
+        public Maybe<T> MaybeFirst => _cache.Values.FirstOrDefault();
 
         protected T ExecuteTransformerAndPurgeEvents(T aggregateRoot, Func<T, T> transformer)
         {
