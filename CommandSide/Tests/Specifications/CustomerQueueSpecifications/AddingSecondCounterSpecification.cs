@@ -9,23 +9,23 @@ using static Tests.Specifications.CustomerQueueSpecifications.CustomerQueueTestV
 
 namespace Tests.Specifications.CustomerQueueSpecifications
 {
-    public sealed class AddingCounterWhenCounterAlreadyExistsSpecification : CustomerQueueSpecification<AddCounter>
+    public sealed class AddingSecondCounterSpecification : CustomerQueueSpecification<AddCounter>
     {
-        protected override AddCounter CommandToExecute => new AddCounter(CounterA_Id, CounterA_Name);
+        protected override AddCounter CommandToExecute => new AddCounter(CounterB_Id, CounterB_Name);
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return new CounterAdded(AggregateRootId, CounterA_Id, CounterA_Name);
         }
 
         public override CommandHandler<AddCounter> When() => new AddCounterHandler(CustomerQueueRepository);
-
+        
         [Fact]
-        public void doesnt_contain_counter_added_event() => ProducedEvents.Should().NotContain(new CounterAdded(
+        public void contains_counter_added_event() => ProducedEvents.Should().Contain(new CounterAdded(
             AggregateRootId,
-            CounterA_Id,
-            CounterA_Name));
+            CounterB_Id,
+            CounterB_Name));
 
         [Fact]
-        public void returns_failure() => Result.IsFailure.Should().BeTrue();
+        public void returns_failure() => Result.IsSuccess.Should().BeTrue();
     }
 }

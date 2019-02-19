@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Shared.CustomerQueue
 {
@@ -14,6 +15,13 @@ namespace Shared.CustomerQueue
         {
             CounterId = counterId;
             CounterName = counterName;
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            foreach (var item in base.GetEqualityComponents()) yield return item;
+            yield return CounterId;
+            yield return CounterName;
         }
     }
 }

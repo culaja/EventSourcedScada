@@ -1,6 +1,4 @@
-﻿using Common;
-
-namespace WebApp.Controllers
+﻿namespace WebApp.Controllers
 {
     public static class StringToDomainObjectsExtensions
     {

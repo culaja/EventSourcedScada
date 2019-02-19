@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using Common.Messaging;
 using Domain.Commands;
@@ -6,12 +5,13 @@ using DomainServices;
 using FluentAssertions;
 using Shared.CustomerQueue;
 using Xunit;
+using static Tests.Specifications.CustomerQueueSpecifications.CustomerQueueTestValues;
 
 namespace Tests.Specifications.CustomerQueueSpecifications
 {
     public sealed class AddingCounterSpecification : CustomerQueueSpecification<AddCounter>
     {
-        protected override AddCounter CommandToExecute => new AddCounter(Guid.NewGuid(), "Counter1");
+        protected override AddCounter CommandToExecute => new AddCounter(CounterA_Id, CounterA_Name);
 
         public override IEnumerable<CustomerQueueEvent> Given()
         {
@@ -23,8 +23,8 @@ namespace Tests.Specifications.CustomerQueueSpecifications
         [Fact]
         public void contains_counter_added_event() => ProducedEvents.Should().Contain(new CounterAdded(
             AggregateRootId,
-            CommandToExecute.CounterId,
-            CommandToExecute.CounterName));
+            CounterA_Id,
+            CounterA_Name));
 
         [Fact]
         public void returns_success() => Result.IsSuccess.Should().BeTrue();
