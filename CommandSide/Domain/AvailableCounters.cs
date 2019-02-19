@@ -25,14 +25,20 @@ namespace Domain
             new Counter(counterId, counterName)
         });
 
-        public Result<bool> IsCounterAlreadyServingTicket(Guid counterId) => Counters.MaybeEntityWith(counterId)
+        public Result<Maybe<Ticket>> GetMaybeServingTicket(Guid counterId) => Counters.MaybeEntityWith(counterId)
             .Unwrap(
-                m => Ok(m.IsServingATicket),
-                () => Fail<bool>($"{nameof(Counter)} with ID '{counterId}' doesn't exist."));
+                m => Ok(m.MaybeServingTicket),
+                () => Fail<Maybe<Ticket>>($"{nameof(Counter)} with ID '{counterId}' doesn't exist."));
 
-        public AvailableCounters ServeTicket(Guid counterId, Ticket t)
+        public AvailableCounters SetServingTicketFor(Guid counterId, Ticket t)
         {
-            Counters.MaybeEntityWith(counterId).Value.Serve(t);
+            Counters.MaybeEntityWith(counterId).Value.SetServingTicket(t);
+            return this;
+        }
+
+        public AvailableCounters RemoveServingTicket(Guid counterId)
+        {
+            Counters.MaybeEntityWith(counterId).Value.RemoveServingTicket();
             return this;
         }
 

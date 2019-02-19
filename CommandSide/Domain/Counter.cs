@@ -1,5 +1,6 @@
 using System;
 using Common;
+using static Common.Maybe<Domain.Ticket>;
 
 namespace Domain
 {
@@ -14,12 +15,8 @@ namespace Domain
             Name = name;
         }
 
-        public bool IsServingATicket => MaybeServingTicket.HasValue;
+        public void SetServingTicket(Ticket ticket) => MaybeServingTicket = ticket;
 
-        public Counter Serve(Ticket ticket)
-        {
-            MaybeServingTicket = ticket;
-            return this;
-        }
+        public void RemoveServingTicket() => MaybeServingTicket = None;
     }
 }

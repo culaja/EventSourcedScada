@@ -11,7 +11,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
 {
     public sealed class WhenTicketExistsInQueue : CustomerQueueSpecification<TakeNextCustomer>
     {
-        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id);
+        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id, CounterA_TakeNextCustomerTimestamp);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {

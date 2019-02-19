@@ -11,7 +11,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
 {
     public sealed class WhenAllTicketsAreTaken : CustomerQueueSpecification<TakeNextCustomer>
     {
-        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id);
+        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id, CounterA_TakeNextCustomerTimestamp);
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return new CounterAdded(AggregateRootId, CounterA_Id, CounterA_Name);
@@ -28,6 +28,6 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
             Ticket1_Id));
 
         [Fact]
-        public void returns_failure() => Result.IsFailure.Should().BeTrue();
+        public void returns_failure() => Result.IsSuccess.Should().BeTrue();
     }
 }

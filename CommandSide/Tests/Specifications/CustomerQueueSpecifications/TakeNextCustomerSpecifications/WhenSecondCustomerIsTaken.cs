@@ -9,32 +9,28 @@ using static Tests.Specifications.CustomerQueueSpecifications.CustomerQueueTestV
 
 namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpecifications
 {
-    public sealed class WhenCounterAlreadyTakenSomeTicket : CustomerQueueSpecification<TakeNextCustomer>
+    public sealed class WhenSecondCustomerIsTaken : CustomerQueueSpecification<TakeNextCustomer>
     {
-        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id, CounterA_TakeNextCustomerTimestamp);
+        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id, Ticked2_ServedTimestamp);
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return new CounterAdded(AggregateRootId, CounterA_Id, CounterA_Name);
             yield return new TicketAdded(AggregateRootId, Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
             yield return new TicketAdded(AggregateRootId, Ticket2_Id, Ticket2_Number, Ticket2_PrintingTimestamp);
             yield return new CustomerTaken(AggregateRootId, CounterA_Id, Ticket1_Id);
+            yield return new CustomerServed(AggregateRootId, CounterA_Id, Ticket1_Id, Ticked1_ServedTimestamp);
+            yield return new CustomerTaken(AggregateRootId, CounterA_Id, Ticket2_Id);
         }
 
         public override CommandHandler<TakeNextCustomer> When() => new TakeNextCustomerHandler(CustomerQueueRepository);
         
         [Fact]
-        public void customer_served_event_produced_for_previous_ticket() => ProducedEvents.Should().Contain(new CustomerServed(
+        public void customer_served_event_not_produced_again_for_the_same_ticket() => ProducedEvents.Should().Contain(new CustomerServed(
             AggregateRootId,
             CounterA_Id,
-            Ticket1_Id,
-            CounterA_TakeNextCustomerTimestamp));
+            Ticket2_Id,
+            Ticked2_ServedTimestamp));
         
-        [Fact]
-        public void customer_taken_is_produced_for_next_ticket() => ProducedEvents.Should().Contain(new CustomerTaken(
-            AggregateRootId,
-            CounterA_Id,
-            Ticket2_Id));
-
         [Fact]
         public void returns_success() => Result.IsSuccess.Should().BeTrue();
     }

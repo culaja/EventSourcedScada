@@ -5,16 +5,17 @@ using DomainServices;
 using FluentAssertions;
 using Shared.CustomerQueue;
 using Xunit;
+using static Tests.Specifications.CustomerQueueSpecifications.CustomerQueueTestValues;
 
 namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpecifications
 {
     public sealed class WhenTicketDoesntExistInQueue : CustomerQueueSpecification<TakeNextCustomer>
     {
-        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CustomerQueueTestValues.CounterA_Id);
+        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id, CounterA_TakeNextCustomerTimestamp);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
-            yield return new CounterAdded(AggregateRootId, CustomerQueueTestValues.CounterA_Id, CustomerQueueTestValues.CounterA_Name);
+            yield return new CounterAdded(AggregateRootId, CounterA_Id, CounterA_Name);
         }
 
         public override CommandHandler<TakeNextCustomer> When() => new TakeNextCustomerHandler(CustomerQueueRepository);

@@ -62,22 +62,33 @@ namespace Domain
             return this;
         }
 
-        public Result<CustomerQueue> TakeNextCustomer(Guid counterId) => AvailableCounters
-            .IsCounterAlreadyServingTicket(counterId)
-                .OnSuccess(isServingTicket => isServingTicket.OnBoth(
-                    () => Fail<CustomerQueue>($"{nameof(Counter)} is already serving a ticket."),
-                    () => QueuedTickets.MaybeNextTicket.Unwrap(
-                        ticket =>
-                        {
-                            ApplyChange(new CustomerTaken(Id, counterId, QueuedTickets.MaybeNextTicket.Value.Id));
-                            return Ok(this);
-                        },
-                        () => Fail<CustomerQueue>($"All tickets are already taken"))));
+        public Result<CustomerQueue> TakeNextCustomer(Guid counterId, DateTime timestamp) => AvailableCounters
+            .GetMaybeServingTicket(counterId)
+                .OnSuccess(maybeServingTicketId =>
+            {
+                if (maybeServingTicketId.HasValue)
+                {
+                    ApplyChange(new CustomerServed(Id, counterId, maybeServingTicketId.Value.Id, timestamp));
+                }
+
+                if (QueuedTickets.MaybeNextTicket.HasValue)
+                {
+                    ApplyChange(new CustomerTaken(Id, counterId, QueuedTickets.MaybeNextTicket.Value.Id));
+                }
+
+                return Ok(this);
+            });
 
         private CustomerQueue Apply(CustomerTaken e)
         {
-            AvailableCounters.ServeTicket(e.CounterId, QueuedTickets.GetWithId(e.TickedId));
+            AvailableCounters.SetServingTicketFor(e.CounterId, QueuedTickets.GetWithId(e.TickedId));
             QueuedTickets = QueuedTickets.RemoveWithId(e.TickedId);
+            return this;
+        }
+
+        private CustomerQueue Apply(CustomerServed e)
+        {
+            AvailableCounters.RemoveServingTicket(e.CounterId);
             return this;
         }
     }
