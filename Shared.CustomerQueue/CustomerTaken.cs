@@ -7,14 +7,17 @@ namespace Shared.CustomerQueue
     {
         public Guid CounterId { get; }
         public Guid TickedId { get; }
+        public DateTime Timestamp { get; }
 
         public CustomerTaken(
             Guid aggregateRootId,
             Guid counterId,
-            Guid tickedId) : base(aggregateRootId)
+            Guid tickedId,
+            DateTime timestamp) : base(aggregateRootId)
         {
             CounterId = counterId;
             TickedId = tickedId;
+            Timestamp = timestamp;
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
@@ -22,6 +25,7 @@ namespace Shared.CustomerQueue
             foreach (var item in base.GetEqualityComponents()) yield return item;
             yield return CounterId;
             yield return TickedId;
+            yield return Timestamp;
         }
     }
 }

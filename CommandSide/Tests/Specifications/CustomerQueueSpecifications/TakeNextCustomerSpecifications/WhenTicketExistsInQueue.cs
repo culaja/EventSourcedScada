@@ -11,7 +11,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
 {
     public sealed class WhenTicketExistsInQueue : CustomerQueueSpecification<TakeNextCustomer>
     {
-        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id, CounterA_TakeNextCustomerTimestamp);
+        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id, Ticket1_TakenTimestamp);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
@@ -25,6 +25,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
         public void doesnt_produce_customer_served() => ProducedEvents.Should().Contain(new CustomerTaken(
             AggregateRootId,
             CounterA_Id,
-            Ticket1_Id));
+            Ticket1_Id,
+            Ticket1_TakenTimestamp));
     }
 }

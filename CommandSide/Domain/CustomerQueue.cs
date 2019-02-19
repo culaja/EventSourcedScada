@@ -1,7 +1,6 @@
 using System;
 using Common;
 using Shared.CustomerQueue;
-using static Common.Result;
 using static Domain.QueuedTickets;
 using static Domain.AvailableCounters;
 
@@ -58,26 +57,21 @@ namespace Domain
 
         private CustomerQueue Apply(TicketAdded e)
         {
-            QueuedTickets = QueuedTickets.AddFrom(e.TicketId, e.TicketNumber, e.TicketPrintingTimestamp);
+            QueuedTickets = QueuedTickets.AddFrom(e.TicketId, e.TicketNumber, e.Timestamp);
             return this;
         }
 
         public Result<CustomerQueue> TakeNextCustomer(Guid counterId, DateTime timestamp) => AvailableCounters
             .GetMaybeServingTicket(counterId)
-                .OnSuccess(maybeServingTicketId =>
-            {
-                if (maybeServingTicketId.HasValue)
-                {
-                    ApplyChange(new CustomerServed(Id, counterId, maybeServingTicketId.Value.Id, timestamp));
-                }
-
-                if (QueuedTickets.MaybeNextTicket.HasValue)
-                {
-                    ApplyChange(new CustomerTaken(Id, counterId, QueuedTickets.MaybeNextTicket.Value.Id));
-                }
-
-                return Ok(this);
-            });
+            .OnSuccess(maybeServingTicketId => ApplyCustomerServedIfTicketIsBeingServed(maybeServingTicketId, counterId, timestamp))
+            .OnSuccess(_ => ApplyCustomerTakenIfThereIsPendingTicketInTheQueue(counterId, timestamp))
+            .ToTypedResult(this);
+        
+        private void ApplyCustomerServedIfTicketIsBeingServed(Maybe<Ticket> maybeServingTicket, Guid counterId, DateTime timestamp) =>
+            maybeServingTicket.Map(t => ApplyChange(new CustomerServed(Id, counterId, t.Id, timestamp)));
+        
+        private void ApplyCustomerTakenIfThereIsPendingTicketInTheQueue(Guid counterId, DateTime timestamp) =>
+            QueuedTickets.MaybeNextTicket.Map(t => ApplyChange(new CustomerTaken(Id, counterId, QueuedTickets.MaybeNextTicket.Value.Id, timestamp)));
 
         private CustomerQueue Apply(CustomerTaken e)
         {

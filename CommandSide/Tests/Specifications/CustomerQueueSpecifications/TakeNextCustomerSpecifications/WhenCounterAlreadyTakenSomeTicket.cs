@@ -17,7 +17,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
             yield return new CounterAdded(AggregateRootId, CounterA_Id, CounterA_Name);
             yield return new TicketAdded(AggregateRootId, Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
             yield return new TicketAdded(AggregateRootId, Ticket2_Id, Ticket2_Number, Ticket2_PrintingTimestamp);
-            yield return new CustomerTaken(AggregateRootId, CounterA_Id, Ticket1_Id);
+            yield return new CustomerTaken(AggregateRootId, CounterA_Id, Ticket1_Id, Ticket1_TakenTimestamp);
         }
 
         public override CommandHandler<TakeNextCustomer> When() => new TakeNextCustomerHandler(CustomerQueueRepository);
@@ -33,7 +33,8 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
         public void customer_taken_is_produced_for_next_ticket() => ProducedEvents.Should().Contain(new CustomerTaken(
             AggregateRootId,
             CounterA_Id,
-            Ticket2_Id));
+            Ticket2_Id,
+            CounterA_TakeNextCustomerTimestamp));
 
         [Fact]
         public void returns_success() => Result.IsSuccess.Should().BeTrue();

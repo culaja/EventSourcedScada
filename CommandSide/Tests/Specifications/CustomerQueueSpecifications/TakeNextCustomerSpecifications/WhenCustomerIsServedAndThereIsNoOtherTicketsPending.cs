@@ -11,13 +11,13 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
 {
     public sealed class WhenCustomerIsServedAndThereIsNoOtherTicketsPending : CustomerQueueSpecification<TakeNextCustomer>
     {
-        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id, Ticked1_ServedTimestamp);
+        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id, Ticket1_ServedTimestamp);
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return new CounterAdded(AggregateRootId, CounterA_Id, CounterA_Name);
             yield return new TicketAdded(AggregateRootId, Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
-            yield return new CustomerTaken(AggregateRootId, CounterA_Id, Ticket1_Id);
-            yield return new CustomerServed(AggregateRootId, CounterA_Id, Ticket1_Id, Ticked1_ServedTimestamp);
+            yield return new CustomerTaken(AggregateRootId, CounterA_Id, Ticket1_Id, Ticket1_TakenTimestamp);
+            yield return new CustomerServed(AggregateRootId, CounterA_Id, Ticket1_Id, Ticket1_ServedTimestamp);
         }
 
         public override CommandHandler<TakeNextCustomer> When() => new TakeNextCustomerHandler(CustomerQueueRepository);
@@ -27,7 +27,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
             AggregateRootId,
             CounterA_Id,
             Ticket1_Id,
-            Ticked1_ServedTimestamp));
+            Ticket1_ServedTimestamp));
         
         [Fact]
         public void returns_success() => Result.IsSuccess.Should().BeTrue();

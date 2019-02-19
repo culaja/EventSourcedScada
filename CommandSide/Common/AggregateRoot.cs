@@ -30,9 +30,10 @@ namespace Common
             return this;
         }
         
-        protected void ApplyChange(IDomainEvent e)
+        protected AggregateRoot ApplyChange(IDomainEvent e)
         {
             ApplyChange(e, true);
+            return this;
         }
         
         private void ApplyChange(IDomainEvent e, bool isNew)
