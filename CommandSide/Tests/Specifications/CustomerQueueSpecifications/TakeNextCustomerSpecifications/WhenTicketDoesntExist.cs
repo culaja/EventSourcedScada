@@ -11,11 +11,15 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
 {
     public sealed class WhenTicketDoesntExistInQueue : CustomerQueueSpecification<TakeNextCustomer>
     {
+        public WhenTicketDoesntExistInQueue() : base(SingleCustomerQueueId)
+        {
+        }
+        
         protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id, CounterA_TakeNextCustomerTimestamp);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
-            yield return new CounterAdded(AggregateRootId, CounterA_Id, CounterA_Name);
+            yield return new CounterAdded(SingleCustomerQueueId, CounterA_Id, CounterA_Name);
         }
 
         public override CommandHandler<TakeNextCustomer> When() => new TakeNextCustomerHandler(CustomerQueueRepository);

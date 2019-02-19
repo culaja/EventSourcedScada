@@ -11,19 +11,23 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
 {
     public sealed class WhenTicketExistsInQueue : CustomerQueueSpecification<TakeNextCustomer>
     {
+        public WhenTicketExistsInQueue() : base(SingleCustomerQueueId)
+        {
+        }
+        
         protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id, Ticket1_TakenTimestamp);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
-            yield return new CounterAdded(AggregateRootId, CounterA_Id, CounterA_Name);
-            yield return new TicketAdded(AggregateRootId, Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
+            yield return new CounterAdded(SingleCustomerQueueId, CounterA_Id, CounterA_Name);
+            yield return new TicketAdded(SingleCustomerQueueId, Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
         }
 
         public override CommandHandler<TakeNextCustomer> When() => new TakeNextCustomerHandler(CustomerQueueRepository);
 
         [Fact]
         public void doesnt_produce_customer_served() => ProducedEvents.Should().Contain(new CustomerTaken(
-            AggregateRootId,
+            SingleCustomerQueueId,
             CounterA_Id,
             Ticket1_Id,
             Ticket1_TakenTimestamp));

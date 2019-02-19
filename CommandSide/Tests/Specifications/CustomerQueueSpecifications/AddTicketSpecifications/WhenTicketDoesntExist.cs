@@ -11,7 +11,12 @@ namespace Tests.Specifications.CustomerQueueSpecifications.AddTicketSpecificatio
 {
     public sealed class WhenTicketDoesntExist : CustomerQueueSpecification<AddTicket>
     {
+        public WhenTicketDoesntExist() : base(SingleCustomerQueueId)
+        {
+        }
+        
         protected override AddTicket CommandToExecute => new AddTicket(Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
+        
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield break;
@@ -21,7 +26,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications.AddTicketSpecificatio
 
         [Fact]
         public void ticket_added_event_exists() => ProducedEvents.Should().Contain(new TicketAdded(
-            AggregateRootId,
+            SingleCustomerQueueId,
             Ticket1_Id,
             Ticket1_Number,
             Ticket1_PrintingTimestamp));

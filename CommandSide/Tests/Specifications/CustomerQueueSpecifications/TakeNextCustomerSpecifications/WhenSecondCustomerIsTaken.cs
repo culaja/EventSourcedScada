@@ -11,22 +11,27 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
 {
     public sealed class WhenSecondCustomerIsTaken : CustomerQueueSpecification<TakeNextCustomer>
     {
+        public WhenSecondCustomerIsTaken() : base(SingleCustomerQueueId)
+        {
+        }
+        
         protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id, Ticket2_ServedTimestamp);
+        
         public override IEnumerable<CustomerQueueEvent> Given()
         {
-            yield return new CounterAdded(AggregateRootId, CounterA_Id, CounterA_Name);
-            yield return new TicketAdded(AggregateRootId, Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
-            yield return new TicketAdded(AggregateRootId, Ticket2_Id, Ticket2_Number, Ticket2_PrintingTimestamp);
-            yield return new CustomerTaken(AggregateRootId, CounterA_Id, Ticket1_Id, Ticket1_TakenTimestamp);
-            yield return new CustomerServed(AggregateRootId, CounterA_Id, Ticket1_Id, Ticket1_ServedTimestamp);
-            yield return new CustomerTaken(AggregateRootId, CounterA_Id, Ticket2_Id, Ticket2_TakenTimestamp);
+            yield return new CounterAdded(SingleCustomerQueueId, CounterA_Id, CounterA_Name);
+            yield return new TicketAdded(SingleCustomerQueueId, Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
+            yield return new TicketAdded(SingleCustomerQueueId, Ticket2_Id, Ticket2_Number, Ticket2_PrintingTimestamp);
+            yield return new CustomerTaken(SingleCustomerQueueId, CounterA_Id, Ticket1_Id, Ticket1_TakenTimestamp);
+            yield return new CustomerServed(SingleCustomerQueueId, CounterA_Id, Ticket1_Id, Ticket1_ServedTimestamp);
+            yield return new CustomerTaken(SingleCustomerQueueId, CounterA_Id, Ticket2_Id, Ticket2_TakenTimestamp);
         }
 
         public override CommandHandler<TakeNextCustomer> When() => new TakeNextCustomerHandler(CustomerQueueRepository);
         
         [Fact]
         public void customer_served_event_not_produced_again_for_the_same_ticket() => ProducedEvents.Should().Contain(new CustomerServed(
-            AggregateRootId,
+            SingleCustomerQueueId,
             CounterA_Id,
             Ticket2_Id,
             Ticket2_ServedTimestamp));

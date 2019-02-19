@@ -1,7 +1,11 @@
 using System;
+using System.Linq;
+using FluentAssertions;
 using Mongo2Go;
 using MongoDbEventStore;
 using Ports.EventStore;
+using Tests.Specifications.CustomerQueueSpecifications;
+using Xunit;
 using static System.Guid;
 
 namespace Tests.IntegrationTests.EventStore
@@ -21,6 +25,12 @@ namespace Tests.IntegrationTests.EventStore
         public void Dispose()
         {
             _runner.Dispose();
+        }
+        
+        [Fact]
+        public void _1()
+        {
+           
         }
     }
 }

@@ -21,7 +21,6 @@ namespace Tests
             AggregateRepository = aggregateRepository;
             
             var aggregateRoot = aggregateRootCreator();
-            AggregateRootId = aggregateRoot.Id;
             AggregateRepository.AddNew(aggregateRoot);
             foreach (var e in Given()) aggregateRoot.ApplyFrom(e);
             
@@ -34,9 +33,7 @@ namespace Tests
                 });
         }
         
-        protected abstract TL CommandToExecute { get; } 
-        
-        protected Guid AggregateRootId { get; }
+        protected abstract TL CommandToExecute { get; }
         
         protected IReadOnlyList<TK> ProducedEvents { get; private set; } 
         

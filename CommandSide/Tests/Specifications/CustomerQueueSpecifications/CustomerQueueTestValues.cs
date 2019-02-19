@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Shared.CustomerQueue;
 using static System.DateTime;
 using static System.Guid;
 using static System.TimeSpan;
@@ -8,6 +9,8 @@ namespace Tests.Specifications.CustomerQueueSpecifications
 {
     public static class CustomerQueueTestValues
     {
+        public static readonly Guid SingleCustomerQueueId = NewGuid();
+        
         public static readonly Guid CounterA_Id = NewGuid();
         public static readonly string CounterA_Name = "CounterA";
         public static readonly DateTime CounterA_TakeNextCustomerTimestamp = Today - FromHours(10);

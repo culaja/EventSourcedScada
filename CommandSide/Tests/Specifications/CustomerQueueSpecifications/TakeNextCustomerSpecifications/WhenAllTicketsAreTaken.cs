@@ -11,19 +11,24 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
 {
     public sealed class WhenAllTicketsAreTaken : CustomerQueueSpecification<TakeNextCustomer>
     {
+        public WhenAllTicketsAreTaken() : base(SingleCustomerQueueId)
+        {
+        }
+        
         protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id, CounterA_TakeNextCustomerTimestamp);
+        
         public override IEnumerable<CustomerQueueEvent> Given()
         {
-            yield return new CounterAdded(AggregateRootId, CounterA_Id, CounterA_Name);
-            yield return new TicketAdded(AggregateRootId, Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
-            yield return new CustomerTaken(AggregateRootId, CounterA_Id, Ticket1_Id, Ticket1_TakenTimestamp);
+            yield return new CounterAdded(SingleCustomerQueueId, CounterA_Id, CounterA_Name);
+            yield return new TicketAdded(SingleCustomerQueueId, Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
+            yield return new CustomerTaken(SingleCustomerQueueId, CounterA_Id, Ticket1_Id, Ticket1_TakenTimestamp);
         }
 
         public override CommandHandler<TakeNextCustomer> When() => new TakeNextCustomerHandler(CustomerQueueRepository);
 
         [Fact]
         public void customer_taken_is_not_produced() => ProducedEvents.Should().NotContain(new CustomerTaken(
-            AggregateRootId,
+            SingleCustomerQueueId,
             CounterA_Id,
             Ticket1_Id,
             CounterA_TakeNextCustomerTimestamp));
