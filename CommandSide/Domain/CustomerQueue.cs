@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Common;
 using Shared.CustomerQueue;
 using static Common.Result;
@@ -35,8 +36,14 @@ namespace Domain
 
         public Result<CustomerQueue> AddCounter(Guid counterId, string counterName)
         {
+            if (Counters.ContainsEntityWith(counterId))
+            {
+                return Fail<CustomerQueue>($"{nameof(Counter)} with Id {counterId} already exist in {nameof(CustomerQueue)}.");
+            }
+            
             ApplyChange(new CounterAdded(Id, counterId, counterName));
-            return Ok<CustomerQueue>(this);
+            
+            return Ok(this);
         }
 
         private CustomerQueue Apply(CounterAdded e)

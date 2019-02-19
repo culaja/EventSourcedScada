@@ -21,13 +21,13 @@ namespace Tests
             AggregateRepository = aggregateRepository;
             
             var aggregateRoot = aggregateRootCreator();
+            AggregateRootId = aggregateRoot.Id;
             AggregateRepository.AddNew(aggregateRoot);
             foreach (var e in Given()) aggregateRoot.ApplyFrom(e);
             
             When().Handle(CommandToExecute)
                 .OnBoth(r =>
                 {
-                    AggregateRootId = aggregateRoot.Id;
                     ProducedEvents = aggregateRoot.DomainEvents.Select(e => (TK)e).ToList();
                     Result = r;
                     return r;
@@ -36,7 +36,7 @@ namespace Tests
         
         protected abstract TL CommandToExecute { get; } 
         
-        protected Guid AggregateRootId { get; private set; }
+        protected Guid AggregateRootId { get; }
         
         protected IReadOnlyList<TK> ProducedEvents { get; private set; } 
         
