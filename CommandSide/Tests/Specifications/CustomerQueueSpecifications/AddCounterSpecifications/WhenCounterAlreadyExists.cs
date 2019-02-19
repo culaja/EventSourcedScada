@@ -5,16 +5,15 @@ using DomainServices;
 using FluentAssertions;
 using Shared.CustomerQueue;
 using Xunit;
-using static Tests.Specifications.CustomerQueueSpecifications.CustomerQueueTestValues;
 
-namespace Tests.Specifications.CustomerQueueSpecifications
+namespace Tests.Specifications.CustomerQueueSpecifications.AddCounterSpecifications
 {
     public sealed class AddingCounterWhenCounterAlreadyExistsSpecification : CustomerQueueSpecification<AddCounter>
     {
-        protected override AddCounter CommandToExecute => new AddCounter(CounterA_Id, CounterA_Name);
+        protected override AddCounter CommandToExecute => new AddCounter(CustomerQueueTestValues.CounterA_Id, CustomerQueueTestValues.CounterA_Name);
         public override IEnumerable<CustomerQueueEvent> Given()
         {
-            yield return new CounterAdded(AggregateRootId, CounterA_Id, CounterA_Name);
+            yield return new CounterAdded(AggregateRootId, CustomerQueueTestValues.CounterA_Id, CustomerQueueTestValues.CounterA_Name);
         }
 
         public override CommandHandler<AddCounter> When() => new AddCounterHandler(CustomerQueueRepository);
@@ -22,8 +21,8 @@ namespace Tests.Specifications.CustomerQueueSpecifications
         [Fact]
         public void doesnt_contain_counter_added_event() => ProducedEvents.Should().NotContain(new CounterAdded(
             AggregateRootId,
-            CounterA_Id,
-            CounterA_Name));
+            CustomerQueueTestValues.CounterA_Id,
+            CustomerQueueTestValues.CounterA_Name));
 
         [Fact]
         public void returns_failure() => Result.IsFailure.Should().BeTrue();

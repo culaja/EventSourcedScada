@@ -6,6 +6,7 @@ using InMemory;
 using Ports.Repositories;
 using Shared.CustomerQueue;
 using Tests.IntegrationTests;
+using static Domain.QueuedTickets;
 
 namespace Tests.Specifications.CustomerQueueSpecifications
 {
@@ -16,7 +17,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications
         
         protected CustomerQueueSpecification() : base(
             new CustomerQueueInMemoryRepository(new NoOpLocalMessageBus()), 
-            () => new CustomerQueue(Guid.NewGuid(), 0, new List<Counter>()))
+            () => new CustomerQueue(Guid.NewGuid(), 0, new List<Counter>(), EmptyQueuedTickets))
         {
         }
     }
