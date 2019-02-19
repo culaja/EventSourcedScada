@@ -70,5 +70,21 @@ namespace Domain
             QueuedTickets = QueuedTickets.AddFrom(e.TicketId, e.TicketNumber, e.TicketPrintingTimestamp);
             return this;
         }
+
+        public Result<CustomerQueue> TakeNextCustomer(Guid counterId)
+        {
+            if (QueuedTickets.MaybeNextTicket.HasValue)
+            {
+                ApplyChange(new CustomerTaken(Id, counterId, QueuedTickets.MaybeNextTicket.Value.Id));
+            }   
+            
+            return Fail<CustomerQueue>($"All tickets are already taken");
+        }
+        
+        private CustomerQueue Apply(CustomerTaken e)
+        {
+            QueuedTickets = QueuedTickets.RemoveWithId(e.TickedId);
+            return this;
+        }
     }
 }

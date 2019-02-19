@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using Common.Messaging;
-using Domain;
 using Domain.Commands;
 using DomainServices;
 using FluentAssertions;

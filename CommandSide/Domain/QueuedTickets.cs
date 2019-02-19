@@ -38,9 +38,17 @@ namespace Domain
             new Ticket(ticketId, ticketNumber, ticketPrintingTimestamp)
         });
 
+        public Maybe<Ticket> MaybeNextTicket => Tickets.MaybeFirst();
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             foreach (var item in Tickets) yield return item;
+        }
+
+        public QueuedTickets RemoveWithId(Guid ticketId)
+        {
+            return new QueuedTickets(new List<Ticket>(Tickets
+                .Where(t => t.Id != ticketId)));
         }
     }
 }
