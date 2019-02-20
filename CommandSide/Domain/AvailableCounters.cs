@@ -8,7 +8,7 @@ namespace Domain
     public sealed class AvailableCounters : ValueObject<AvailableCounters>
     {
         public IReadOnlyList<Counter> Counters { get; }
-
+        
         public AvailableCounters(IReadOnlyList<Counter> counters)
         {
             Counters = counters;
@@ -39,6 +39,19 @@ namespace Domain
         public AvailableCounters RemoveServingTicket(Guid counterId)
         {
             Counters.MaybeEntityWith(counterId).Value.RemoveServingTicket();
+            return this;
+        }
+
+        public AvailableCounters MapFirstFree(Action<Counter> onFreeCounterCallback)
+        {
+            Counters.MaybeFirst(c => c.MaybeServingTicket.HasNoValue).Map(
+                counter => OnFreeCounterCallback(counter, onFreeCounterCallback));
+            return this;
+        }
+
+        private AvailableCounters OnFreeCounterCallback(Counter c, Action<Counter> onFreeCounterCallback)
+        {
+            onFreeCounterCallback(c);
             return this;
         }
 

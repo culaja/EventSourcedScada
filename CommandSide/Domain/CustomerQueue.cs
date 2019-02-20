@@ -53,6 +53,7 @@ namespace Domain
             DateTime ticketPrintingTimestamp) =>
             QueuedTickets.CanAddFrom(ticketId, ticketNumber, ticketPrintingTimestamp)
                 .OnSuccess(() => ApplyChange(new TicketAdded(Id, ticketId, ticketNumber, ticketPrintingTimestamp)))
+                .OnSuccess(_ => AvailableCounters.MapFirstFree(counter => ApplyChange(new CustomerTaken(Id, counter.Id, ticketId, ticketPrintingTimestamp))))
                 .ToTypedResult(this);
 
         private CustomerQueue Apply(TicketAdded e)
