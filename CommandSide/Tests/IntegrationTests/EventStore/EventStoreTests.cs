@@ -35,8 +35,9 @@ namespace Tests.IntegrationTests.EventStore
             _eventStore.Append(SingleCustomerQueueCreated);
             _eventStore.Append(CounterA_Added);
             _eventStore.Append(Ticket1_Added);
-            _eventStore.Append(CustomerWithTicket1_Added);
+            _eventStore.Append(CustomerWithTicket1_Taken);
             _eventStore.Append(CustomerWithTicket1_Served);
+            _eventStore.Append(CustomerWithTicket1_Revoked);
            
             var allEvents =  _eventStore.LoadAllFor<CustomerQueueSubscription>().ToList();
 
@@ -44,8 +45,9 @@ namespace Tests.IntegrationTests.EventStore
                 SingleCustomerQueueCreated,
                 CounterA_Added,
                 Ticket1_Added,
-                CustomerWithTicket1_Added,
-                CustomerWithTicket1_Served);
+                CustomerWithTicket1_Taken,
+                CustomerWithTicket1_Served,
+                CustomerWithTicket1_Revoked);
         }
     }
 }

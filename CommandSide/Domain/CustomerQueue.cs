@@ -75,12 +75,24 @@ namespace Domain
 
         private CustomerQueue Apply(CustomerTaken e)
         {
-            AvailableCounters.SetServingTicketFor(e.CounterId, QueuedTickets.GetWithId(e.TickedId));
-            QueuedTickets = QueuedTickets.RemoveWithId(e.TickedId);
+            AvailableCounters.SetServingTicketFor(e.CounterId, QueuedTickets.GetWithId(e.TicketId));
+            QueuedTickets = QueuedTickets.RemoveWithId(e.TicketId);
             return this;
         }
 
         private CustomerQueue Apply(CustomerServed e)
+        {
+            AvailableCounters.RemoveServingTicket(e.CounterId);
+            return this;
+        }
+
+        public Result<CustomerQueue> RevokeCustomer(Guid counterId) =>
+            AvailableCounters.GetMaybeServingTicket(counterId)
+                .OnSuccess(maybeServingTicket => maybeServingTicket.Map(
+                    servingTicket => ApplyChange(new CustomerRevoked(Id, counterId, servingTicket.Id))))
+                .ToTypedResult(this);
+
+        private CustomerQueue Apply(CustomerRevoked e)
         {
             AvailableCounters.RemoveServingTicket(e.CounterId);
             return this;

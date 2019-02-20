@@ -11,6 +11,6 @@ namespace Common
             list.Select(e => e.Id).Contains(id);
 
         public static Maybe<T> MaybeEntityWith<T>(this IEnumerable<T> list, Guid id) where T : Entity =>
-            list.First(e => e.Id.Equals(id));
+            list.FirstOrDefault(e => e.Id.Equals(id));
     }
 }
