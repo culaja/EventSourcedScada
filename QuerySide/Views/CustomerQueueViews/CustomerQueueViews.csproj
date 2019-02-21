@@ -1,0 +1,13 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\..\..\CommandSide\Common\Common.csproj" />
+      <ProjectReference Include="..\..\..\Shared.CustomerQueue\Shared.CustomerQueue.csproj" />
+      <ProjectReference Include="..\..\QueryCommon\QueryCommon.csproj" />
+    </ItemGroup>
+
+</Project>
