@@ -8,23 +8,18 @@ namespace Services.EventHandlers
 {
     public sealed class ViewRefreshFromCustomerQueueEventHandler : Common.Messaging.EventHandler<CustomerQueueEvent>
     {
-        private readonly CountersView _countersView;
-        private readonly TicketsPerCounterServedView _ticketsPerCounterServedView;
+        private readonly ViewHolder _viewHolder;
 
         public ViewRefreshFromCustomerQueueEventHandler(
-            CountersView countersView,
-            TicketsPerCounterServedView ticketsPerCounterServedView)
+            ViewHolder viewHolder)
         {
-            _countersView = countersView;
-            _ticketsPerCounterServedView = ticketsPerCounterServedView;
+            _viewHolder = viewHolder;
         }
         
         public override Result Handle(CustomerQueueEvent e)
         {
-            _countersView.Apply(e);
-            _ticketsPerCounterServedView.Apply(e);
-            Console.WriteLine(_countersView);
-            Console.WriteLine(_ticketsPerCounterServedView);
+            _viewHolder.Apply(e);
+            Console.WriteLine(_viewHolder);
             return Ok();
         }
     }

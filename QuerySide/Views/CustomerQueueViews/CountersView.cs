@@ -6,7 +6,7 @@ using Shared.CustomerQueue;
 
 namespace CustomerQueueViews
 {
-    public sealed class CountersView : View,
+    internal sealed class CountersView : View,
         IHandle<CounterAdded>,
         IHandle<TicketAdded>,
         IHandle<CustomerTaken>,

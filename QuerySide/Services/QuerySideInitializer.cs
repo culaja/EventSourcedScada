@@ -11,21 +11,18 @@ namespace Services
         private readonly IEventStoreReader _eventStoreReader;
         private readonly IRemoteEventSubscriber _remoteEventSubscriber;
         private readonly ILocalMessageBus _localMessageBus;
-        private readonly CountersView _countersView;
-        private readonly TicketsPerCounterServedView _ticketsPerCounterServedView;
+        private readonly ViewHolder _viewHolder;
 
         public QuerySideInitializer(
             IEventStoreReader eventStoreReader,
             IRemoteEventSubscriber remoteEventSubscriber,
             ILocalMessageBus localMessageBus,
-            CountersView countersView,
-            TicketsPerCounterServedView ticketsPerCounterServedView)
+            ViewHolder viewHolder)
         {
             _eventStoreReader = eventStoreReader;
             _remoteEventSubscriber = remoteEventSubscriber;
             _localMessageBus = localMessageBus;
-            _countersView = countersView;
-            _ticketsPerCounterServedView = ticketsPerCounterServedView;
+            _viewHolder = viewHolder;
         }
 
         public void Initialize()
@@ -43,14 +40,9 @@ namespace Services
         {
             Console.WriteLine("Performing integrity read of domain events ...");
             var domainEvents = _eventStoreReader.LoadAll();
-            foreach (var e in domainEvents)
-            {
-                _countersView.Apply(e);
-                _ticketsPerCounterServedView.Apply(e);
-            }
+            foreach (var e in domainEvents) _viewHolder.Apply(e);
             Console.WriteLine("Integrity read finished");
-            Console.WriteLine(_countersView);
-            Console.WriteLine(_ticketsPerCounterServedView);
+            Console.WriteLine(_viewHolder);
         }
     }
 }

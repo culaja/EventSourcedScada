@@ -5,7 +5,7 @@ using Shared.CustomerQueue;
 
 namespace CustomerQueueViews
 {
-    public sealed class TicketsPerCounterServedView : View,
+    internal sealed class TicketsPerCounterServedView : View,
         IHandle<CustomerServed>
     {
         private readonly  Dictionary<string, int> _dictionary = new Dictionary<string, int>();
