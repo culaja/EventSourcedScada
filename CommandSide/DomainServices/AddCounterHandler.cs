@@ -15,6 +15,6 @@ namespace DomainServices
         }
 
         public override Result Handle(AddCounter c) => _repository.BorrowSingle(
-            cq => cq.AddCounter(c.CounterId, c.CounterName));
+            cq => cq.AddCounter(c.CounterName));
     }
 }

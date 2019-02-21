@@ -15,10 +15,10 @@ namespace Tests.Specifications.CustomerQueueSpecifications.AddCounterSpecificati
         {
         }
         
-        protected override AddCounter CommandToExecute => new AddCounter(CounterB_Id, CounterB_Name);
+        protected override AddCounter CommandToExecute => new AddCounter(CounterB_Name);
         public override IEnumerable<CustomerQueueEvent> Given()
         {
-            yield return new CounterAdded(SingleCustomerQueueId, CounterA_Id, CounterA_Name);
+            yield return new CounterAdded(SingleCustomerQueueId, CounterA_Name);
         }
 
         public override CommandHandler<AddCounter> When() => new AddCounterHandler(CustomerQueueRepository);
@@ -26,7 +26,6 @@ namespace Tests.Specifications.CustomerQueueSpecifications.AddCounterSpecificati
         [Fact]
         public void contains_counter_added_event() => ProducedEvents.Should().Contain(new CounterAdded(
             SingleCustomerQueueId,
-            CounterB_Id,
             CounterB_Name));
 
         [Fact]

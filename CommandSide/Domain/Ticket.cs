@@ -3,13 +3,13 @@ using Common;
 
 namespace Domain
 {
-    public sealed class Ticket : Entity
+    public sealed class Ticket : Entity<TicketId>
     {
         public int Number { get; }
         public DateTime PrintingTimestamp { get; }
 
         public Ticket(
-            Guid id,
+            TicketId id,
             int number,
             DateTime printingTimestamp) : base(id)
         {

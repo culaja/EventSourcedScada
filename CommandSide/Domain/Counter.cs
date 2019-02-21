@@ -4,15 +4,12 @@ using static Common.Maybe<Domain.Ticket>;
 
 namespace Domain
 {
-    public sealed class Counter : Entity
+    public sealed class Counter : Entity<CounterName>
     {
-        public string Name { get; }
-        
         public Maybe<Ticket> MaybeServingTicket { get; private set; }
 
-        public Counter(Guid id, string name) : base(id)
+        public Counter(CounterName name) : base(name)
         {
-            Name = name;
         }
 
         public void SetServingTicket(Ticket ticket) => MaybeServingTicket = ticket;

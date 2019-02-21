@@ -5,12 +5,12 @@ namespace Domain.Commands
 {
     public sealed class RevokeCustomer : ICommand
     {
-        public Guid CounterId { get; }
+        public CounterName CounterName { get; }
 
         public RevokeCustomer(
-            Guid counterId)
+            CounterName counterName)
         {
-            CounterId = counterId;
+            CounterName = counterName;
         }
     }
 }

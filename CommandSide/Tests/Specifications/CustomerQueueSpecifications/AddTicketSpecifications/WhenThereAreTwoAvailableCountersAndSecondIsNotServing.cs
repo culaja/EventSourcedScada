@@ -19,16 +19,16 @@ namespace Tests.Specifications.CustomerQueueSpecifications.AddTicketSpecificatio
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
-            yield return new CounterAdded(SingleCustomerQueueId, CounterA_Id, CounterA_Name);
-            yield return new CounterAdded(SingleCustomerQueueId, CounterB_Id, CounterB_Name);
+            yield return new CounterAdded(SingleCustomerQueueId, CounterA_Name);
+            yield return new CounterAdded(SingleCustomerQueueId, CounterB_Name);
             yield return new TicketAdded(SingleCustomerQueueId, Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
-            yield return new CustomerTaken(SingleCustomerQueueId, CounterA_Id, Ticket1_Id, Ticket1_PrintingTimestamp);
+            yield return new CustomerTaken(SingleCustomerQueueId, CounterA_Name, Ticket1_Id, Ticket1_PrintingTimestamp);
         }
 
         public override CommandHandler<AddTicket> When() => new AddTicketHandler(CustomerQueueRepository);
 
         [Fact]
         public void customer_taken_is_not_produced() => ProducedEvents.Should().Contain(
-            new CustomerTaken(SingleCustomerQueueId, CounterB_Id, Ticket2_Id, Ticket2_PrintingTimestamp));
+            new CustomerTaken(SingleCustomerQueueId, CounterB_Name, Ticket2_Id, Ticket2_PrintingTimestamp));
     }
 }

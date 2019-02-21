@@ -5,22 +5,22 @@ namespace Shared.CustomerQueue
 {
     public sealed class CustomerRevoked : CustomerQueueEvent
     {
-        public Guid CounterId { get; }
+        public string CounterName { get; }
         public Guid TicketId { get; }
 
         public CustomerRevoked(
             Guid aggregateRootId,
-            Guid counterId,
+            string counterName,
             Guid ticketId) : base(aggregateRootId)
         {
-            CounterId = counterId;
+            CounterName = counterName;
             TicketId = ticketId;
         }
         
         protected override IEnumerable<object> GetEqualityComponents()
         {
             foreach (var item in base.GetEqualityComponents()) yield return item;
-            yield return CounterId;
+            yield return CounterName;
             yield return TicketId;
         } 
     }

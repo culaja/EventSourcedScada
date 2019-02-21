@@ -15,11 +15,11 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
         {
         }
         
-        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id, Ticket1_TakenTimestamp);
+        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Name, Ticket1_TakenTimestamp);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
-            yield return new CounterAdded(SingleCustomerQueueId, CounterA_Id, CounterA_Name);
+            yield return new CounterAdded(SingleCustomerQueueId, CounterA_Name);
             yield return new TicketAdded(SingleCustomerQueueId, Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
         }
 
@@ -28,7 +28,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
         [Fact]
         public void doesnt_produce_customer_served() => ProducedEvents.Should().Contain(new CustomerTaken(
             SingleCustomerQueueId,
-            CounterA_Id,
+            CounterA_Name,
             Ticket1_Id,
             Ticket1_TakenTimestamp));
     }

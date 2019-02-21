@@ -15,7 +15,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications.RevokeCustomerSpecifi
         {
         }
 
-        protected override RevokeCustomer CommandToExecute => new RevokeCustomer(CounterA_Id);
+        protected override RevokeCustomer CommandToExecute => new RevokeCustomer(CounterA_Name);
 
         public override IEnumerable<CustomerQueueEvent> Given()
         {

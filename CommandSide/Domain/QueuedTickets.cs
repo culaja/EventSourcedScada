@@ -17,11 +17,11 @@ namespace Domain
         
         public static readonly QueuedTickets EmptyQueuedTickets = new QueuedTickets(new List<Ticket>());
 
-        public Result CanAddFrom(Guid ticketId, int ticketNumber, DateTime ticketPrintingTimestamp) =>
+        public Result CanAddFrom(TicketId ticketId, int ticketNumber, DateTime ticketPrintingTimestamp) =>
             Validate(ticketId)
                 .OnSuccess(() => Validate(ticketNumber));
         
-        private Result Validate(Guid ticketId) => Tickets.ContainsEntityWith(ticketId).OnBoth(
+        private Result Validate(TicketId ticketId) => Tickets.ContainsEntityWith(ticketId).OnBoth(
             () => Fail<Ticket>($"{nameof(Ticket)} with Id {ticketId} already exist."),
             Ok);
         
@@ -31,7 +31,7 @@ namespace Domain
                 Ok);
         
         public QueuedTickets AddFrom(
-            Guid ticketId, 
+            TicketId ticketId, 
             int ticketNumber,
             DateTime ticketPrintingTimestamp) => new QueuedTickets(new List<Ticket>(Tickets)
         {
@@ -45,12 +45,12 @@ namespace Domain
             foreach (var item in Tickets) yield return item;
         }
 
-        public QueuedTickets RemoveWithId(Guid ticketId)
+        public QueuedTickets RemoveWithId(TicketId ticketId)
         {
             return new QueuedTickets(new List<Ticket>(Tickets
                 .Where(t => t.Id != ticketId)));
         }
 
-        public Ticket GetWithId(Guid ticketId) => Tickets.First(t => t.Id == ticketId);
+        public Ticket GetWithId(TicketId ticketId) => Tickets.First(t => t.Id == ticketId);
     }
 }

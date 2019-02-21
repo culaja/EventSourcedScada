@@ -15,14 +15,14 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
         {
         }
         
-        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Id, CounterA_TakeNextCustomerTimestamp);
+        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Name, CounterA_TakeNextCustomerTimestamp);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
-            yield return new CounterAdded(SingleCustomerQueueId, CounterA_Id, CounterA_Name);
+            yield return new CounterAdded(SingleCustomerQueueId, CounterA_Name);
             yield return new TicketAdded(SingleCustomerQueueId, Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
             yield return new TicketAdded(SingleCustomerQueueId, Ticket2_Id, Ticket2_Number, Ticket2_PrintingTimestamp);
-            yield return new CustomerTaken(SingleCustomerQueueId, CounterA_Id, Ticket1_Id, Ticket1_TakenTimestamp);
+            yield return new CustomerTaken(SingleCustomerQueueId, CounterA_Name, Ticket1_Id, Ticket1_TakenTimestamp);
         }
 
         public override CommandHandler<TakeNextCustomer> When() => new TakeNextCustomerHandler(CustomerQueueRepository);
@@ -30,14 +30,14 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
         [Fact]
         public void customer_served_event_produced_for_previous_ticket() => ProducedEvents.Should().Contain(new CustomerServed(
             SingleCustomerQueueId,
-            CounterA_Id,
+            CounterA_Name,
             Ticket1_Id,
             CounterA_TakeNextCustomerTimestamp));
         
         [Fact]
         public void customer_taken_is_produced_for_next_ticket() => ProducedEvents.Should().Contain(new CustomerTaken(
             SingleCustomerQueueId,
-            CounterA_Id,
+            CounterA_Name,
             Ticket2_Id,
             CounterA_TakeNextCustomerTimestamp));
 

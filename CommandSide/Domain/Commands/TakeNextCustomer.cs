@@ -5,14 +5,14 @@ namespace Domain.Commands
 {
     public sealed class TakeNextCustomer : ICommand
     {
-        public Guid CounterId { get; }
+        public CounterName CounterName { get; }
         public DateTime Timestamp { get; }
 
         public TakeNextCustomer(
-            Guid counterId,
+            CounterName counterName,
             DateTime timestamp)
         {
-            CounterId = counterId;
+            CounterName = counterName;
             Timestamp = timestamp;
         }
     }

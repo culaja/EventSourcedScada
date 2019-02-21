@@ -15,7 +15,7 @@ namespace DomainServices
         }
 
         public override Result Handle(RevokeCustomer c) => _repository
-            .BorrowSingle(cq => cq.RevokeCustomer(c.CounterId));
+            .BorrowSingle(cq => cq.RevokeCustomer(c.CounterName));
 
     }
 }

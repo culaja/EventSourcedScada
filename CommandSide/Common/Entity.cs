@@ -1,20 +1,21 @@
 ﻿using System;
+using System.Collections.Generic;
 using static System.Guid;
 
 namespace Common
 {
-    public abstract class Entity
+    public abstract class Entity<T> where T : Id
     {
-        public Guid Id { get; protected set; }
+        public T Id { get; }
 
-        protected Entity(Guid id)
+        protected Entity(T id)
         {
             Id = id;
         }
 
         public override bool Equals(object obj)
         {
-            var other = obj as Entity;
+            var other = obj as Entity<T>;
 
             if (ReferenceEquals(other, null))
                 return false;
@@ -25,13 +26,10 @@ namespace Common
             if (GetType() != other.GetType())
                 return false;
 
-            if (Id == Empty || other.Id == Empty)
-                return false;
-
             return Id == other.Id;
         }
 
-        public static bool operator ==(Entity a, Entity b)
+        public static bool operator ==(Entity<T> a, Entity<T> b)
         {
             if (ReferenceEquals(a, null) && ReferenceEquals(b, null))
                 return true;
@@ -42,7 +40,7 @@ namespace Common
             return a.Equals(b);
         }
 
-        public static bool operator !=(Entity a, Entity b)
+        public static bool operator !=(Entity<T> a, Entity<T> b)
         {
             return !(a == b);
         }

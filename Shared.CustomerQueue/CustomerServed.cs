@@ -5,17 +5,17 @@ namespace Shared.CustomerQueue
 {
     public sealed class CustomerServed : CustomerQueueEvent
     {
-        public Guid CounterId { get; }
+        public string CounterName { get; }
         public Guid TicketId { get; }
         public DateTime Timestamp { get; }
 
         public CustomerServed(
             Guid aggregateRootId,
-            Guid counterId,
+            string counterName,
             Guid ticketId,
             DateTime timestamp) : base(aggregateRootId)
         {
-            CounterId = counterId;
+            CounterName = counterName;
             TicketId = ticketId;
             Timestamp = timestamp;
         }
@@ -23,7 +23,7 @@ namespace Shared.CustomerQueue
         protected override IEnumerable<object> GetEqualityComponents()
         {
             foreach (var item in base.GetEqualityComponents()) yield return item;
-            yield return CounterId;
+            yield return CounterName;
             yield return TicketId;
             yield return Timestamp;
         }

@@ -16,29 +16,29 @@ namespace Domain
         
         public static readonly AvailableCounters NoAvailableCounters = new AvailableCounters(new List<Counter>());
 
-        public Result CheckIfCounterIsAvailableWith(Guid counterId) => Counters.ContainsEntityWith(counterId).OnBoth(
-            () => Fail($"{nameof(Counter)} with Id {counterId} already exist in {nameof(CustomerQueue)}."),
+        public Result CheckIfCounterIsAvailableWith(CounterName counterName) => Counters.ContainsEntityWith(counterName).OnBoth(
+            () => Fail($"{nameof(Counter)} with name '{counterName}' already exist in {nameof(CustomerQueue)}."),
             Ok);
         
-        public AvailableCounters AddNewWith(Guid counterId, string counterName) => new AvailableCounters(new List<Counter>(Counters)
+        public AvailableCounters AddNewWith(CounterName counterName) => new AvailableCounters(new List<Counter>(Counters)
         {
-            new Counter(counterId, counterName)
+            new Counter(counterName)
         });
 
-        public Result<Maybe<Ticket>> GetMaybeServingTicket(Guid counterId) => Counters.MaybeEntityWith(counterId)
+        public Result<Maybe<Ticket>> GetMaybeServingTicket(CounterName counterName) => Counters.MaybeEntityWith(counterName)
             .Unwrap(
                 m => Ok(m.MaybeServingTicket),
-                () => Fail<Maybe<Ticket>>($"{nameof(Counter)} with ID '{counterId}' doesn't exist."));
+                () => Fail<Maybe<Ticket>>($"{nameof(Counter)} with name '{counterName}' doesn't exist."));
 
-        public AvailableCounters SetServingTicketFor(Guid counterId, Ticket t)
+        public AvailableCounters SetServingTicketFor(CounterName counterName, Ticket t)
         {
-            Counters.MaybeEntityWith(counterId).Value.SetServingTicket(t);
+            Counters.MaybeEntityWith(counterName).Value.SetServingTicket(t);
             return this;
         }
 
-        public AvailableCounters RemoveServingTicket(Guid counterId)
+        public AvailableCounters RemoveServingTicket(CounterName counterName)
         {
-            Counters.MaybeEntityWith(counterId).Value.RemoveServingTicket();
+            Counters.MaybeEntityWith(counterName).Value.RemoveServingTicket();
             return this;
         }
 

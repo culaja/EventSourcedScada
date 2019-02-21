@@ -5,12 +5,10 @@ namespace Domain.Commands
 {
     public sealed class AddCounter : ICommand
     {
-        public Guid CounterId { get; }
-        public string CounterName { get; }
+        public CounterName CounterName { get; }
 
-        public AddCounter(Guid counterId, string counterName)
+        public AddCounter(CounterName counterName)
         {
-            CounterId = counterId;
             CounterName = counterName;
         }
     }
