@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Common.Messaging;
 using Domain.Commands;
-using DomainServices;
+using DomainServices.CommandHandlers;
 using FluentAssertions;
 using Shared.CustomerQueue;
 using Xunit;

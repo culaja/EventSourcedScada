@@ -3,7 +3,7 @@ using Common.Messaging;
 using Domain.Commands;
 using Ports.Repositories;
 
-namespace DomainServices
+namespace DomainServices.CommandHandlers
 {
     public sealed class RevokeCustomerHandler : CommandHandler<RevokeCustomer>
     {

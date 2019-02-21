@@ -1,6 +1,8 @@
 using System;
 using Common.Messaging;
+using CustomerQueueViews;
 using Ports;
+using Shared.CustomerQueue;
 
 namespace Services
 {
@@ -9,15 +11,18 @@ namespace Services
         private readonly IEventStoreReader _eventStoreReader;
         private readonly IRemoteEventSubscriber _remoteEventSubscriber;
         private readonly ILocalMessageBus _localMessageBus;
+        private readonly CountersView _countersView;
 
         public QuerySideInitializer(
             IEventStoreReader eventStoreReader,
             IRemoteEventSubscriber remoteEventSubscriber,
-            ILocalMessageBus localMessageBus)
+            ILocalMessageBus localMessageBus,
+            CountersView countersView)
         {
             _eventStoreReader = eventStoreReader;
             _remoteEventSubscriber = remoteEventSubscriber;
             _localMessageBus = localMessageBus;
+            _countersView = countersView;
         }
 
         public void Initialize()
@@ -28,6 +33,7 @@ namespace Services
 
         private void SubscribeToDomainEventsAndPassThemToLocalMessageBus()
         {
+            _remoteEventSubscriber.Register<CustomerQueueSubscription>(e => _localMessageBus.Dispatch(e));
         }
 
         private void PerformIntegrityLoadFromEventStore()
@@ -36,8 +42,10 @@ namespace Services
             var domainEvents = _eventStoreReader.LoadAll();
             foreach (var e in domainEvents)
             {
+                _countersView.Apply(e);
             }
             Console.WriteLine("Integrity read finished");
+            Console.WriteLine(_countersView);
         }
     }
 }

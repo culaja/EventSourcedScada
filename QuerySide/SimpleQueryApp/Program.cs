@@ -1,6 +1,6 @@
 ﻿using System;
 using Autofac;
-using AutofacApplicationWrapup;
+using AutofacApplicationWrapUp;
 using Services;
 
 namespace SimpleQueryApp

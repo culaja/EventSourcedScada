@@ -8,8 +8,4 @@ namespace Domain
         
         public static TicketId ToTicketId(this Guid g) => new TicketId(g);
     }
-
-    public static class ToBaseTypesExtensions
-    {
-    }
 }

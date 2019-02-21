@@ -5,7 +5,7 @@ using AutofacMessageBus;
 using Services;
 using Module = Autofac.Module;
 
-namespace AutofacApplicationWrapup
+namespace AutofacApplicationWrapUp
 {
     public sealed class DomainServicesRegistrator : Module
     {
