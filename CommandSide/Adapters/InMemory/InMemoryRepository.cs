@@ -59,16 +59,16 @@ namespace InMemory
             return Ok(PurgeAllEvents(aggregateRoot));
         }
 
-        public Result<T> BorrowBy(Guid aggregateRootId, Func<T, T> transformer) => ReadAggregateFromCash(aggregateRootId)
+        public Result<T> BorrowBy(Guid aggregateRootId, Func<T, Result<T>> transformer) => ReadAggregateFromCash(aggregateRootId)
             .OnSuccess(t => ExecuteTransformerAndPurgeEvents(t, transformer));
 
         public Maybe<T> MaybeFirst => _cache.Values.FirstOrDefault();
 
-        protected T ExecuteTransformerAndPurgeEvents(T aggregateRoot, Func<T, T> transformer)
+        protected Result<T> ExecuteTransformerAndPurgeEvents(T aggregateRoot, Func<T, Result<T>> transformer)
         {
-            transformer(aggregateRoot);
+            var result = transformer(aggregateRoot);
             PurgeAllEvents(aggregateRoot);
-            return aggregateRoot;
+            return result;
         }
 
         private Result<T> ReadAggregateFromCash(Guid aggregateRootId)

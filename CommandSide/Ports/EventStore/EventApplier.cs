@@ -35,10 +35,10 @@ namespace Ports.EventStore
             return domainEvent;
         }
 
-        private static T ApplyToAggregate<T>(T aggregateRoot, IDomainEvent e) where T : AggregateRoot
+        private static Result<T> ApplyToAggregate<T>(T aggregateRoot, IDomainEvent e) where T : AggregateRoot
         {
             aggregateRoot.ApplyFrom(e);
-            return aggregateRoot;
+            return aggregateRoot.ToOkResult();
         }
     }
 }

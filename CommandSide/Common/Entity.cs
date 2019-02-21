@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using static System.Guid;
-
-namespace Common
+﻿namespace Common
 {
     public abstract class Entity<T> where T : Id
     {

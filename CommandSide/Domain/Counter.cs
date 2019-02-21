@@ -1,4 +1,3 @@
-using System;
 using Common;
 using static Common.Maybe<Domain.Ticket>;
 

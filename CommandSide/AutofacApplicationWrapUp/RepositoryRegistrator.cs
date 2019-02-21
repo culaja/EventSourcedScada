@@ -1,4 +1,6 @@
 using Autofac;
+using InMemory;
+using Ports.Repositories;
 
 namespace AutofacApplicationWrapup
 {
@@ -6,6 +8,7 @@ namespace AutofacApplicationWrapup
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterType<CustomerQueueInMemoryRepository>().As<ICustomerQueueRepository>().SingleInstance();
         }
     }
 }

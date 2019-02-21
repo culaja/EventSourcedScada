@@ -8,6 +8,7 @@ namespace AutofacApplicationWrapUp
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<CountersView>().SingleInstance();
+            builder.RegisterType<TicketsPerCounterServedView>().SingleInstance();
         }
     }
 }

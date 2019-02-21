@@ -1,4 +1,3 @@
-using System;
 using Common.Messaging;
 
 namespace Domain.Commands

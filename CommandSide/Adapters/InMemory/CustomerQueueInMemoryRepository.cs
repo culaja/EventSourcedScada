@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using Common;
 using Common.Messaging;
 using Domain;
@@ -24,9 +23,9 @@ namespace InMemory
                 NoAvailableCounters,
                 EmptyQueuedTickets);
 
-        public Result<CustomerQueue> BorrowSingle(Func<CustomerQueue, Result<CustomerQueue>> transformer) =>
+        public Result<CustomerQueue> BorrowSingle(Func<CustomerQueue, Result<CustomerQueue>> transformer) => 
             MaybeFirst.Unwrap(
-                customerQueue => transformer(customerQueue),
+                customerQueue => ExecuteTransformerAndPurgeEvents(customerQueue, transformer),
                 () => Fail<CustomerQueue>($"There is no '{nameof(CustomerQueue)}' stored in the repository."));
     }
 }

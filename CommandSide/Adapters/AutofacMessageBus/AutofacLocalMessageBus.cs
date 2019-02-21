@@ -75,7 +75,8 @@ namespace AutofacMessageBus
 
 		private IMessage DispatchTo(IMessage message, IMessageHandler messageHandler)
 		{
-			var result = messageHandler.Handle(message);
+			messageHandler.Handle(message)
+				.OnFailure(e => Console.WriteLine(e));
 			return message;
 		}
 	}

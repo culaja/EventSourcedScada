@@ -3,6 +3,8 @@ using System.Reflection;
 using Autofac;
 using AutofacMessageBus;
 using Services;
+using Services.EventHandlers;
+using Shared.CustomerQueue;
 using Module = Autofac.Module;
 
 namespace AutofacApplicationWrapUp
@@ -20,9 +22,11 @@ namespace AutofacApplicationWrapUp
             containerBuilder.RegisterModule(new AutofacMessagingRegistrator(
                 new List<Assembly>
                 {
+                    typeof(CustomerQueueEvent).Assembly
                 },
                 new List<Assembly>()
                 {
+                    typeof(ViewRefreshFromCustomerQueueEventHandler).Assembly
                 }));
         }
 

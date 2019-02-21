@@ -5,7 +5,6 @@ using Mongo2Go;
 using MongoDbEventStore;
 using Ports.EventStore;
 using Shared.CustomerQueue;
-using Tests.Specifications.CustomerQueueSpecifications;
 using Xunit;
 using static System.Guid;
 using static Tests.CustomerQueueTestValues;
