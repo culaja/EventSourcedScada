@@ -13,17 +13,17 @@ namespace CustomerQueueViews
         IHandle<CustomerServed>,
         IHandle<CustomerRevoked>
     {
-        private readonly Dictionary<string, int> _counterDictionary = new Dictionary<string, int>();
-        private readonly Dictionary<Guid, int> _ticketDictionary = new Dictionary<Guid, int>();
+        private readonly Dictionary<string, string> _counterDictionary = new Dictionary<string, string>();
+        private readonly Dictionary<Guid, string> _ticketDictionary = new Dictionary<Guid, string>();
 
         public void Handle(CounterAdded e)
         {
-            _counterDictionary.Add(e.CounterName, 0);
+            _counterDictionary.Add(e.CounterName, "-");
         }
 
         public void Handle(TicketAdded e)
         {
-            _ticketDictionary.Add(e.TicketId, e.TicketNumber);
+            _ticketDictionary.Add(e.TicketId, e.TicketNumber == 0 ? "-" : e.TicketNumber.ToString());
         }
 
         public void Handle(CustomerTaken e)
@@ -33,20 +33,20 @@ namespace CustomerQueueViews
 
         public void Handle(CustomerServed e)
         {
-            _counterDictionary[e.CounterName] = 0;
+            _counterDictionary[e.CounterName] = "-";
         }
 
         public void Handle(CustomerRevoked e)
         {
-            _counterDictionary[e.CounterName] = 0;
+            _counterDictionary[e.CounterName] = "-";
         }
 
         public override string ToString()
         {
             var builder = new StringBuilder();
-            builder.AppendLine($"Total counters: {_counterDictionary.Count}");
-            builder.AppendLine($"Total tickets: {_ticketDictionary.Count}");
-            builder.AppendLine("***************************************************************************");
+            builder.AppendLine("*************************Counters state ************************************");
+            builder.AppendLine($"Total counters: {_counterDictionary.Count} \t\t\t\t\t Total tickets: {_ticketDictionary.Count}");
+            builder.AppendLine("\t\tServing ticket number");
             foreach (var kv in _counterDictionary) builder.AppendLine($"{kv.Key}:\t\t {kv.Value}");
             builder.AppendLine("***************************************************************************");
             builder.AppendLine();

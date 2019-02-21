@@ -10,7 +10,8 @@ namespace CustomerQueueViews
         private readonly IReadOnlyList<View> _views = new View[]
         {
             new CountersView(),
-            new TicketsPerCounterServedView()
+            new TicketsPerCounterView(),
+            new TicketQueueView()
         };
 
         public void Apply(IDomainEvent e)
