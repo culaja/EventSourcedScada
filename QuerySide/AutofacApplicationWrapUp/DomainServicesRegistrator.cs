@@ -22,7 +22,8 @@ namespace AutofacApplicationWrapUp
             containerBuilder.RegisterModule(new AutofacMessagingRegistrator(
                 new List<Assembly>
                 {
-                    typeof(CustomerQueueEvent).Assembly
+                    typeof(CustomerQueueEvent).Assembly,
+                    typeof(NewClientConnected).Assembly
                 },
                 new List<Assembly>()
                 {

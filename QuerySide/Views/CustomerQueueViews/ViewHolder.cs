@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Common.Messaging;
@@ -24,6 +25,12 @@ namespace CustomerQueueViews
             var builder = new StringBuilder();
             foreach (var v in _views) builder.Append(v);
             return builder.ToString();
+        }
+
+        public ViewHolder ForEachView(Func<IView, IView> notifyAll)
+        {
+            foreach (var v in _views) notifyAll(v);
+            return this;
         }
     }
 }

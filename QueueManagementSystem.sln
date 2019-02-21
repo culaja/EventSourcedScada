@@ -52,6 +52,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.CustomerQueue", "Sha
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomerQueueViews", "QuerySide\Views\CustomerQueueViews\CustomerQueueViews.csproj", "{A0C0FF46-043F-44E1-A1AB-38B756F5D5C7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebsocketClientNotifier", "QuerySide\Adapters\WebsocketClientNotifier\WebsocketClientNotifier.csproj", "{374AC404-904F-49CA-9390-FDDF29D027AF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -138,6 +140,10 @@ Global
 		{A0C0FF46-043F-44E1-A1AB-38B756F5D5C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0C0FF46-043F-44E1-A1AB-38B756F5D5C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0C0FF46-043F-44E1-A1AB-38B756F5D5C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{374AC404-904F-49CA-9390-FDDF29D027AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{374AC404-904F-49CA-9390-FDDF29D027AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{374AC404-904F-49CA-9390-FDDF29D027AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{374AC404-904F-49CA-9390-FDDF29D027AF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{77542D59-B757-4601-B21D-6E97DB306568} = {DD8DC3BF-CDFA-4CF7-AC84-E42947C4AB44}
@@ -161,5 +167,6 @@ Global
 		{29703358-A94D-46ED-BBE0-87129C79FC68} = {EC4C1DB9-2120-4C63-A768-DD6DDB1028A7}
 		{AC85A20B-D091-485A-845E-AA9BCFB17527} = {EC4C1DB9-2120-4C63-A768-DD6DDB1028A7}
 		{A0C0FF46-043F-44E1-A1AB-38B756F5D5C7} = {29703358-A94D-46ED-BBE0-87129C79FC68}
+		{374AC404-904F-49CA-9390-FDDF29D027AF} = {6339373D-3A9F-4177-9217-4E74A70F6772}
 	EndGlobalSection
 EndGlobal

@@ -14,6 +14,9 @@ namespace CustomerQueueViews
     {
         private readonly Dictionary<Guid, TicketState> _dictionary = new Dictionary<Guid, TicketState>();
 
+        private readonly List<TicketState> _ticketStates = new List<TicketState>();
+        public IReadOnlyList<TicketState> TicketStates => _ticketStates;
+
         public void Handle(TicketAdded e) => TicketStateFrom(e.TicketId).ToWaiting(e.TicketNumber.ToString());
 
         public void Handle(CustomerTaken e) => TicketStateFrom(e.TicketId).ToServing();
@@ -28,6 +31,7 @@ namespace CustomerQueueViews
             {
                 ticketDetails = new TicketState();
                 _dictionary[ticketId] = ticketDetails;
+                _ticketStates.Add(ticketDetails);
             }
 
             return ticketDetails;
@@ -37,14 +41,14 @@ namespace CustomerQueueViews
         {
             var builder = new StringBuilder();
             builder.AppendLine("***************************Ticket queue ***********************************");
-            foreach (var t in _dictionary.Values) builder.Append($"{t.Number}\t"); builder.AppendLine();
-            foreach (var t in _dictionary.Values) builder.Append($"{t.State}\t"); builder.AppendLine();
+            foreach (var t in _ticketStates) builder.Append($"{t.Number}\t"); builder.AppendLine();
+            foreach (var t in _ticketStates) builder.Append($"{t.State}\t"); builder.AppendLine();
             builder.AppendLine("***************************************************************************");
             builder.AppendLine();
             return builder.ToString();
         }
         
-        private sealed class TicketState
+        public sealed class TicketState
         {
             public const string FormatColumns = "\t\tServed\t\t\tRevoked";
 

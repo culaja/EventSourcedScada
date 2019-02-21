@@ -1,8 +1,10 @@
 ﻿using Common.Messaging;
+using static Newtonsoft.Json.Formatting;
+using static Newtonsoft.Json.JsonConvert;
 
 namespace QueryCommon
 {
-    public abstract class View
+    public abstract class View : IView
     {
         public void Apply(IDomainEvent e)
         {
@@ -13,5 +15,7 @@ namespace QueryCommon
                 applyMethodInfo.Invoke(this, new object[] {e});
             }
         }
+
+        public string SerializeToJson() => SerializeObject(this, Indented);
     }
 }

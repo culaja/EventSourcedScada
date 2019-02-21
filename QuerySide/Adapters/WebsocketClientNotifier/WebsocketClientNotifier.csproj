@@ -5,11 +5,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\CommandSide\Common\Common.csproj" />
+      <PackageReference Include="WebSocketSharp" Version="1.0.3-rc11" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Newtonsoft.Json" Version="12.0.1" />
+      <ProjectReference Include="..\..\Ports\Ports.csproj" />
+      <ProjectReference Include="..\..\QueryCommon\QueryCommon.csproj" />
     </ItemGroup>
 
 </Project>
