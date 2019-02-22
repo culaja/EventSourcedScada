@@ -1,6 +1,7 @@
 using System;
 using Ports;
 using QueryCommon;
+using WebSocketSharp;
 using WebSocketSharp.Server;
 
 namespace WebsocketClientNotifier
@@ -9,22 +10,25 @@ namespace WebsocketClientNotifier
     {
         private WebSocketServer _server;
         private Action _newClientCallback = () => { };
-        private readonly ClientHub _clientHub;
-        
-        public WebSocketNotifier()
-        {
-            _clientHub = new ClientHub(() => _newClientCallback());
-        }
+        private readonly OpenedSocketsHub _socketHub = new OpenedSocketsHub();
         
         public void StartClientNotifier(Action newClientCallback)
         {
             _server = new WebSocketServer("ws://localhost");
             _newClientCallback = newClientCallback;
-            _server.AddWebSocketService("/ClientHub", () => _clientHub);
+            _server.AddWebSocketService("/ClientHub", () => new Connection(OnConnectionOpened, OnConnectionClosed)); 
             _server.Start();
         }
 
-        public IView NotifyAll(IView v) => _clientHub.NotifyAll(v);
+        private void OnConnectionOpened(WebSocket socket)
+        {
+            _socketHub.Add(socket);
+            _newClientCallback();
+        }
+
+        private void OnConnectionClosed(WebSocket socket) => _socketHub.Remove(socket);
+
+        public IView NotifyAll(IView v) => _socketHub.NotifyAll(v);
 
         public void Dispose()
         {
