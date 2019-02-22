@@ -8,14 +8,66 @@
     <title>Customer Queue</title>
 
     <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <link href="style.css" rel="stylesheet">
-
 </head>
 
 <body>
 
+<div id="results">
+    <h2>Customer queue stats:</h2>
+    <div class="container">    
+        <h3>Counters state</h3>
+        <form id="submitCounter">
+            <input id="name" type="text" placeholder="Counter name">
+            <input type="submit" value="Add counter">
+        </form>
+        <div id="countersState">
+            <table>
+                <thead>
+                <tr>
+                    <th>Counter</th>
+                    <th>Ticket</th>
+                </tr>                
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="container">
+        <h3>Tickets per counter</h3>
+        <div id="ticketsPerCounter">
+            <table>
+                <thead>
+                <tr>
+                    <th>Counter</th>
+                    <th>Served</th>
+                    <th>Revoked</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div>
+        <h3>Ticket queue</h3>
+        <div id="ticketQueue">
+        </div>
+    </div>
+
+    <i class="fas fa-print fa-2x"></i>
+</div>
+
 <div id="root"></div>
 
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
 <script src="scripts.js"></script>
 </body>
 

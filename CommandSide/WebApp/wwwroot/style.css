@@ -78,3 +78,81 @@ p {
 .card:nth-child(5n) h1 {
   background-image: linear-gradient(120deg, #ffc3a0 0%, #ffafbd 100%);
 }
+
+
+/**********************************************/
+
+#ticketQueue {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.singleTicket {
+    display: flex;
+    flex-direction: column;
+    background-color: gray;
+    -webkit-box-shadow: 0px 0px 54px -5px rgba(0,0,0,0.75);
+    -moz-box-shadow: 0px 0px 54px -5px rgba(0,0,0,0.75);
+    box-shadow: 0px 0px 54px -5px rgba(0,0,0,0.75);
+    background-color: #e8deca;
+    margin-right: 2em;
+    padding: 20px;
+    align-items: center;
+    min-width: 70px;
+    margin-top: 15px;
+}
+
+.singleTicket span {
+    font-weight: bold;
+}
+
+#counterStatsHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.container {
+    width: 30%;
+    display: flex;
+    flex-direction: column;
+}
+
+#countersState table,
+#ticketsPerCounter table{   
+    width: 100%;
+    border: 1px solid black;
+}
+
+td, th
+{
+    border: 1px solid black;
+    font-weight: bold;
+}
+
+#countersState table td:not(:first-of-type),
+#ticketsPerCounter table td:not(:first-of-type){
+    text-align: center;
+}
+
+#countersState table td:first-of-type,
+#ticketsPerCounter table td:first-of-type{
+    display: flex;
+    justify-content: space-around;
+}
+
+.fa-print {
+    margin-top: 1em;
+}
+
+.active-print {
+    color: red;
+}
+
+form {
+    margin-bottom: 1em;
+}
+
+.counterName {
+    min-width: 50px;
+}
