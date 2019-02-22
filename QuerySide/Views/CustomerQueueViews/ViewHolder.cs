@@ -27,9 +27,9 @@ namespace CustomerQueueViews
             return builder.ToString();
         }
 
-        public ViewHolder ForEachView(Func<IView, IView> notifyAll)
+        public ViewHolder ForEachView(Func<IView, IView> transformer)
         {
-            foreach (var v in _views) notifyAll(v);
+            foreach (var v in _views) transformer(v);
             return this;
         }
     }

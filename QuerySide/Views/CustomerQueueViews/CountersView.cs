@@ -16,6 +16,8 @@ namespace CustomerQueueViews
         private readonly Dictionary<string, string> _counterDictionary = new Dictionary<string, string>();
         private readonly Dictionary<Guid, string> _ticketDictionary = new Dictionary<Guid, string>();
 
+        public IReadOnlyDictionary<string, string> CountersState => _counterDictionary;
+
         public void Handle(CounterAdded e)
         {
             _counterDictionary.Add(e.CounterName, "-");

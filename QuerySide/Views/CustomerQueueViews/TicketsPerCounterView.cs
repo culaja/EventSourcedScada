@@ -10,6 +10,8 @@ namespace CustomerQueueViews
         IHandle<CustomerRevoked>
     {
         private readonly  Dictionary<string, TicketDetails> _dictionary = new Dictionary<string, TicketDetails>();
+
+        public IReadOnlyDictionary<string, TicketDetails> CountersDetails => _dictionary;
         
         public void Handle(CustomerServed e) => TicketDetailsFrom(e.CounterName).IncrementServedTickets();
 
@@ -37,17 +39,17 @@ namespace CustomerQueueViews
             return builder.ToString();
         }
 
-        private sealed class TicketDetails
+        public sealed class TicketDetails
         {
             public const string FormatColumns = "\t\tServed\t\t\tRevoked";
             
-            private int _servedTickets = 0;
-            private int _revokedTickets = 0;
+            public int ServedTickets { get; private set; }
+            public int RevokedTickets { get; private set; }
 
-            public void IncrementServedTickets() => _servedTickets++;
-            public void IncrementRevokedTickets() => _revokedTickets++;
+            public void IncrementServedTickets() => ServedTickets++;
+            public void IncrementRevokedTickets() => RevokedTickets++;
 
-            public override string ToString() => $"\t\t{_servedTickets}\t\t\t{_revokedTickets}";
+            public override string ToString() => $"\t\t{ServedTickets}\t\t\t{RevokedTickets}";
         }
     }
 }
