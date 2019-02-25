@@ -24,7 +24,6 @@ namespace Services.EventHandlers
         {
             _viewHolder.Apply(e);
             _viewHolder.ForEachView(_clientNotifier.NotifyAll);
-            Console.WriteLine(_viewHolder);
             return Ok();
         }
     }

@@ -6,6 +6,7 @@ using Shared.CustomerQueue;
 namespace CustomerQueueViews
 {
     internal sealed class TicketsPerCounterView : View,
+        IHandle<CounterAdded>,
         IHandle<CustomerServed>,
         IHandle<CustomerRevoked>
     {
@@ -16,6 +17,8 @@ namespace CustomerQueueViews
         public void Handle(CustomerServed e) => TicketDetailsFrom(e.CounterName).IncrementServedTickets();
 
         public void Handle(CustomerRevoked e) => TicketDetailsFrom(e.CounterName).IncrementRevokedTickets();
+
+        public void Handle(CounterAdded e) => TicketDetailsFrom(e.CounterName);
 
         private TicketDetails TicketDetailsFrom(string counterName)
         {
