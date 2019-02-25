@@ -7,6 +7,8 @@ namespace Common
         where T : AggregateRoot
         where TK: IAggregateRootCreated
     {
+        ILocalMessageBus LocalMessageBus { get; }
+        
         Result<T> CreateFrom(TK aggregateRootCreated);
 
         Result<T> AddNew(T aggregateRoot);

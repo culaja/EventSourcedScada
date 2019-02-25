@@ -16,7 +16,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications
         protected ICustomerQueueRepository CustomerQueueRepository => (ICustomerQueueRepository) AggregateRepository;
         
         protected CustomerQueueSpecification(Guid aggregateRootId) : base(
-            new CustomerQueueInMemoryRepository(new NoOpLocalMessageBus()), 
+            new CustomerQueueInMemoryRepository(new DomainEventMessageBusAggregator()), 
             () => new CustomerQueue(aggregateRootId, 0, NoAvailableCounters, EmptyQueuedTickets))
         {
         }

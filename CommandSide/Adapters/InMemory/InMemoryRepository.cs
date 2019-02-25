@@ -11,15 +11,15 @@ namespace InMemory
         where T: AggregateRoot
         where Tk: IAggregateRootCreated
     {
-        private readonly ILocalMessageBus _localMessageBus;
-        
         private readonly Dictionary<Guid, T> _cache = new Dictionary<Guid, T>();
         private readonly UniqueIndexing<T> _uniqueIndexes = new UniqueIndexing<T>();
 
         public InMemoryRepository(ILocalMessageBus localMessageBus)
         {
-            _localMessageBus = localMessageBus;
+            LocalMessageBus = localMessageBus;
         }
+
+        public ILocalMessageBus LocalMessageBus { get; }
 
         protected bool ContainsIndex(object key) => _uniqueIndexes.ContainsIndex(key);
 
@@ -83,7 +83,7 @@ namespace InMemory
 
         private T PurgeAllEvents(T aggregateRoot)
         {
-            _localMessageBus.DispatchAll(aggregateRoot.DomainEvents);
+            LocalMessageBus.DispatchAll(aggregateRoot.DomainEvents);
             aggregateRoot.ClearDomainEvents();
             return aggregateRoot;
         }

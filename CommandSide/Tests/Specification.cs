@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 using Common.Messaging;
+using Tests.Specifications;
 
 namespace Tests
 {
@@ -12,6 +13,7 @@ namespace Tests
         where TK : IDomainEvent
         where TL : ICommand
     {
+        
         public IRepository<T, TJ> AggregateRepository { get; }
 
         protected Specification(
@@ -27,15 +29,14 @@ namespace Tests
             When().Handle(CommandToExecute)
                 .OnBoth(r =>
                 {
-                    ProducedEvents = aggregateRoot.DomainEvents.Select(e => (TK)e).ToList();
                     Result = r;
                     return r;
                 });
         }
         
         protected abstract TL CommandToExecute { get; }
-        
-        protected IReadOnlyList<TK> ProducedEvents { get; private set; } 
+
+        protected IReadOnlyList<IDomainEvent> ProducedEvents => ((DomainEventMessageBusAggregator)AggregateRepository.LocalMessageBus).ProducedEvents;
         
         protected Result Result { get; private set; } 
         public abstract IEnumerable<TK> Given();
