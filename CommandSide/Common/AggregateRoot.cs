@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Common.Messaging;
+using static System.DateTime;
 
 namespace Common
 {
@@ -51,6 +52,7 @@ namespace Common
             if (isNew)
             {
                 e.SetVersion(Version);
+                e.SetTimestamp(UtcNow);
                 _domainEvents.Add(e);
             }
         }

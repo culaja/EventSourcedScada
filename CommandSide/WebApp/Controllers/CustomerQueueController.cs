@@ -21,33 +21,53 @@ namespace WebApp.Controllers
         
         [HttpPost]
         [Route(nameof(AddCustomerQueue))]
-        public void AddCustomerQueue() => _localMessageBus
-            .Dispatch(new AddCustomerQueue(NewGuid()));
-        
+        public IActionResult AddCustomerQueue()
+        {
+            _localMessageBus
+                .Dispatch(new AddCustomerQueue(NewGuid()));
+            return new JsonResult("OK");
+        }
+
         [HttpPost]
         [Route(nameof(AddCounter))]
-        public void AddCounter([FromBody] AddCounterDto dto) => _localMessageBus
-            .Dispatch(new AddCounter(
-                dto.CounterName.ToCounterName()));
+        public IActionResult AddCounter([FromBody] AddCounterDto dto)
+        {
+            _localMessageBus
+                .Dispatch(new AddCounter(
+                    dto.CounterName.ToCounterName()));
+            return new JsonResult("OK");
+        }
 
         [HttpPost]
         [Route(nameof(AddTicket))]
-        public void AddTicket([FromBody] AddTicketDto dto) => _localMessageBus
-            .Dispatch(new AddTicket(
-                NewGuid().ToTicketId(),
-                dto.TicketNumber,
-                dto.TicketPrintingTimestamp));
-        
+        public IActionResult AddTicket([FromBody] AddTicketDto dto)
+        {
+            _localMessageBus
+                .Dispatch(new AddTicket(
+                    NewGuid().ToTicketId(),
+                    dto.TicketNumber,
+                    dto.TicketPrintingTimestamp));
+            return new JsonResult("OK");
+        }
+
         [HttpPost]
         [Route(nameof(RevokeCustomer))]
-        public void RevokeCustomer([FromBody] RevokeCustomerDto dto) => _localMessageBus
-            .Dispatch(new RevokeCustomer(dto.CounterName.ToCounterName()));
-        
+        public IActionResult RevokeCustomer([FromBody] RevokeCustomerDto dto)
+        {
+            _localMessageBus
+                .Dispatch(new RevokeCustomer(dto.CounterName.ToCounterName()));
+            return new JsonResult("OK");
+        }
+
         [HttpPost]
         [Route(nameof(TakeNextCustomer))]
-        public void TakeNextCustomer([FromBody] TakeNextCustomerDto dto) => _localMessageBus
-            .Dispatch(new TakeNextCustomer(
-                dto.CounterName.ToCounterName(),
-                DateTime.Now));
+        public IActionResult TakeNextCustomer([FromBody] TakeNextCustomerDto dto)
+        {
+            _localMessageBus
+                .Dispatch(new TakeNextCustomer(
+                    dto.CounterName.ToCounterName(),
+                    DateTime.Now));
+            return new JsonResult("OK");
+        }
     }
 }

@@ -8,8 +8,10 @@ namespace Common.Messaging
         public Guid AggregateRootId { get; set; }
         public string AggregateName { get; set; }
         public ulong Version { get; set; }
-        
+
         public ulong Number { get; set; }
+        
+        public DateTime Timestamp { get; set; }
 
 
         protected DomainEvent(Guid aggregateRootId, string aggregateName)
@@ -33,6 +35,15 @@ namespace Common.Messaging
                 () => Number = number,
                 () => throw new InvalidOperationException($"Number already set to {Number} and you want to set it to {number}"));
 
+            return this;
+        }
+
+        public IDomainEvent SetTimestamp(DateTime timestamp)
+        {
+            (Timestamp == default(DateTime)).OnBoth(
+                () => Timestamp = timestamp.ToUniversalTime(),
+                () => throw new InvalidOperationException($"Timestamp already set to {Timestamp} and you want to set it to {timestamp}"));
+            
             return this;
         }
 
