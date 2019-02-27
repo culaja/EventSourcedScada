@@ -8,7 +8,7 @@ namespace EventStore
     {
         public ObjectId Id { get; set; }
         
-        public string AggregateName { get; set; }
+        public string AggregateTopicName { get; set; }
         
         public ulong AggregateRootVersion { get; set; }
         
@@ -19,7 +19,7 @@ namespace EventStore
         public PersistedEvent(IDomainEvent domainEvent)
         {
             Id = ObjectId.GenerateNewId();
-            AggregateName = domainEvent.AggregateTopicName;
+            AggregateTopicName = domainEvent.AggregateTopicName;
             AggregateRootVersion = domainEvent.Version;
             Number = domainEvent.Number;
             Payload = domainEvent.Serialize();

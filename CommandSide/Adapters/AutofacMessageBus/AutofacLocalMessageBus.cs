@@ -3,15 +3,17 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using System.Threading.Tasks;
 using Autofac;
 using Common;
 using Common.Messaging;
+using static Common.Result;
 
 namespace AutofacMessageBus
 {
-    public sealed class AutofacLocalMessageBus : ILocalMessageBus, IDisposable
+	public sealed class AutofacLocalMessageBus : ILocalMessageBus, IDisposable
 	{
-		private readonly BlockingCollection<IMessage> _messagesBlockingCollection = new BlockingCollection<IMessage>();
+		private readonly BlockingCollection<MessageContext> _messagesContextBlockingCollection = new BlockingCollection<MessageContext>();
 		private readonly AutofacMessageResolver _messageResolver;
 		private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
 		private readonly Thread _workerThread;
@@ -28,10 +30,15 @@ namespace AutofacMessageBus
 			.Select(Dispatch)
 			.ToList();
 
-		public IMessage Dispatch(IMessage message)
+		public IMessage Dispatch(IMessage message) => DispatchInternal(message).MessageToHandle;
+
+		public Task<Result> HandleAsync(IMessage message) => DispatchInternal(message).WaitToBeHandledAsync();
+
+		private MessageContext DispatchInternal(IMessage message)
 		{
-			_messagesBlockingCollection.Add(message);
-			return message;
+			var messageContext = new MessageContext(message);
+			_messagesContextBlockingCollection.Add(messageContext);
+			return messageContext;
 		}
 
 		public void Dispose()
@@ -45,39 +52,32 @@ namespace AutofacMessageBus
 			bool isCancellationNotRequested;
 			do
 			{
-				isCancellationNotRequested = TakeMessageFromBlockingCollectionOrNoneIfCanceled()
-					.Map(DispatchMessageToAllRegisteredHandlers)
+				isCancellationNotRequested = TakeMessageContextFromBlockingCollectionOrNoneIfCanceled()
+					.Map(messageContext => messageContext
+						.FinalizeWith(DispatchMessageToAllRegisteredHandlers(messageContext.MessageToHandle)))
 					.HasValue;
 
 			} while (isCancellationNotRequested);
 		}
 
-		private Maybe<IMessage> TakeMessageFromBlockingCollectionOrNoneIfCanceled()
+		private Maybe<MessageContext> TakeMessageContextFromBlockingCollectionOrNoneIfCanceled()
 		{
 			try
 			{
-				return Maybe<IMessage>.From(_messagesBlockingCollection.Take(_cancellationTokenSource.Token));
+				return Maybe<MessageContext>.From(_messagesContextBlockingCollection.Take(_cancellationTokenSource.Token));
 			}
 			catch (OperationCanceledException)
 			{
-				return Maybe<IMessage>.None;
+				return Maybe<MessageContext>.None;
 			}
 		}
 
-		private IMessage DispatchMessageToAllRegisteredHandlers(IMessage message)
-		{
+		private Result DispatchMessageToAllRegisteredHandlers(IMessage message) => Combine(
 			_messageResolver
 				.GetMessageHandlersFor(message)
 				.Select(handler => DispatchTo(message, handler))
-				.ToList();
-			return message;
-		}
+				.ToArray());
 
-		private IMessage DispatchTo(IMessage message, IMessageHandler messageHandler)
-		{
-			messageHandler.Handle(message)
-				.OnFailure(e => Console.WriteLine(e));
-			return message;
-		}
+		private Result DispatchTo(IMessage message, IMessageHandler messageHandler) => messageHandler.Handle(message);
 	}
 }

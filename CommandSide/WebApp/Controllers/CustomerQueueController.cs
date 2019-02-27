@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using Common.Messaging;
 using Domain;
 using Domain.Commands;
@@ -21,51 +21,34 @@ namespace WebApp.Controllers
         
         [HttpPost]
         [Route(nameof(AddCustomerQueue))]
-        public IActionResult AddCustomerQueue()
-        {
-            _localMessageBus
-                .Dispatch(new AddCustomerQueue(NewGuid()));
-            return new JsonResult("OK");
-        }
+        public Task<IActionResult> AddCustomerQueue() => _localMessageBus
+            .HandleAsync(new AddCustomerQueue(NewGuid()))
+            .ToActionResultAsync();
 
         [HttpPost]
         [Route(nameof(AddCounter))]
-        public IActionResult AddCounter([FromBody] AddCounterDto dto)
-        {
-            _localMessageBus
-                .Dispatch(new AddCounter(
-                    dto.CounterName.ToCounterName()));
-            return new JsonResult("OK");
-        }
+        public Task<IActionResult> AddCounter([FromBody] AddCounterDto dto) => _localMessageBus
+                .HandleAsync(new AddCounter(dto.CounterName.ToCounterName()))
+                .ToActionResultAsync();
 
         [HttpPost]
         [Route(nameof(AddTicket))]
-        public IActionResult AddTicket([FromBody] AddTicketDto dto)
-        {
-            _localMessageBus
-                .Dispatch(new AddTicket(
-                    NewGuid().ToTicketId(),
-                    dto.TicketNumber));
-            return new JsonResult("OK");
-        }
+        public Task<IActionResult> AddTicket([FromBody] AddTicketDto dto) => _localMessageBus
+            .HandleAsync(new AddTicket(
+                NewGuid().ToTicketId(),
+                dto.TicketNumber))
+            .ToActionResultAsync();
 
         [HttpPost]
         [Route(nameof(RevokeCustomer))]
-        public IActionResult RevokeCustomer([FromBody] RevokeCustomerDto dto)
-        {
-            _localMessageBus
-                .Dispatch(new RevokeCustomer(dto.CounterName.ToCounterName()));
-            return new JsonResult("OK");
-        }
+        public Task<IActionResult> RevokeCustomer([FromBody] RevokeCustomerDto dto) => _localMessageBus
+            .HandleAsync(new RevokeCustomer(dto.CounterName.ToCounterName()))
+            .ToActionResultAsync();
 
         [HttpPost]
         [Route(nameof(TakeNextCustomer))]
-        public IActionResult TakeNextCustomer([FromBody] TakeNextCustomerDto dto)
-        {
-            _localMessageBus
-                .Dispatch(new TakeNextCustomer(
-                    dto.CounterName.ToCounterName()));
-            return new JsonResult("OK");
-        }
+        public Task<IActionResult> TakeNextCustomer([FromBody] TakeNextCustomerDto dto) => _localMessageBus
+            .HandleAsync(new TakeNextCustomer(dto.CounterName.ToCounterName()))
+            .ToActionResultAsync();
     }
 }

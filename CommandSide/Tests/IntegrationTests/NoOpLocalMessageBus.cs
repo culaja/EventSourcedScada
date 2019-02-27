@@ -1,5 +1,8 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using Common;
 using Common.Messaging;
+using static Common.Result;
 
 namespace Tests.IntegrationTests
 {
@@ -14,5 +17,7 @@ namespace Tests.IntegrationTests
         {
             return message;
         }
+
+        public Task<Result> HandleAsync(IMessage message) => Task.FromResult(Ok());
     }
 }
