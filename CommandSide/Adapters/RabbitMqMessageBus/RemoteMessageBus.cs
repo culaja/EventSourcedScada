@@ -22,9 +22,9 @@ namespace RabbitMqMessageBus
         
         public IDomainEvent Send(IDomainEvent e)
         {
-            _channel.ExchangeDeclare(e.AggregateName, "topic", true);
+            _channel.ExchangeDeclare(e.AggregateTopicName, "topic", true);
             _channel.BasicPublish(
-                e.AggregateName,
+                e.AggregateTopicName,
                 Empty,
                 null,
                 Encoding.ASCII.GetBytes(e.Serialize()));

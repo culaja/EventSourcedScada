@@ -19,7 +19,7 @@ namespace InMemory
         {
             var aggregateEventSubscription = new T();
             return _allDomainEvents
-                .Where(domainEvent => domainEvent.AggregateName == aggregateEventSubscription.AggregateTopicName).ToList();
+                .Where(domainEvent => domainEvent.AggregateTopicName == aggregateEventSubscription.AggregateTopicName).ToList();
         }
     }
 }

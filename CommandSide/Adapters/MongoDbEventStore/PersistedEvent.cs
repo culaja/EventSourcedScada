@@ -9,7 +9,7 @@ namespace MongoDbEventStore
     {
         public ObjectId Id { get; set; }
         
-        public string AggregateName { get; set; }
+        public string AggregateTopicName { get; set; }
         
         public ulong AggregateRootVersion { get; set; }
         
@@ -20,7 +20,7 @@ namespace MongoDbEventStore
         public PersistedEvent(IDomainEvent domainEvent)
         {
             Id = GenerateNewId();
-            AggregateName = domainEvent.AggregateName;
+            AggregateTopicName = domainEvent.AggregateTopicName;
             AggregateRootVersion = domainEvent.Version;
             Number = domainEvent.Number;
             Payload = domainEvent.Serialize();

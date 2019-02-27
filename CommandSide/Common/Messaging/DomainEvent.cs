@@ -6,7 +6,7 @@ namespace Common.Messaging
     public abstract class DomainEvent : ValueObject<DomainEvent>, IDomainEvent
     {
         public Guid AggregateRootId { get; set; }
-        public string AggregateName { get; set; }
+        public string AggregateTopicName { get; set; }
         public ulong Version { get; set; }
 
         public ulong Number { get; set; }
@@ -14,10 +14,10 @@ namespace Common.Messaging
         public DateTime Timestamp { get; set; }
 
 
-        protected DomainEvent(Guid aggregateRootId, string aggregateName)
+        protected DomainEvent(Guid aggregateRootId, string aggregateTopicName)
         {
             AggregateRootId = aggregateRootId;
-            AggregateName = aggregateName;
+            AggregateTopicName = aggregateTopicName;
         }
         
         public IDomainEvent SetVersion(ulong version)
@@ -50,7 +50,7 @@ namespace Common.Messaging
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return AggregateRootId;
-            yield return AggregateName;
+            yield return AggregateTopicName;
         }
     }
 }

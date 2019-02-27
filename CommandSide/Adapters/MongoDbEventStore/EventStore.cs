@@ -23,7 +23,7 @@ namespace MongoDbEventStore
         
         public IDomainEvent Append(IDomainEvent e)
         {
-            e.SetNumber(_aggregateEventNumberTracker.AllocateNextEventNumberFor(e.AggregateName));
+            e.SetNumber(_aggregateEventNumberTracker.AllocateNextEventNumberFor(e.AggregateTopicName));
             _mongoCollection.InsertOne(new PersistedEvent(e));
             return e;
         }
@@ -32,7 +32,7 @@ namespace MongoDbEventStore
         {
             var aggregateEventSubscription = new T();
             return _mongoCollection.AsQueryable()
-                .Where(e => e.AggregateName == aggregateEventSubscription.AggregateTopicName)
+                .Where(e => e.AggregateTopicName == aggregateEventSubscription.AggregateTopicName)
                 .ToEnumerable()
                 .Select(ConvertPersistedEventToDomainEventWithoutErrorCheck)
                 .Select(UpdateEventNumberForEventAggregate);
@@ -43,7 +43,7 @@ namespace MongoDbEventStore
 
         private IDomainEvent UpdateEventNumberForEventAggregate(IDomainEvent e)
         {
-            _aggregateEventNumberTracker.UpdateEventNumberFor(e.AggregateName, e.Number);
+            _aggregateEventNumberTracker.UpdateEventNumberFor(e.AggregateTopicName, e.Number);
             return e;
         }
     }

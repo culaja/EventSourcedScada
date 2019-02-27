@@ -19,7 +19,7 @@ namespace EventStore
         public PersistedEvent(IDomainEvent domainEvent)
         {
             Id = ObjectId.GenerateNewId();
-            AggregateName = domainEvent.AggregateName;
+            AggregateName = domainEvent.AggregateTopicName;
             AggregateRootVersion = domainEvent.Version;
             Number = domainEvent.Number;
             Payload = domainEvent.Serialize();
