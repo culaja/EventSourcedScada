@@ -7,17 +7,14 @@ namespace Shared.CustomerQueue
     {
         public Guid TicketId { get; }
         public int TicketNumber { get; }
-        public DateTime Timestamp { get; }
 
         public TicketAdded(
             Guid aggregateRootId,
             Guid ticketId,
-            int ticketNumber,
-            DateTime timestamp) : base(aggregateRootId)
+            int ticketNumber) : base(aggregateRootId)
         {
             TicketId = ticketId;
             TicketNumber = ticketNumber;
-            Timestamp = timestamp;
         }
         
         protected override IEnumerable<object> GetEqualityComponents()
@@ -25,7 +22,6 @@ namespace Shared.CustomerQueue
             foreach (var item in base.GetEqualityComponents()) yield return item;
             yield return TicketId;
             yield return TicketNumber;
-            yield return Timestamp;
         }
     }
 }

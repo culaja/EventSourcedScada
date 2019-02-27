@@ -49,11 +49,10 @@ namespace Domain
 
         public Result<CustomerQueue> AddTicket(
             TicketId ticketId, 
-            int ticketNumber,
-            DateTime ticketPrintingTimestamp) =>
-            QueuedTickets.CanAddFrom(ticketId, ticketNumber, ticketPrintingTimestamp)
-                .OnSuccess(() => ApplyChange(new TicketAdded(Id, ticketId, ticketNumber, ticketPrintingTimestamp)))
-                .OnSuccess(_ => AvailableCounters.MapFirstFree(counter => ApplyChange(new CustomerTaken(Id, counter.Id, ticketId, ticketPrintingTimestamp))))
+            int ticketNumber) =>
+            QueuedTickets.CanAddFrom(ticketId, ticketNumber)
+                .OnSuccess(() => ApplyChange(new TicketAdded(Id, ticketId, ticketNumber)))
+                .OnSuccess(_ => AvailableCounters.MapFirstFree(counter => ApplyChange(new CustomerTaken(Id, counter.Id, ticketId))))
                 .ToTypedResult(this);
 
         private CustomerQueue Apply(TicketAdded e)
@@ -62,17 +61,17 @@ namespace Domain
             return this;
         }
 
-        public Result<CustomerQueue> TakeNextCustomer(CounterName counterName, DateTime timestamp) => AvailableCounters
+        public Result<CustomerQueue> TakeNextCustomer(CounterName counterName) => AvailableCounters
             .GetMaybeServingTicket(counterName)
-            .OnSuccess(maybeServingTicketId => ApplyCustomerServedIfTicketIsBeingServed(maybeServingTicketId, counterName, timestamp))
-            .OnSuccess(_ => ApplyCustomerTakenIfThereIsPendingTicketInTheQueue(counterName, timestamp))
+            .OnSuccess(maybeServingTicketId => ApplyCustomerServedIfTicketIsBeingServed(maybeServingTicketId, counterName))
+            .OnSuccess(_ => ApplyCustomerTakenIfThereIsPendingTicketInTheQueue(counterName))
             .ToTypedResult(this);
         
-        private void ApplyCustomerServedIfTicketIsBeingServed(Maybe<Ticket> maybeServingTicket, CounterName counterName, DateTime timestamp) =>
-            maybeServingTicket.Map(t => ApplyChange(new CustomerServed(Id, counterName, t.Id, timestamp)));
+        private void ApplyCustomerServedIfTicketIsBeingServed(Maybe<Ticket> maybeServingTicket, CounterName counterName) =>
+            maybeServingTicket.Map(t => ApplyChange(new CustomerServed(Id, counterName, t.Id)));
         
-        private void ApplyCustomerTakenIfThereIsPendingTicketInTheQueue(CounterName counterName, DateTime timestamp) =>
-            QueuedTickets.MaybeNextTicket.Map(t => ApplyChange(new CustomerTaken(Id, counterName, QueuedTickets.MaybeNextTicket.Value.Id, timestamp)));
+        private void ApplyCustomerTakenIfThereIsPendingTicketInTheQueue(CounterName counterName) =>
+            QueuedTickets.MaybeNextTicket.Map(t => ApplyChange(new CustomerTaken(Id, counterName, QueuedTickets.MaybeNextTicket.Value.Id)));
 
         private CustomerQueue Apply(CustomerTaken e)
         {

@@ -7,13 +7,11 @@ namespace Domain.Commands
     {
         public TicketId TicketId { get; }
         public int TicketNumber { get; }
-        public DateTime TicketPrintingTimestamp { get; }
 
-        public AddTicket(TicketId ticketId, int ticketNumber, DateTime ticketPrintingTimestamp)
+        public AddTicket(TicketId ticketId, int ticketNumber)
         {
             TicketId = ticketId;
             TicketNumber = ticketNumber;
-            TicketPrintingTimestamp = ticketPrintingTimestamp;
         }
     }
 }

@@ -15,11 +15,11 @@ namespace Tests.Specifications.CustomerQueueSpecifications.AddTicketSpecificatio
         {
         }
         
-        protected override AddTicket CommandToExecute => new AddTicket(Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
+        protected override AddTicket CommandToExecute => new AddTicket(Ticket1_Id, Ticket1_Number);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
-            yield return new TicketAdded(SingleCustomerQueueId, Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
+            yield return new TicketAdded(SingleCustomerQueueId, Ticket1_Id, Ticket1_Number);
         }
 
         public override CommandHandler<AddTicket> When() => new AddTicketHandler(CustomerQueueRepository);
@@ -28,8 +28,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications.AddTicketSpecificatio
         public void ticket_added_event_is_not_produced() => ProducedEvents.Should().NotContain(new TicketAdded(
             SingleCustomerQueueId,
             Ticket1_Id,
-            Ticket1_Number,
-            Ticket1_PrintingTimestamp));
+            Ticket1_Number));
 
         [Fact]
         public void returns_failure() => Result.IsFailure.Should().BeTrue();

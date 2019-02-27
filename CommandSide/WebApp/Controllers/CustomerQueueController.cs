@@ -45,8 +45,7 @@ namespace WebApp.Controllers
             _localMessageBus
                 .Dispatch(new AddTicket(
                     NewGuid().ToTicketId(),
-                    dto.TicketNumber,
-                    dto.TicketPrintingTimestamp));
+                    dto.TicketNumber));
             return new JsonResult("OK");
         }
 
@@ -65,8 +64,7 @@ namespace WebApp.Controllers
         {
             _localMessageBus
                 .Dispatch(new TakeNextCustomer(
-                    dto.CounterName.ToCounterName(),
-                    DateTime.Now));
+                    dto.CounterName.ToCounterName()));
             return new JsonResult("OK");
         }
     }

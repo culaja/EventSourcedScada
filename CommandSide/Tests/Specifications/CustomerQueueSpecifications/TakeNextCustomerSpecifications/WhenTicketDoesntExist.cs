@@ -15,7 +15,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpeci
         {
         }
         
-        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Name, CounterA_TakeNextCustomerTimestamp);
+        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Name);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {

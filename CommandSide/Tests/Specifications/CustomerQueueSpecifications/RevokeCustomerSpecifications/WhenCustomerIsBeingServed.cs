@@ -20,8 +20,8 @@ namespace Tests.Specifications.CustomerQueueSpecifications.RevokeCustomerSpecifi
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return new CounterAdded(SingleCustomerQueueId, CounterA_Name);
-            yield return new TicketAdded(SingleCustomerQueueId, Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
-            yield return new CustomerTaken(SingleCustomerQueueId, CounterA_Name, Ticket1_Id, Ticket1_TakenTimestamp);
+            yield return new TicketAdded(SingleCustomerQueueId, Ticket1_Id, Ticket1_Number);
+            yield return new CustomerTaken(SingleCustomerQueueId, CounterA_Name, Ticket1_Id);
         }
 
         public override CommandHandler<RevokeCustomer> When() => new RevokeCustomerHandler(CustomerQueueRepository);

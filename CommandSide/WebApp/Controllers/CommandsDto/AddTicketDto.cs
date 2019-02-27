@@ -6,12 +6,10 @@ namespace WebApp.Controllers.CommandsDto
     public sealed class AddTicketDto : ICommand
     {
         public int TicketNumber { get; }
-        public DateTime TicketPrintingTimestamp { get; }
 
-        public AddTicketDto(int ticketNumber, DateTime ticketPrintingTimestamp)
+        public AddTicketDto(int ticketNumber)
         {
             TicketNumber = ticketNumber;
-            TicketPrintingTimestamp = ticketPrintingTimestamp;
         }
     }
 }

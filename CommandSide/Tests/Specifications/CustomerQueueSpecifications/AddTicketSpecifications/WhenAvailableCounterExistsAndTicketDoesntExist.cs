@@ -15,7 +15,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications.AddTicketSpecificatio
         {
         }
         
-        protected override AddTicket CommandToExecute => new AddTicket(Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
+        protected override AddTicket CommandToExecute => new AddTicket(Ticket1_Id, Ticket1_Number);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
@@ -26,7 +26,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications.AddTicketSpecificatio
 
         [Fact]
         public void after_ticked_added_also_customer_taken_is_produced() => ProducedEvents.Should().BeEquivalentTo(
-            new TicketAdded(SingleCustomerQueueId, Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp),
-            new CustomerTaken(SingleCustomerQueueId, CounterA_Name, Ticket1_Id, Ticket1_PrintingTimestamp));
+            new TicketAdded(SingleCustomerQueueId, Ticket1_Id, Ticket1_Number),
+            new CustomerTaken(SingleCustomerQueueId, CounterA_Name, Ticket1_Id));
     }
 }

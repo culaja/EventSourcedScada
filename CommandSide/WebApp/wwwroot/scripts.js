@@ -127,7 +127,6 @@ $(document).ready(function(){
     $(".fa-print").on("click", function() {       
        var postData = {};
        postData.TicketNumber = maxTicketNumber + 1;
-       postData.TicketPrintingTimestamp = new Date().toDateString();
        
        $.ajax({
             type: "POST",

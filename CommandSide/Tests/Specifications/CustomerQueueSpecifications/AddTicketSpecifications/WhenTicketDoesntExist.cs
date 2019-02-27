@@ -15,7 +15,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications.AddTicketSpecificatio
         {
         }
         
-        protected override AddTicket CommandToExecute => new AddTicket(Ticket1_Id, Ticket1_Number, Ticket1_PrintingTimestamp);
+        protected override AddTicket CommandToExecute => new AddTicket(Ticket1_Id, Ticket1_Number);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
@@ -28,8 +28,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications.AddTicketSpecificatio
         public void ticket_added_event_exists() => ProducedEvents.Should().Contain(new TicketAdded(
             SingleCustomerQueueId,
             Ticket1_Id,
-            Ticket1_Number,
-            Ticket1_PrintingTimestamp));
+            Ticket1_Number));
 
         [Fact]
         public void returns_success() => Result.IsSuccess.Should().BeTrue();

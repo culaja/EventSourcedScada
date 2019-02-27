@@ -17,7 +17,7 @@ namespace Domain
         
         public static readonly QueuedTickets EmptyQueuedTickets = new QueuedTickets(new List<Ticket>());
 
-        public Result CanAddFrom(TicketId ticketId, int ticketNumber, DateTime ticketPrintingTimestamp) =>
+        public Result CanAddFrom(TicketId ticketId, int ticketNumber) =>
             Validate(ticketId)
                 .OnSuccess(() => Validate(ticketNumber));
         

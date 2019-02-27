@@ -15,6 +15,6 @@ namespace DomainServices.CommandHandlers
         }
 
         public override Result Handle(AddTicket c) => _repository.BorrowSingle(
-            cq => cq.AddTicket(c.TicketId, c.TicketNumber, c.TicketPrintingTimestamp));
+            cq => cq.AddTicket(c.TicketId, c.TicketNumber));
     }
 }
