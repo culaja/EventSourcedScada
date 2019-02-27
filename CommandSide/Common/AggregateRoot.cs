@@ -45,7 +45,7 @@ namespace Common
             {
                 throw new InvalidOperationException($"Aggregate '{GetType().Name}' can't apply '{e.GetType().Name}' event type.");
             }
-            
+
             applyMethodInfo.Invoke(this, new object[] {e});
 
             IncrementedVersion();
