@@ -17,6 +17,8 @@ namespace Domain
             yield return _name;
         }
 
+        public override string ToString() => _name;
+
         public static implicit operator string(CounterName counterName) => counterName._name;
     }
 }

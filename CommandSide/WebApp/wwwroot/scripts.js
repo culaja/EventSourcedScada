@@ -124,6 +124,13 @@ $(document).ready(function(){
             $(this).removeClass("active-print");
     });
     
+    var showErrorBoxWith = function(error) {
+        const rootErrorBox = document.getElementById('rootErrorBox');
+        const errorMessage = document.getElementById('errorMessage');
+        errorMessage.innerHTML  = error;
+        rootErrorBox.style.display = 'block';
+    }
+    
     $(".fa-print").on("click", function() {       
        var postData = {};
        postData.TicketNumber = maxTicketNumber + 1;
@@ -133,8 +140,8 @@ $(document).ready(function(){
             contentType: "application/json",
             url: url + "/CustomerQueue/AddTicket",
             data: JSON.stringify(postData),
-            success: function(result) {
-                console.log("Ticket added");
+            error: function(error) {
+                showErrorBoxWith(error.responseJSON);
             }
        });
        
@@ -152,8 +159,8 @@ $(document).ready(function(){
         contentType: "application/json",
         url: url + "/CustomerQueue/AddCounter",
         data: JSON.stringify(postData),
-        success: function(result) {
-            console.log("Counter added");
+        error: function(error) {
+            showErrorBoxWith(error.responseJSON);
         }
        });
     });
@@ -169,8 +176,8 @@ $(document).ready(function(){
             contentType: "application/json",
             url: url + "/CustomerQueue/" + action,
             data: JSON.stringify(postData),
-            success: function(result) {
-                console.log(action + "invoked");
+            error: function(result) {
+                showErrorBoxWith(error.responseJSON);
             }
          });
     }

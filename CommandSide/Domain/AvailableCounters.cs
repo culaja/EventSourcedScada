@@ -17,7 +17,7 @@ namespace Domain
         public static readonly AvailableCounters NoAvailableCounters = new AvailableCounters(new List<Counter>());
 
         public Result CheckIfCounterIsAvailableWith(CounterName counterName) => Counters.ContainsEntityWith(counterName).OnBoth(
-            () => Fail($"{nameof(Counter)} with name '{counterName}' already exist in {nameof(CustomerQueue)}."),
+            () => Fail($"{nameof(Counter)} with name '{counterName}' already exists in {nameof(CustomerQueue)}."),
             Ok);
         
         public AvailableCounters AddNewWith(CounterName counterName) => new AvailableCounters(new List<Counter>(Counters)

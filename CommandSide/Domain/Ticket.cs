@@ -16,5 +16,7 @@ namespace Domain
             Number = number;
             PrintingTimestamp = printingTimestamp;
         }
+
+        public override string ToString() => $"{nameof(Ticket)}: {Number}";
     }
 }
