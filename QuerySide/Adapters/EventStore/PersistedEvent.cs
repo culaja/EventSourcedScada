@@ -1,6 +1,8 @@
+using System;
 using Common.Messaging;
 using Common.Messaging.Serialization;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace EventStore
 {
@@ -13,6 +15,9 @@ namespace EventStore
         public ulong AggregateRootVersion { get; set; }
         
         public ulong Number { get; set; }
+        
+        [BsonDateTimeOptions(Representation = BsonType.Document)]
+        public DateTime Timestamp { get; set; }
         
         public string Payload { get; set; }
 

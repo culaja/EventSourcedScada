@@ -4,8 +4,10 @@ using Common.Messaging;
 using Domain;
 using Ports.Repositories;
 using Shared.CustomerQueue;
+using static System.Guid;
 using static Common.Result;
 using static Domain.AvailableCounters;
+using static Domain.CustomerQueue;
 using static Domain.QueuedTickets;
 
 namespace InMemory
@@ -23,9 +25,11 @@ namespace InMemory
                 NoAvailableCounters,
                 EmptyQueuedTickets);
 
-        public Result<CustomerQueue> BorrowSingle(Func<CustomerQueue, Result<CustomerQueue>> transformer) => 
-            MaybeFirst.Unwrap(
-                customerQueue => ExecuteTransformerAndPurgeEvents(customerQueue, transformer),
-                () => Fail<CustomerQueue>($"There is no '{nameof(CustomerQueue)}' stored in the repository."));
+        public Result<CustomerQueue> BorrowSingle(Func<CustomerQueue, Result<CustomerQueue>> transformer) =>
+            ExecuteTransformerAndPurgeEvents(
+                MaybeFirst.Unwrap(
+                    customerQueue => customerQueue,
+                    () =>  AddNew(NewCustomerQueueFrom(NewGuid())).Value),
+                transformer);
     }
 }
