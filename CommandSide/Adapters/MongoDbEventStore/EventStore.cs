@@ -39,7 +39,10 @@ namespace MongoDbEventStore
         } 
         
         private static IDomainEvent ConvertPersistedEventToDomainEventWithoutErrorCheck(PersistedEvent pe) =>
-            (IDomainEvent)pe.Payload.Deserialize().Value;
+            ((DomainEvent)pe.Payload.Deserialize().Value)
+            .SetVersion(pe.AggregateRootVersion)
+            .SetNumber(pe.Number)
+            .SetTimestamp(pe.Timestamp);
 
         private IDomainEvent UpdateEventNumberForEventAggregate(IDomainEvent e)
         {

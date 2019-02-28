@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Common.Messaging
 {
     public abstract class DomainEvent : ValueObject<DomainEvent>, IDomainEvent
     {
-        public Guid AggregateRootId { get; set; }
-        public string AggregateTopicName { get; set; }
-        public ulong Version { get; set; }
-
-        public ulong Number { get; set; }
+        public Guid AggregateRootId { get; }
+        public string AggregateTopicName { get; }
         
-        public DateTime Timestamp { get; set; }
+        [JsonIgnore]
+        public ulong Version { get; private set; }
 
-
+        [JsonIgnore]
+        public ulong Number { get; private set; }
+        
+        [JsonIgnore]
+        public DateTime Timestamp { get; private set; }
+        
         protected DomainEvent(Guid aggregateRootId, string aggregateTopicName)
         {
             AggregateRootId = aggregateRootId;

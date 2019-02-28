@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Common.Messaging;
 using FluentAssertions;
 using Mongo2Go;
 using MongoDbEventStore;
@@ -31,22 +33,33 @@ namespace Tests.IntegrationTests.EventStore
         [Fact]
         public void _1()
         {
-            _eventStore.Append(SingleCustomerQueueCreated);
-            _eventStore.Append(CounterA_Added);
-            _eventStore.Append(Ticket1_Added);
-            _eventStore.Append(CustomerWithTicket1_Taken);
-            _eventStore.Append(CustomerWithTicket1_Served);
-            _eventStore.Append(CustomerWithTicket1_Revoked);
+            _eventStore.Append(SingleCustomerQueueCreated.SetAnyVersionAndTimestamp());
+            _eventStore.Append(CounterA_Added.SetAnyVersionAndTimestamp());
+            _eventStore.Append(Ticket1_Added.SetAnyVersionAndTimestamp());
+            _eventStore.Append(CustomerWithTicket1_Taken.SetAnyVersionAndTimestamp());
+            _eventStore.Append(CustomerWithTicket1_Served.SetAnyVersionAndTimestamp());
+            _eventStore.Append(CustomerWithTicket1_Revoked.SetAnyVersionAndTimestamp());
            
             var allEvents =  _eventStore.LoadAllFor<CustomerQueueSubscription>().ToList();
 
-            allEvents.Should().BeEquivalentTo(
+            ListsAreEquivalent(allEvents, 
                 SingleCustomerQueueCreated,
                 CounterA_Added,
                 Ticket1_Added,
                 CustomerWithTicket1_Taken,
                 CustomerWithTicket1_Served,
                 CustomerWithTicket1_Revoked);
+        }
+
+        private static void ListsAreEquivalent(IReadOnlyList<IDomainEvent> a, params IDomainEvent[] b)
+        {
+            a.Should().BeEquivalentTo(b);
+            for (var i = 0; i < a.Count; ++i)
+            {
+                a[i].Version.Should().Be(b[i].Version);
+                a[i].Number.Should().Be(b[i].Number);
+                a[i].Timestamp.Should().Be(b[i].Timestamp);
+            }
         }
     }
 }
