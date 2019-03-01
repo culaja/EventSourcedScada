@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "CommandSide\Common\Common.csproj", "{25FD620B-067D-4A86-93EA-75E87CBC42C0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{25FD620B-067D-4A86-93EA-75E87CBC42C0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Domain", "CommandSide\Domain\Domain.csproj", "{717C5E05-E298-4659-A04A-1C1EF608658D}"
 EndProject
