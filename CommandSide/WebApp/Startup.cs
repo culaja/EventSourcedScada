@@ -50,7 +50,7 @@ namespace WebApp
             }
 
             app.UseStaticFiles();
-
+            app.UseCors();
             app.UseHttpsRedirection();
             app.UseMvc();
         }

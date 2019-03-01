@@ -24,7 +24,7 @@ namespace DomainServices
         {
             WriteLine("Started applying events " + DateTime.Now);
             var totalEventsApplied = _eventStore.ApplyAllTo<CustomerQueue, CustomerQueueCreated, CustomerQueueSubscription>(_customerQueueRepository);
-            WriteLine($"Total events applied for '{nameof(CounterName)}': {totalEventsApplied}");
+            WriteLine($"Total events applied for '{nameof(CustomerQueue)}': {totalEventsApplied}");
             WriteLine("Finished applying events " + DateTime.Now);
         }
     }

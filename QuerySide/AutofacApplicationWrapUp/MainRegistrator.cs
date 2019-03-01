@@ -10,7 +10,6 @@ namespace AutofacApplicationWrapUp
             base.Load(builder);
             builder.RegisterModule<DomainServicesRegistrator>();
             builder.RegisterModule<EventStoreRegistrator>();
-            builder.RegisterModule<RemoteMessagingRegistrator>();
             builder.RegisterModule<ViewsRegistrator>();
             builder.RegisterModule<ClientNotificationRegistrator>();
         }

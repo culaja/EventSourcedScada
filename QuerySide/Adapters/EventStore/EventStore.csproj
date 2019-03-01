@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
@@ -10,6 +10,7 @@
 
     <ItemGroup>
       <PackageReference Include="MongoDB.Driver" Version="2.7.3" />
+      <PackageReference Include="RabbitMQ.Client" Version="6.0.0-pre3" />
     </ItemGroup>
 
 </Project>

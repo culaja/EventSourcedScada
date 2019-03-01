@@ -3,26 +3,24 @@ using Common.Messaging;
 using CustomerQueueViews;
 using Ports;
 using Shared.CustomerQueue;
+using static Common.Nothing;
 
 namespace Services
 {
     public sealed class QuerySideInitializer
     {
-        private readonly IEventStoreReader _eventStoreReader;
-        private readonly IRemoteEventSubscriber _remoteEventSubscriber;
+        private readonly IEventStoreSubscription<CustomerQueueSubscription> _customerQueueEventStoreSubscription;
         private readonly ILocalMessageBus _localMessageBus;
         private readonly IClientNotifier _clientNotifier;
         private readonly ViewHolder _viewHolder;
 
         public QuerySideInitializer(
-            IEventStoreReader eventStoreReader,
-            IRemoteEventSubscriber remoteEventSubscriber,
+            IEventStoreSubscription<CustomerQueueSubscription> customerQueueEventStoreSubscription,
             ILocalMessageBus localMessageBus,
             IClientNotifier clientNotifier,
             ViewHolder viewHolder)
         {
-            _eventStoreReader = eventStoreReader;
-            _remoteEventSubscriber = remoteEventSubscriber;
+            _customerQueueEventStoreSubscription = customerQueueEventStoreSubscription;
             _localMessageBus = localMessageBus;
             _clientNotifier = clientNotifier;
             _viewHolder = viewHolder;
@@ -31,8 +29,7 @@ namespace Services
         public void Initialize()
         {
             StartClientNotifier();
-            SubscribeToDomainEventsAndPassThemToLocalMessageBus();
-            PerformIntegrityLoadFromEventStore();
+            FeedFromEventStore();
         }
 
         private void StartClientNotifier()
@@ -40,15 +37,16 @@ namespace Services
             _clientNotifier.StartClientNotifier(() => _localMessageBus.Dispatch(new NewClientConnected()));
         }
 
-        private void SubscribeToDomainEventsAndPassThemToLocalMessageBus()
+        private void FeedFromEventStore()
         {
-            _remoteEventSubscriber.Register<CustomerQueueSubscription>(e => _localMessageBus.Dispatch(e));
-        }
-
-        private void PerformIntegrityLoadFromEventStore()
-        {
+            _customerQueueEventStoreSubscription.Register(e =>
+            {
+                _localMessageBus.Dispatch(e);
+                return NotAtAll;
+            });
+            
             Console.WriteLine("Performing integrity read of domain events ...");
-            var domainEvents = _eventStoreReader.LoadAll();
+            var domainEvents = _customerQueueEventStoreSubscription.IntegrityLoadEvents();
             foreach (var e in domainEvents) _viewHolder.Apply(e);
             Console.WriteLine("Integrity read finished");
             Console.WriteLine(_viewHolder);

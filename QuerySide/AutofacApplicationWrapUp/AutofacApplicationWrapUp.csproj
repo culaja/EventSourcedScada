@@ -14,7 +14,6 @@
       <ProjectReference Include="..\Adapters\WebsocketClientNotifier\WebsocketClientNotifier.csproj" />
       <ProjectReference Include="..\Ports\Ports.csproj" />
       <ProjectReference Include="..\QueryCommon\QueryCommon.csproj" />
-      <ProjectReference Include="..\RabbitMqAdapter\RabbitMqAdapter.csproj" />
       <ProjectReference Include="..\Services\Services.csproj" />
       <ProjectReference Include="..\Views\CustomerQueueViews\CustomerQueueViews.csproj" />
     </ItemGroup>

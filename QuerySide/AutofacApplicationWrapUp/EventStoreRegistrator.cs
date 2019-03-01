@@ -1,7 +1,7 @@
 using Autofac;
 using EventStore;
 using Ports;
-using RabbitMqAdapter;
+using Shared.CustomerQueue;
 
 namespace AutofacApplicationWrapUp
 {
@@ -9,16 +9,16 @@ namespace AutofacApplicationWrapUp
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterInstance(new DatabaseContext("mongodb://localhost:27017/", "CustomerQueue")).SingleInstance();
-            builder.RegisterType<EventStoreReader>().As<IEventStoreReader>().SingleInstance();
-        }
-    }
+            builder.RegisterInstance(new EventStoreSubscriptionProvider(
+                "mongodb://localhost:27017/", 
+                "CustomerQueue",
+                "localhost"))
+                .As<IEventStoreSubscriptionProvider>()
+                .SingleInstance();
 
-    public sealed class RemoteMessagingRegistrator : Module
-    {
-        protected override void Load(ContainerBuilder builder)
-        {
-            builder.RegisterInstance(new RabbitMqSubscriber("localhost")).As<IRemoteEventSubscriber>().SingleInstance();
+            builder.Register(c => c.Resolve<IEventStoreSubscriptionProvider>().MakeSubscriptionFor<CustomerQueueSubscription>())
+                .As<IEventStoreSubscription<CustomerQueueSubscription>>()
+                .SingleInstance();
         }
     }
 }
