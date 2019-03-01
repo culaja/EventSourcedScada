@@ -5,7 +5,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="WebSocketSharp" Version="1.0.3-rc11" />
+        <PackageReference Include="WebSocketSharp" Version="1.0.3-rc11" >
+            <NoWarn>NU1701</NoWarn>
+        </PackageReference>
     </ItemGroup>
 
     <ItemGroup>
