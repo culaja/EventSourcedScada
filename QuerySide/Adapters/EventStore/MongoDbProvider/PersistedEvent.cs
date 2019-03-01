@@ -4,7 +4,7 @@ using Common.Messaging.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace EventStore
+namespace EventStore.MongoDbProvider
 {
     public sealed class PersistedEvent
     {

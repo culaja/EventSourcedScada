@@ -1,5 +1,6 @@
 using System;
 using Common.Messaging;
+using EventStore.MongoDbProvider;
 using EventStore.RabbitMqProvider;
 using Ports;
 using RabbitMQ.Client;
