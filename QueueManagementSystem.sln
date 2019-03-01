@@ -16,7 +16,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApp", "CommandSide\WebAp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainServices", "CommandSide\DomainServices\DomainServices.csproj", "{3A86BC56-3F76-44C1-BF85-B9AC4F3C749E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutofacMessageBus", "CommandSide\Adapters\AutofacMessageBus\AutofacMessageBus.csproj", "{92DD149E-FDD5-4147-A266-071635E5D23C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutofacMessageBus", "CommonAdapters\AutofacMessageBus\AutofacMessageBus.csproj", "{92DD149E-FDD5-4147-A266-071635E5D23C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutofacApplicationWrapUp", "CommandSide\AutofacApplicationWrapUp\AutofacApplicationWrapUp.csproj", "{55FCBDF9-02EE-484A-BE4C-5C646E687809}"
 EndProject

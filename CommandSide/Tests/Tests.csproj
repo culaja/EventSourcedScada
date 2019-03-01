@@ -16,7 +16,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AutofacApplicationWrapUp\AutofacApplicationWrapUp.csproj" />
-      <ProjectReference Include="..\Adapters\AutofacMessageBus\AutofacMessageBus.csproj" />
+      <ProjectReference Include="..\..\CommonAdapters\AutofacMessageBus\AutofacMessageBus.csproj" />
       <ProjectReference Include="..\DomainServices\DomainServices.csproj" />
       <ProjectReference Include="..\Domain\Domain.csproj" />
       <ProjectReference Include="..\Adapters\InMemory\InMemory.csproj" />

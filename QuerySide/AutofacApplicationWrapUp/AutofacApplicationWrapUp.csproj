@@ -9,7 +9,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\CommandSide\Adapters\AutofacMessageBus\AutofacMessageBus.csproj" />
+      <ProjectReference Include="..\..\CommonAdapters\AutofacMessageBus\AutofacMessageBus.csproj" />
       <ProjectReference Include="..\Adapters\EventStore\EventStore.csproj" />
       <ProjectReference Include="..\Adapters\WebsocketClientNotifier\WebsocketClientNotifier.csproj" />
       <ProjectReference Include="..\Ports\Ports.csproj" />
