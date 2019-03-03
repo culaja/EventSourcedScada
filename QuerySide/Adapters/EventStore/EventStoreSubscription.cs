@@ -52,6 +52,7 @@ namespace EventStore
         public Nothing Register(EventStoreSubscriptionHandler callback)
         {
             _maybeEventStoreSubscriptionHandler = callback;
+            _rabbitMqSubscriber.Register<T>(callback);
             return NotAtAll;
         }
 

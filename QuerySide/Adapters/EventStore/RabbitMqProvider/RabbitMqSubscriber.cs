@@ -3,6 +3,7 @@ using System.Text;
 using Common;
 using Common.Messaging;
 using Common.Messaging.Serialization;
+using Ports;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using static Common.Nothing;
@@ -18,7 +19,7 @@ namespace EventStore.RabbitMqProvider
             _channel = connection.CreateModel();
         }
         
-        public Nothing Register<T>(Action<IDomainEvent> messageReceivedHandler) where T : IAggregateEventSubscription, new()
+        public Nothing Register<T>(EventStoreSubscriptionHandler callback) where T : IAggregateEventSubscription, new()
         {
             var aggregateEventSubscription = new T();
             _channel.ExchangeDeclare(aggregateEventSubscription.AggregateTopicName, "topic", true);
@@ -29,7 +30,7 @@ namespace EventStore.RabbitMqProvider
             {
                 var messageAsString = Encoding.ASCII.GetString(ea.Body);
                 messageAsString.Deserialize()
-                    .OnSuccess(message => messageReceivedHandler(message as IDomainEvent))
+                    .OnSuccess(message => callback(message as IDomainEvent))
                     .OnFailure(error => Console.WriteLine($"Failed to deserialize received message: {error}"));
             };
 
