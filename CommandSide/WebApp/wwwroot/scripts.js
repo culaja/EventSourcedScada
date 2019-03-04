@@ -43,6 +43,28 @@ $(document).ready(function(){
       }
     }
     
+    var ticketStateToString = function(ticketState) {
+        switch (ticketState)
+        {
+            case 'W': return "Waiting";
+            case 'C': return "Serving";
+            case 'S': return "Served";
+            case 'R': return "Revoked";
+        }
+        return "";
+    }
+    
+    var ticketStateToColor = function(ticketState) {
+         switch (ticketState)
+         {
+             case 'W': return "#e8deca";
+             case 'C': return "#ccffcc";
+             case 'S': return "#99ccff";
+             case 'R': return "#ff9999";
+         }
+         return "";
+     }
+    
     var populateTicketQueue = function(data) {
         if(!data.length) return;
         
@@ -52,6 +74,7 @@ $(document).ready(function(){
         $.each(data, function(index, elem) {
             var entry = $("<div>");
             entry.addClass("singleTicket");
+            entry.css("background-color", ticketStateToColor(elem.State));
             
             var num = parseInt(elem.Number);            
             if(num > maxTicketNumber) {
@@ -59,7 +82,7 @@ $(document).ready(function(){
             }
             
             var number = $("<span>").text(elem.Number);
-            var state = $("<span>").text(elem.State);
+            var state = $("<span>").text(ticketStateToString(elem.State));
             
             entry.append(number);
             entry.append(state);

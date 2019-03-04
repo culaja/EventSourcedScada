@@ -19,13 +19,11 @@ namespace EventStore.MongoDbProvider
             _mongoCollection = databaseContext.GetCollectionFor<PersistedEvent>();
         }
         
-        public IEnumerable<IDomainEvent> LoadAll() 
-        {
-            return _mongoCollection.AsQueryable()
-                .Where(OnlyTEventsAreTaken())
-                .AsEnumerable()
-                .Select(ConvertPersistedEventToDomainEventWithoutErrorCheck);
-        }
+        public IEnumerable<IDomainEvent> LoadAll() => _mongoCollection
+            .AsQueryable()
+            .Where(OnlyTEventsAreTaken())
+            .AsEnumerable()
+            .Select(ConvertPersistedEventToDomainEventWithoutErrorCheck);
 
         private Expression<Func<PersistedEvent, bool>> OnlyTEventsAreTaken() => 
             e => e.AggregateTopicName.Equals(_aggregateTopicName);
