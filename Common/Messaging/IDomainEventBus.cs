@@ -1,14 +1,11 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace Common.Messaging
 {
-    public interface ILocalMessageBus
+    public interface IDomainEventBus
     {
         IReadOnlyList<IMessage> DispatchAll(IReadOnlyList<IMessage> messages);
 
         IMessage Dispatch(IMessage message);
-
-        Task<Result> HandleAsync(IMessage message);
     }
 }

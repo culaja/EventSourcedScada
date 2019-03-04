@@ -11,7 +11,7 @@ using static Common.Result;
 
 namespace AutofacMessageBus
 {
-	public sealed class AutofacLocalMessageBus : ILocalMessageBus, IDisposable
+	public sealed class AutofacLocalMessageBus : IDomainEventBus, ICommandBus, IDisposable
 	{
 		private readonly BlockingCollection<MessageContext> _messagesContextBlockingCollection = new BlockingCollection<MessageContext>();
 		private readonly AutofacMessageResolver _messageResolver;
@@ -32,7 +32,7 @@ namespace AutofacMessageBus
 
 		public IMessage Dispatch(IMessage message) => DispatchInternal(message).MessageToHandle;
 
-		public Task<Result> HandleAsync(IMessage message) => DispatchInternal(message).WaitToBeHandledAsync();
+		public Task<Result> ExecuteAsync(IMessage message) => DispatchInternal(message).WaitToBeHandledAsync();
 
 		private MessageContext DispatchInternal(IMessage message)
 		{

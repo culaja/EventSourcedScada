@@ -14,12 +14,12 @@ namespace InMemory
         private readonly Dictionary<Guid, T> _cache = new Dictionary<Guid, T>();
         private readonly UniqueIndexing<T> _uniqueIndexes = new UniqueIndexing<T>();
 
-        public InMemoryRepository(ILocalMessageBus localMessageBus)
+        public InMemoryRepository(IDomainEventBus domainEventBus)
         {
-            LocalMessageBus = localMessageBus;
+            DomainEventBus = domainEventBus;
         }
 
-        public ILocalMessageBus LocalMessageBus { get; }
+        public IDomainEventBus DomainEventBus { get; }
 
         protected bool ContainsIndex(object key) => _uniqueIndexes.ContainsIndex(key);
 
@@ -83,7 +83,7 @@ namespace InMemory
 
         private T PurgeAllEvents(T aggregateRoot)
         {
-            LocalMessageBus.DispatchAll(aggregateRoot.DomainEvents);
+            DomainEventBus.DispatchAll(aggregateRoot.DomainEvents);
             aggregateRoot.ClearDomainEvents();
             return aggregateRoot;
         }

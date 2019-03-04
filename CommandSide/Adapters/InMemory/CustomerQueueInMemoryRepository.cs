@@ -14,7 +14,7 @@ namespace InMemory
 {
     public sealed class CustomerQueueInMemoryRepository : InMemoryRepository<CustomerQueue, CustomerQueueCreated>, ICustomerQueueRepository
     {
-        public CustomerQueueInMemoryRepository(ILocalMessageBus localMessageBus) : base(localMessageBus)
+        public CustomerQueueInMemoryRepository(IDomainEventBus domainEventBus) : base(domainEventBus)
         {
         }
 

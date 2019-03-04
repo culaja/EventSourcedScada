@@ -7,7 +7,7 @@ using static Common.Result;
 
 namespace Tests.Specifications
 {
-    public sealed class DomainEventMessageBusAggregator : ILocalMessageBus
+    public sealed class DomainEventMessageBusAggregator : IDomainEventBus
     {
         private readonly List<IDomainEvent> _producedEvents = new List<IDomainEvent>();
         public IReadOnlyList<IDomainEvent> ProducedEvents => _producedEvents;
@@ -24,7 +24,5 @@ namespace Tests.Specifications
 
             return message;
         }
-        
-        public Task<Result> HandleAsync(IMessage message) => Task.FromResult(Ok());
     }
 }

@@ -23,7 +23,10 @@ namespace AutofacMessageBus
         
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<AutofacLocalMessageBus>().As<ILocalMessageBus>().SingleInstance();
+            builder.RegisterType<AutofacLocalMessageBus>()
+                .As<IDomainEventBus>()
+                .As<ICommandBus>()
+                .SingleInstance();
             RegisterMessageHandlersForAllMessages(builder);
         }
 

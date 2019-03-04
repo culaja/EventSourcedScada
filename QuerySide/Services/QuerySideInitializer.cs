@@ -10,18 +10,18 @@ namespace Services
     public sealed class QuerySideInitializer
     {
         private readonly IEventStoreSubscription<CustomerQueueSubscription> _customerQueueEventStoreSubscription;
-        private readonly ILocalMessageBus _localMessageBus;
+        private readonly IDomainEventBus _domainEventBus;
         private readonly IClientNotifier _clientNotifier;
         private readonly ViewHolder _viewHolder;
 
         public QuerySideInitializer(
             IEventStoreSubscription<CustomerQueueSubscription> customerQueueEventStoreSubscription,
-            ILocalMessageBus localMessageBus,
+            IDomainEventBus domainEventBus,
             IClientNotifier clientNotifier,
             ViewHolder viewHolder)
         {
             _customerQueueEventStoreSubscription = customerQueueEventStoreSubscription;
-            _localMessageBus = localMessageBus;
+            _domainEventBus = domainEventBus;
             _clientNotifier = clientNotifier;
             _viewHolder = viewHolder;
         }
@@ -34,14 +34,14 @@ namespace Services
 
         private void StartClientNotifier()
         {
-            _clientNotifier.StartClientNotifier(() => _localMessageBus.Dispatch(new NewClientConnected()));
+            _clientNotifier.StartClientNotifier(() => _domainEventBus.Dispatch(new NewClientConnected()));
         }
 
         private void FeedFromEventStore()
         {
             _customerQueueEventStoreSubscription.Register(e =>
             {
-                _localMessageBus.Dispatch(e);
+                _domainEventBus.Dispatch(e);
                 return NotAtAll;
             });
             

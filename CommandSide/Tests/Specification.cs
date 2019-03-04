@@ -36,7 +36,7 @@ namespace Tests
         
         protected abstract TL CommandToExecute { get; }
 
-        protected IReadOnlyList<IDomainEvent> ProducedEvents => ((DomainEventMessageBusAggregator)AggregateRepository.LocalMessageBus).ProducedEvents;
+        protected IReadOnlyList<IDomainEvent> ProducedEvents => ((DomainEventMessageBusAggregator)AggregateRepository.DomainEventBus).ProducedEvents;
         
         protected Result Result { get; private set; } 
         public abstract IEnumerable<TK> Given();

@@ -12,43 +12,43 @@ namespace WebApp.Controllers
     [ApiController]
     public class CustomerQueueController : ControllerBase
     {
-        private readonly ILocalMessageBus _localMessageBus;
+        private readonly ICommandBus _commandBus;
 
-        public CustomerQueueController(ILocalMessageBus localMessageBus)
+        public CustomerQueueController(ICommandBus commandBus)
         {
-            _localMessageBus = localMessageBus;
+            _commandBus = commandBus;
         }
         
         [HttpPost]
         [Route(nameof(AddCustomerQueue))]
-        public Task<IActionResult> AddCustomerQueue() => _localMessageBus
-            .HandleAsync(new AddCustomerQueue(NewGuid()))
+        public Task<IActionResult> AddCustomerQueue() => _commandBus
+            .ExecuteAsync(new AddCustomerQueue(NewGuid()))
             .ToActionResultAsync();
 
         [HttpPost]
         [Route(nameof(AddCounter))]
-        public Task<IActionResult> AddCounter([FromBody] AddCounterDto dto) => _localMessageBus
-                .HandleAsync(new AddCounter(dto.CounterName.ToCounterName()))
+        public Task<IActionResult> AddCounter([FromBody] AddCounterDto dto) => _commandBus
+                .ExecuteAsync(new AddCounter(dto.CounterName.ToCounterName()))
                 .ToActionResultAsync();
 
         [HttpPost]
         [Route(nameof(AddTicket))]
-        public Task<IActionResult> AddTicket([FromBody] AddTicketDto dto) => _localMessageBus
-            .HandleAsync(new AddTicket(
+        public Task<IActionResult> AddTicket([FromBody] AddTicketDto dto) => _commandBus
+            .ExecuteAsync(new AddTicket(
                 NewGuid().ToTicketId(),
                 dto.TicketNumber))
             .ToActionResultAsync();
 
         [HttpPost]
         [Route(nameof(RevokeCustomer))]
-        public Task<IActionResult> RevokeCustomer([FromBody] RevokeCustomerDto dto) => _localMessageBus
-            .HandleAsync(new RevokeCustomer(dto.CounterName.ToCounterName()))
+        public Task<IActionResult> RevokeCustomer([FromBody] RevokeCustomerDto dto) => _commandBus
+            .ExecuteAsync(new RevokeCustomer(dto.CounterName.ToCounterName()))
             .ToActionResultAsync();
 
         [HttpPost]
         [Route(nameof(TakeNextCustomer))]
-        public Task<IActionResult> TakeNextCustomer([FromBody] TakeNextCustomerDto dto) => _localMessageBus
-            .HandleAsync(new TakeNextCustomer(dto.CounterName.ToCounterName()))
+        public Task<IActionResult> TakeNextCustomer([FromBody] TakeNextCustomerDto dto) => _commandBus
+            .ExecuteAsync(new TakeNextCustomer(dto.CounterName.ToCounterName()))
             .ToActionResultAsync();
     }
 }

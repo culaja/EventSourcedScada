@@ -6,7 +6,7 @@ using static Common.Result;
 
 namespace Tests.IntegrationTests
 {
-    public sealed class NoOpLocalMessageBus : ILocalMessageBus
+    public sealed class NoOpDomainEventBus : IDomainEventBus
     {
         public IReadOnlyList<IMessage> DispatchAll(IReadOnlyList<IMessage> messages)
         {
@@ -17,7 +17,5 @@ namespace Tests.IntegrationTests
         {
             return message;
         }
-
-        public Task<Result> HandleAsync(IMessage message) => Task.FromResult(Ok());
     }
 }
