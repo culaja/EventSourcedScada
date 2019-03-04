@@ -27,20 +27,24 @@ namespace EventStore
             _rabbitMqSubscriber = new RabbitMqSubscriber(rabbitMqConnection);
         }
 
-        public IEnumerable<IDomainEvent> IntegrityLoadEvents() => _isIntegrityLoadPerformed
+        public IEnumerable<IDomainEvent> IntegrityLoadEvents(EventStoreSubscriptionHandler eventStoreSubscriptionCallback) => _isIntegrityLoadPerformed
             .OnBoth(
                 ThrowInvalidOperationException,
-                PerformIntegrityLoad);
+                () => PerformIntegrityLoad(eventStoreSubscriptionCallback));
 
         private static IEnumerable<IDomainEvent> ThrowInvalidOperationException()
         {
             throw new InvalidOperationException($"Integrity load is already performed for aggregate topic '{nameof(T)}'");
         }
 
-        private IEnumerable<IDomainEvent> PerformIntegrityLoad() => _maybeEventStoreSubscriptionHandler
-            .Unwrap(
-                PerformIntegrityLoadInternal,
-                () => throw new InvalidOperationException($"Integrity load can't be performed if '{nameof(EventStoreSubscriptionHandler)} is not registered.'"));
+        private IEnumerable<IDomainEvent> PerformIntegrityLoad(EventStoreSubscriptionHandler eventStoreSubscriptionCallback)
+        {
+            Register(eventStoreSubscriptionCallback);
+            return _maybeEventStoreSubscriptionHandler
+                .Unwrap(
+                    PerformIntegrityLoadInternal,
+                    () => throw new InvalidOperationException($"Integrity load can't be performed if '{nameof(EventStoreSubscriptionHandler)} is not registered.'"));
+        }
 
         private IEnumerable<IDomainEvent> PerformIntegrityLoadInternal(EventStoreSubscriptionHandler callback)
         {
@@ -49,7 +53,7 @@ namespace EventStore
             _domainEventAggregator.StopAggregation(callback);
         }
 
-        public Nothing Register(EventStoreSubscriptionHandler callback)
+        private Nothing Register(EventStoreSubscriptionHandler callback)
         {
             _maybeEventStoreSubscriptionHandler = callback;
             _rabbitMqSubscriber.Register<T>(callback);

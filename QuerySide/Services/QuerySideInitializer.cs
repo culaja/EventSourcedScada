@@ -1,4 +1,5 @@
 using System;
+using Common;
 using Common.Messaging;
 using CustomerQueueViews;
 using Ports;
@@ -39,17 +40,17 @@ namespace Services
 
         private void FeedFromEventStore()
         {
-            _customerQueueEventStoreSubscription.Register(e =>
-            {
-                _domainEventBus.Dispatch(e);
-                return NotAtAll;
-            });
-            
             Console.WriteLine("Performing integrity read of domain events ...");
-            var domainEvents = _customerQueueEventStoreSubscription.IntegrityLoadEvents();
+            var domainEvents = _customerQueueEventStoreSubscription.IntegrityLoadEvents(OnEachNewDomainEventDispatchItToEventBus);
             foreach (var e in domainEvents) _viewHolder.Apply(e);
             Console.WriteLine("Integrity read finished");
             Console.WriteLine(_viewHolder);
+        }
+
+        private Nothing OnEachNewDomainEventDispatchItToEventBus(IDomainEvent e)
+        {
+            _domainEventBus.Dispatch(e);
+            return NotAtAll;
         }
     }
 }

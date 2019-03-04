@@ -2,6 +2,7 @@ using System;
 using Ports;
 using QueryCommon;
 using WebSocketSharp;
+using WebSocketSharp.Net;
 using WebSocketSharp.Server;
 
 namespace WebsocketClientNotifier
@@ -17,6 +18,16 @@ namespace WebsocketClientNotifier
             _server = new WebSocketServer("ws://localhost");
             _newClientCallback = newClientCallback;
             _server.AddWebSocketService("/ClientHub", () => new Connection(OnConnectionOpened, OnConnectionClosed)); 
+           
+            _server.AuthenticationSchemes = AuthenticationSchemes.Basic;
+            _server.UserCredentialsFinder = id =>
+            {
+                var name = id.Name;
+                return name == "AnyClient"
+                    ? new NetworkCredential(name, "AnyClientPass", "all")
+                    : null;
+            };
+            
             _server.Start();
         }
 

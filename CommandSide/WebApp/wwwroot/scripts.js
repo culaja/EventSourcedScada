@@ -3,7 +3,7 @@ $(document).ready(function(){
     var url = "http://localhost:5000/api";
     var maxTicketNumber = 0;
     
-    var exampleSocket = new WebSocket("ws://localhost/ClientHub");
+    var exampleSocket = new WebSocket("ws://AnyClient:AnyClientPass@localhost/ClientHub");
     window.onbeforeunload = function() {
         exampleSocket.onclose = function () {}; // disable onclose handler first
         exampleSocket.close();

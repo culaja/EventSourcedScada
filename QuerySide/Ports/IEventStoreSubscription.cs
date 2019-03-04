@@ -13,15 +13,14 @@ namespace Ports
     public interface IEventStoreSubscription<T>: IDisposable where T : IAggregateEventSubscription
     {
         /// <summary>
-        /// Can be called only once to perform integrity load of all events in the event store.
+        /// Can be called only once to perform integrity load of all events in the event store. After integrity load is
+        /// finished all other events will be passed through specified callback.
         /// </summary>
-        /// <returns>Returns all domain events from the event store. <see cref="IEnumerable{T}"/> is used to avoid high memory consumption.</returns>
-        IEnumerable<IDomainEvent> IntegrityLoadEvents();
-
-        /// <summary>
-        /// Registered callback will be called only after integrity load is performed. In the mean
-        /// time all received events will be aggregated.
-        /// </summary>
-        Nothing Register(EventStoreSubscriptionHandler callback);
+        /// <param name="eventStoreSubscriptionCallback">Callback that will be called on each received event after integrity load is finished.</param>
+        /// <returns>
+        /// Returns all domain events from the event store. To take advantage of <see cref="IEnumerable{T}"/>  don't
+        /// call ToList() or something similar to avoid high memory consumption.
+        /// </returns>
+        IEnumerable<IDomainEvent> IntegrityLoadEvents(EventStoreSubscriptionHandler eventStoreSubscriptionCallback);
     }
 }
