@@ -33,7 +33,7 @@ namespace WebApp
             containerBuilder.Populate(services);
             var container = containerBuilder.Build();
             
-            ReConstructAllAggregatesAndViews(container);
+            InitializeServiceLayer(container);
             
             return new AutofacServiceProvider(container);
         }
@@ -54,9 +54,9 @@ namespace WebApp
             app.UseMvc();
         }
 
-        private static void ReConstructAllAggregatesAndViews(IComponentContext componentContext)
+        private static void InitializeServiceLayer(IComponentContext componentContext)
         {
-            componentContext.Resolve<AggregateConstructor>().ReconstructAllAggregates();
+            componentContext.Resolve<CommandSideInitializer>().Initialize();
             componentContext.Resolve<QuerySideInitializer>().Initialize();
         }
     }

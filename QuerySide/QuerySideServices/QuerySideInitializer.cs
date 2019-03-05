@@ -1,9 +1,11 @@
-using System;
+using System.Linq;
 using Common.Messaging;
 using Ports.EventStore;
 using QuerySide.QuerySidePorts;
 using QuerySide.Views.CustomerQueueViews;
 using Shared.CustomerQueue;
+using static System.Console;
+using static System.DateTime;
 
 namespace QuerySide.Services
 {
@@ -39,10 +41,11 @@ namespace QuerySide.Services
 
         private void IntegrityLoadEventsFromEventStore()
         {
-            Console.WriteLine("Performing integrity read of domain events ...");
-            foreach (var e in _eventStore.LoadAllFor<CustomerQueueSubscription>()) _viewHolder.Apply(e);
-            Console.WriteLine("Integrity read finished");
-            Console.WriteLine(_viewHolder);
+            WriteLine($"Reconstructing views from event store ...\t\t\t{Now}");
+            var totalEventsApplied = _eventStore.LoadAllFor<CustomerQueueSubscription>()
+                .Select(e => _viewHolder.Apply(e))
+                .Count();
+            WriteLine($"All views reconstructed. (Total events applied: {totalEventsApplied})\t\t{Now}");
         }
     }
 }

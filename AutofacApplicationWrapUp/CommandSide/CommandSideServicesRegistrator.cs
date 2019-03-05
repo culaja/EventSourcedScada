@@ -8,7 +8,7 @@ namespace AutofacApplicationWrapUp.CommandSide
     {
         protected override void Load(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterType<AggregateConstructor>();
+            containerBuilder.RegisterType<CommandSideInitializer>();
         }
     }
 }

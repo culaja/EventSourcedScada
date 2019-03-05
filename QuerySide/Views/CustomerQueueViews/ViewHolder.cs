@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Common;
 using Common.Messaging;
 using QuerySide.QueryCommon;
+using static Common.Nothing;
 
 namespace QuerySide.Views.CustomerQueueViews
 {
@@ -15,9 +17,10 @@ namespace QuerySide.Views.CustomerQueueViews
             new TicketQueueView()
         };
 
-        public void Apply(IDomainEvent e)
+        public Nothing Apply(IDomainEvent e)
         {
             foreach (var v in _views) v.Apply(e);
+            return NotAtAll;
         }
 
         public override string ToString()

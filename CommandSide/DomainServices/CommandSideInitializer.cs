@@ -1,17 +1,20 @@
-using System;
 using CommandSide.CommandSidePorts.Repositories;
 using CommandSide.Domain;
+using Common;
 using Ports.EventStore;
 using Shared.CustomerQueue;
+using static System.Console;
+using static System.DateTime;
+using static Common.Nothing;
 
 namespace CommandSide.DomainServices
 {
-    public sealed class AggregateConstructor
+    public sealed class CommandSideInitializer
     {
         private readonly IEventStore _eventStore;
         private readonly ICustomerQueueRepository _customerQueueRepository;
 
-        public AggregateConstructor(
+        public CommandSideInitializer(
             IEventStore eventStore,
             ICustomerQueueRepository customerQueueRepository)
         {
@@ -19,12 +22,15 @@ namespace CommandSide.DomainServices
             _customerQueueRepository = customerQueueRepository;
         }
 
-        public void ReconstructAllAggregates()
+        public Nothing Initialize() => ReconstructAllAggregates();
+
+        private Nothing ReconstructAllAggregates()
         {
-            Console.WriteLine("Started applying events " + DateTime.Now);
+            WriteLine($"Reconstructing aggregates from event store ...\t\t\t{Now}");
             var totalEventsApplied = _eventStore.ApplyAllTo<CustomerQueue, CustomerQueueCreated, CustomerQueueSubscription>(_customerQueueRepository);
-            Console.WriteLine($"Total events applied for '{nameof(CustomerQueue)}': {totalEventsApplied}");
-            Console.WriteLine("Finished applying events " + DateTime.Now);
+            WriteLine($"All aggregates reconstructed. (Total applied events: {totalEventsApplied})\t{Now}");
+            
+            return NotAtAll;
         }
     }
 }
