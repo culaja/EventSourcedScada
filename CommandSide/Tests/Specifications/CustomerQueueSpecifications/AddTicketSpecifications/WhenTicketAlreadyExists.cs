@@ -1,34 +1,33 @@
 using System.Collections.Generic;
+using CommandSide.Domain.Commands;
+using CommandSide.DomainServices.CommandHandlers;
 using Common.Messaging;
-using Domain.Commands;
-using DomainServices.CommandHandlers;
 using FluentAssertions;
 using Shared.CustomerQueue;
 using Xunit;
-using static Tests.CustomerQueueTestValues;
 
-namespace Tests.Specifications.CustomerQueueSpecifications.AddTicketSpecifications
+namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.AddTicketSpecifications
 {
     public sealed class WhenTicketAlreadyExists : CustomerQueueSpecification<AddTicket>
     {
-        public WhenTicketAlreadyExists() : base(SingleCustomerQueueId)
+        public WhenTicketAlreadyExists() : base(CustomerQueueTestValues.SingleCustomerQueueId)
         {
         }
         
-        protected override AddTicket CommandToExecute => new AddTicket(Ticket1_Id, Ticket1_Number);
+        protected override AddTicket CommandToExecute => new AddTicket(CustomerQueueTestValues.Ticket1_Id, CustomerQueueTestValues.Ticket1_Number);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
-            yield return new TicketAdded(SingleCustomerQueueId, Ticket1_Id, Ticket1_Number);
+            yield return new TicketAdded(CustomerQueueTestValues.SingleCustomerQueueId, CustomerQueueTestValues.Ticket1_Id, CustomerQueueTestValues.Ticket1_Number);
         }
 
         public override CommandHandler<AddTicket> When() => new AddTicketHandler(CustomerQueueRepository);
         
         [Fact]
         public void ticket_added_event_is_not_produced() => ProducedEvents.Should().NotContain(new TicketAdded(
-            SingleCustomerQueueId,
-            Ticket1_Id,
-            Ticket1_Number));
+            CustomerQueueTestValues.SingleCustomerQueueId,
+            CustomerQueueTestValues.Ticket1_Id,
+            CustomerQueueTestValues.Ticket1_Number));
 
         [Fact]
         public void returns_failure() => Result.IsFailure.Should().BeTrue();

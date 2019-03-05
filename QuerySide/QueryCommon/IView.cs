@@ -1,6 +1,6 @@
 using Common.Messaging;
 
-namespace QueryCommon
+namespace QuerySide.QueryCommon
 {
     public interface IView
     {

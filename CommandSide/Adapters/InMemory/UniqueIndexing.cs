@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Common;
 
-namespace InMemory
+namespace CommandSide.Adapters.InMemory
 {
     public sealed class UniqueIndexing<T> where T : AggregateRoot
     {

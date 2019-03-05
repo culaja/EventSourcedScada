@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using QueryCommon;
+using QuerySide.QueryCommon;
 using Shared.CustomerQueue;
 
-namespace CustomerQueueViews
+namespace QuerySide.Views.CustomerQueueViews
 {
     internal sealed class CountersView : View,
         IHandle<CounterAdded>,

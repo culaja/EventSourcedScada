@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using QueryCommon;
+using QuerySide.QueryCommon;
 using WebSocketSharp;
 
-namespace WebsocketClientNotifier
+namespace QuerySide.Adapters.WebsocketClientNotifier
 {
     public sealed class OpenedSocketsHub
     {

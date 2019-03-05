@@ -2,16 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common.Messaging;
+using CommonAdapters.MongoDbEventStore;
 using FluentAssertions;
 using Mongo2Go;
-using MongoDbEventStore;
 using Ports.EventStore;
 using Shared.CustomerQueue;
 using Xunit;
-using static System.Guid;
-using static Tests.CustomerQueueTestValues;
 
-namespace Tests.IntegrationTests.EventStore
+namespace CommandSide.Tests.IntegrationTests.EventStore
 {
     public sealed class EventStoreTests : IDisposable
     {
@@ -21,8 +19,8 @@ namespace Tests.IntegrationTests.EventStore
         public EventStoreTests()
         {
             var connectionString = _runner.ConnectionString;
-            var databaseName = NewGuid().ToString();
-            _eventStore = new MongoDbEventStore.EventStore(new DatabaseContext(connectionString, databaseName));
+            var databaseName = Guid.NewGuid().ToString();
+            _eventStore = new CommonAdapters.MongoDbEventStore.EventStore(new DatabaseContext(connectionString, databaseName));
         }
 
         public void Dispose()
@@ -33,22 +31,22 @@ namespace Tests.IntegrationTests.EventStore
         [Fact]
         public void _1()
         {
-            _eventStore.Append(SingleCustomerQueueCreated.SetAnyVersionAndTimestamp());
-            _eventStore.Append(CounterA_Added.SetAnyVersionAndTimestamp());
-            _eventStore.Append(Ticket1_Added.SetAnyVersionAndTimestamp());
-            _eventStore.Append(CustomerWithTicket1_Taken.SetAnyVersionAndTimestamp());
-            _eventStore.Append(CustomerWithTicket1_Served.SetAnyVersionAndTimestamp());
-            _eventStore.Append(CustomerWithTicket1_Revoked.SetAnyVersionAndTimestamp());
+            _eventStore.Append(CustomerQueueTestValues.SingleCustomerQueueCreated.SetAnyVersionAndTimestamp());
+            _eventStore.Append(CustomerQueueTestValues.CounterA_Added.SetAnyVersionAndTimestamp());
+            _eventStore.Append(CustomerQueueTestValues.Ticket1_Added.SetAnyVersionAndTimestamp());
+            _eventStore.Append(CustomerQueueTestValues.CustomerWithTicket1_Taken.SetAnyVersionAndTimestamp());
+            _eventStore.Append(CustomerQueueTestValues.CustomerWithTicket1_Served.SetAnyVersionAndTimestamp());
+            _eventStore.Append(CustomerQueueTestValues.CustomerWithTicket1_Revoked.SetAnyVersionAndTimestamp());
            
             var allEvents =  _eventStore.LoadAllFor<CustomerQueueSubscription>().ToList();
 
             ListsAreEquivalent(allEvents, 
-                SingleCustomerQueueCreated,
-                CounterA_Added,
-                Ticket1_Added,
-                CustomerWithTicket1_Taken,
-                CustomerWithTicket1_Served,
-                CustomerWithTicket1_Revoked);
+                CustomerQueueTestValues.SingleCustomerQueueCreated,
+                CustomerQueueTestValues.CounterA_Added,
+                CustomerQueueTestValues.Ticket1_Added,
+                CustomerQueueTestValues.CustomerWithTicket1_Taken,
+                CustomerQueueTestValues.CustomerWithTicket1_Served,
+                CustomerQueueTestValues.CustomerWithTicket1_Revoked);
         }
 
         private static void ListsAreEquivalent(IReadOnlyList<IDomainEvent> a, params IDomainEvent[] b)

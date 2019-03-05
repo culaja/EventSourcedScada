@@ -1,11 +1,9 @@
-using System;
 using Common;
-using CustomerQueueViews;
-using QuerySidePorts;
+using QuerySide.QuerySidePorts;
+using QuerySide.Views.CustomerQueueViews;
 using Shared.CustomerQueue;
-using static Common.Result;
 
-namespace Services.EventHandlers
+namespace QuerySide.Services.EventHandlers
 {
     public sealed class ViewRefreshFromCustomerQueueEventHandler : Common.Messaging.EventHandler<CustomerQueueEvent>
     {
@@ -24,7 +22,7 @@ namespace Services.EventHandlers
         {
             _viewHolder.Apply(e);
             _viewHolder.ForEachView(_clientNotifier.NotifyAll);
-            return Ok();
+            return Result.Ok();
         }
     }
 }

@@ -2,9 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Common;
-using static Common.Result;
 
-namespace Domain
+namespace CommandSide.Domain
 {
     public sealed class QueuedTickets : ValueObject<QueuedTickets>
     {
@@ -22,13 +21,13 @@ namespace Domain
                 .OnSuccess(() => Validate(ticketNumber));
         
         private Result Validate(TicketId ticketId) => Tickets.ContainsEntityWith(ticketId).OnBoth(
-            () => Fail<Ticket>($"{nameof(Ticket)} with Id {ticketId} already exist."),
-            Ok);
+            () => Result.Fail<Ticket>($"{nameof(Ticket)} with Id {ticketId} already exist."),
+            Result.Ok);
         
         private Result Validate(int ticketNumber) => Tickets.Select(t => t.Number).Contains(ticketNumber)
             .OnBoth(
-                () => Fail<Ticket>($"{nameof(Ticket)} with number {ticketNumber} already exist."),
-                Ok);
+                () => Result.Fail<Ticket>($"{nameof(Ticket)} with number {ticketNumber} already exist."),
+                Result.Ok);
         
         public QueuedTickets AddFrom(
             TicketId ticketId, 

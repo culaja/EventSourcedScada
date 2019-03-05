@@ -1,10 +1,8 @@
 using System;
 using Common;
 using Shared.CustomerQueue;
-using static Domain.QueuedTickets;
-using static Domain.AvailableCounters;
 
-namespace Domain
+namespace CommandSide.Domain
 {
     public sealed class CustomerQueue : AggregateRoot
     {
@@ -27,8 +25,8 @@ namespace Domain
             var customerQueue = new CustomerQueue(
                 id,
                 0,
-                NoAvailableCounters,
-                EmptyQueuedTickets);
+                AvailableCounters.NoAvailableCounters,
+                QueuedTickets.EmptyQueuedTickets);
             customerQueue.ApplyChange(new CustomerQueueCreated(
                 customerQueue.Id));
             return customerQueue;

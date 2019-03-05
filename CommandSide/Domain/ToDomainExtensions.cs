@@ -1,6 +1,6 @@
 using System;
 
-namespace Domain
+namespace CommandSide.Domain
 {
     public static class ToDomainExtensions
     {

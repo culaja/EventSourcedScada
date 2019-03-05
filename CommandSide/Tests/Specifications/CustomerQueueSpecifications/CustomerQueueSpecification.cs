@@ -1,13 +1,11 @@
 using System;
-using CommandSidePorts.Repositories;
+using CommandSide.Adapters.InMemory;
+using CommandSide.CommandSidePorts.Repositories;
+using CommandSide.Domain;
 using Common.Messaging;
-using Domain;
-using InMemory;
 using Shared.CustomerQueue;
-using static Domain.AvailableCounters;
-using static Domain.QueuedTickets;
 
-namespace Tests.Specifications.CustomerQueueSpecifications
+namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications
 {
     public abstract class CustomerQueueSpecification<T> : Specification<CustomerQueue, CustomerQueueCreated, CustomerQueueEvent, T>
         where T : ICommand
@@ -16,7 +14,7 @@ namespace Tests.Specifications.CustomerQueueSpecifications
         
         protected CustomerQueueSpecification(Guid aggregateRootId) : base(
             new CustomerQueueInMemoryRepository(new DomainEventMessageBusAggregator()), 
-            () => new CustomerQueue(aggregateRootId, 0, NoAvailableCounters, EmptyQueuedTickets))
+            () => new CustomerQueue(aggregateRootId, 0, AvailableCounters.NoAvailableCounters, QueuedTickets.EmptyQueuedTickets))
         {
         }
     }

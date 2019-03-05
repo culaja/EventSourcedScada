@@ -3,7 +3,7 @@ using Common.Messaging;
 using Ports.EventStore;
 using Shared.CustomerQueue;
 
-namespace DomainServices.EventHandlers
+namespace CommandSide.DomainServices.EventHandlers
 {
     public sealed class CustomerQueuePersistenceHandler : EventHandler<CustomerQueueEvent>
     {

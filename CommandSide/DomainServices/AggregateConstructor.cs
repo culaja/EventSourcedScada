@@ -1,11 +1,10 @@
 using System;
-using CommandSidePorts.Repositories;
-using Domain;
+using CommandSide.CommandSidePorts.Repositories;
+using CommandSide.Domain;
 using Ports.EventStore;
 using Shared.CustomerQueue;
-using static System.Console;
 
-namespace DomainServices
+namespace CommandSide.DomainServices
 {
     public sealed class AggregateConstructor
     {
@@ -22,10 +21,10 @@ namespace DomainServices
 
         public void ReconstructAllAggregates()
         {
-            WriteLine("Started applying events " + DateTime.Now);
+            Console.WriteLine("Started applying events " + DateTime.Now);
             var totalEventsApplied = _eventStore.ApplyAllTo<CustomerQueue, CustomerQueueCreated, CustomerQueueSubscription>(_customerQueueRepository);
-            WriteLine($"Total events applied for '{nameof(CustomerQueue)}': {totalEventsApplied}");
-            WriteLine("Finished applying events " + DateTime.Now);
+            Console.WriteLine($"Total events applied for '{nameof(CustomerQueue)}': {totalEventsApplied}");
+            Console.WriteLine("Finished applying events " + DateTime.Now);
         }
     }
 }

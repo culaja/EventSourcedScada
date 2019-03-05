@@ -1,10 +1,10 @@
-using CommandSidePorts.Repositories;
+using CommandSide.CommandSidePorts.Repositories;
+using CommandSide.Domain;
+using CommandSide.Domain.Commands;
 using Common;
 using Common.Messaging;
-using Domain.Commands;
-using static Domain.CustomerQueue;
 
-namespace DomainServices.CommandHandlers
+namespace CommandSide.DomainServices.CommandHandlers
 {
     public sealed class AddCustomerQueueHandler : CommandHandler<AddCustomerQueue>
     {
@@ -16,6 +16,6 @@ namespace DomainServices.CommandHandlers
         }
 
         public override Result Handle(AddCustomerQueue c) => _repository.AddNew(
-            NewCustomerQueueFrom(c.AggregateRootId));
+            CustomerQueue.NewCustomerQueueFrom(c.AggregateRootId));
     }
 }

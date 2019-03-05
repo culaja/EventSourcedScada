@@ -1,21 +1,20 @@
 using System.Collections.Generic;
+using CommandSide.Domain.Commands;
+using CommandSide.DomainServices.CommandHandlers;
 using Common.Messaging;
-using Domain.Commands;
-using DomainServices.CommandHandlers;
 using FluentAssertions;
 using Shared.CustomerQueue;
 using Xunit;
-using static Tests.CustomerQueueTestValues;
 
-namespace Tests.Specifications.CustomerQueueSpecifications.RevokeCustomerSpecifications
+namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.RevokeCustomerSpecifications
 {
     public sealed class WhenCounterDoesntExist : CustomerQueueSpecification<RevokeCustomer>
     {
-        public WhenCounterDoesntExist() : base(SingleCustomerQueueId)
+        public WhenCounterDoesntExist() : base(CustomerQueueTestValues.SingleCustomerQueueId)
         {
         }
 
-        protected override RevokeCustomer CommandToExecute => new RevokeCustomer(CounterA_Name);
+        protected override RevokeCustomer CommandToExecute => new RevokeCustomer(CustomerQueueTestValues.CounterA_Name);
 
         public override IEnumerable<CustomerQueueEvent> Given()
         {

@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using Common;
-using static Common.Result;
 
-namespace Domain
+namespace CommandSide.Domain
 {
     public sealed class AvailableCounters : ValueObject<AvailableCounters>
     {
@@ -17,8 +16,8 @@ namespace Domain
         public static readonly AvailableCounters NoAvailableCounters = new AvailableCounters(new List<Counter>());
 
         public Result CheckIfCounterIsAvailableWith(CounterName counterName) => Counters.ContainsEntityWith(counterName).OnBoth(
-            () => Fail($"{nameof(Counter)} with name '{counterName}' already exists in {nameof(CustomerQueue)}."),
-            Ok);
+            () => Result.Fail($"{nameof(Counter)} with name '{counterName}' already exists in {nameof(CustomerQueue)}."),
+            Result.Ok);
         
         public AvailableCounters AddNewWith(CounterName counterName) => new AvailableCounters(new List<Counter>(Counters)
         {
@@ -27,8 +26,8 @@ namespace Domain
 
         public Result<Maybe<Ticket>> GetMaybeServingTicket(CounterName counterName) => Counters.MaybeEntityWith(counterName)
             .Unwrap(
-                m => Ok(m.MaybeServingTicket),
-                () => Fail<Maybe<Ticket>>($"{nameof(Counter)} with name '{counterName}' doesn't exist."));
+                m => Result.Ok(m.MaybeServingTicket),
+                () => Result.Fail<Maybe<Ticket>>($"{nameof(Counter)} with name '{counterName}' doesn't exist."));
 
         public AvailableCounters SetServingTicketFor(CounterName counterName, Ticket t)
         {

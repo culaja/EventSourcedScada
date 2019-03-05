@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
+using CommandSide.Domain;
+using CommandSide.Domain.Commands;
 using Common.Messaging;
-using Domain;
-using Domain.Commands;
 using Microsoft.AspNetCore.Mvc;
 using WebApp.Controllers.CommandsDto;
 using static System.Guid;

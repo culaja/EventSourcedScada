@@ -6,7 +6,7 @@ using Autofac;
 using Common.Messaging;
 using Module = Autofac.Module;
 
-namespace AutofacMessageBus
+namespace CommonAdapters.AutofacMessageBus
 {
     public sealed class AutofacMessagingRegistrator : Module
     {

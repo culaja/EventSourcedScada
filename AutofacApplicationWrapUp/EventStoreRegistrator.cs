@@ -1,5 +1,5 @@
 using Autofac;
-using MongoDbEventStore;
+using CommonAdapters.MongoDbEventStore;
 using Ports.EventStore;
 
 namespace AutofacApplicationWrapUp

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Common.Messaging;
 
-namespace AutofacMessageBus
+namespace CommonAdapters.AutofacMessageBus
 {
     public sealed class MessageHandlerComparer: IEqualityComparer<IMessageHandler>
     {

@@ -1,7 +1,7 @@
 using System;
 using Common;
 
-namespace Domain
+namespace CommandSide.Domain
 {
     public sealed class Ticket : Entity<TicketId>
     {

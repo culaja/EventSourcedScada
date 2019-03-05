@@ -1,25 +1,24 @@
 using System.Collections.Generic;
+using CommandSide.Domain.Commands;
+using CommandSide.DomainServices.CommandHandlers;
 using Common.Messaging;
-using Domain.Commands;
-using DomainServices.CommandHandlers;
 using FluentAssertions;
 using Shared.CustomerQueue;
 using Xunit;
-using static Tests.CustomerQueueTestValues;
 
-namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpecifications
+namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpecifications
 {
     public sealed class WhenTicketDoesntExistInQueue : CustomerQueueSpecification<TakeNextCustomer>
     {
-        public WhenTicketDoesntExistInQueue() : base(SingleCustomerQueueId)
+        public WhenTicketDoesntExistInQueue() : base(CustomerQueueTestValues.SingleCustomerQueueId)
         {
         }
         
-        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Name);
+        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CustomerQueueTestValues.CounterA_Name);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
-            yield return new CounterAdded(SingleCustomerQueueId, CounterA_Name);
+            yield return new CounterAdded(CustomerQueueTestValues.SingleCustomerQueueId, CustomerQueueTestValues.CounterA_Name);
         }
 
         public override CommandHandler<TakeNextCustomer> When() => new TakeNextCustomerHandler(CustomerQueueRepository);

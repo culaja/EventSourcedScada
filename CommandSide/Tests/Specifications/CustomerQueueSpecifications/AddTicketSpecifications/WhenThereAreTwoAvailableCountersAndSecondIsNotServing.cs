@@ -1,34 +1,33 @@
 using System.Collections.Generic;
+using CommandSide.Domain.Commands;
+using CommandSide.DomainServices.CommandHandlers;
 using Common.Messaging;
-using Domain.Commands;
-using DomainServices.CommandHandlers;
 using FluentAssertions;
 using Shared.CustomerQueue;
 using Xunit;
-using static Tests.CustomerQueueTestValues;
 
-namespace Tests.Specifications.CustomerQueueSpecifications.AddTicketSpecifications
+namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.AddTicketSpecifications
 {
     public sealed class WhenThereAreTwoAvailableCountersAndSecondIsNotServing : CustomerQueueSpecification<AddTicket>
     {
-        public WhenThereAreTwoAvailableCountersAndSecondIsNotServing() : base(SingleCustomerQueueId)
+        public WhenThereAreTwoAvailableCountersAndSecondIsNotServing() : base(CustomerQueueTestValues.SingleCustomerQueueId)
         {
         }
         
-        protected override AddTicket CommandToExecute => new AddTicket(Ticket2_Id, Ticket2_Number);
+        protected override AddTicket CommandToExecute => new AddTicket(CustomerQueueTestValues.Ticket2_Id, CustomerQueueTestValues.Ticket2_Number);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
-            yield return new CounterAdded(SingleCustomerQueueId, CounterA_Name);
-            yield return new CounterAdded(SingleCustomerQueueId, CounterB_Name);
-            yield return new TicketAdded(SingleCustomerQueueId, Ticket1_Id, Ticket1_Number);
-            yield return new CustomerTaken(SingleCustomerQueueId, CounterA_Name, Ticket1_Id);
+            yield return new CounterAdded(CustomerQueueTestValues.SingleCustomerQueueId, CustomerQueueTestValues.CounterA_Name);
+            yield return new CounterAdded(CustomerQueueTestValues.SingleCustomerQueueId, CustomerQueueTestValues.CounterB_Name);
+            yield return new TicketAdded(CustomerQueueTestValues.SingleCustomerQueueId, CustomerQueueTestValues.Ticket1_Id, CustomerQueueTestValues.Ticket1_Number);
+            yield return new CustomerTaken(CustomerQueueTestValues.SingleCustomerQueueId, CustomerQueueTestValues.CounterA_Name, CustomerQueueTestValues.Ticket1_Id);
         }
 
         public override CommandHandler<AddTicket> When() => new AddTicketHandler(CustomerQueueRepository);
 
         [Fact]
         public void customer_taken_is_not_produced() => ProducedEvents.Should().Contain(
-            new CustomerTaken(SingleCustomerQueueId, CounterB_Name, Ticket2_Id));
+            new CustomerTaken(CustomerQueueTestValues.SingleCustomerQueueId, CustomerQueueTestValues.CounterB_Name, CustomerQueueTestValues.Ticket2_Id));
     }
 }

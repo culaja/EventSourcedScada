@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Reflection;
-using AutofacMessageBus;
+using CommonAdapters.AutofacMessageBus;
 
-namespace Tests.IntegrationTests.AutofacMessageBus
+namespace CommandSide.Tests.IntegrationTests.AutofacMessageBus
 {
     public static class AutofacMessagingRegistratorValues
     {

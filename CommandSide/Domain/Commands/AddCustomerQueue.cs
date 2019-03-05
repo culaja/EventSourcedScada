@@ -1,7 +1,7 @@
 using System;
 using Common.Messaging;
 
-namespace Domain.Commands
+namespace CommandSide.Domain.Commands
 {
     public sealed class AddCustomerQueue : ICommand
     {

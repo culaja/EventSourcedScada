@@ -1,15 +1,11 @@
 using System;
-using CommandSidePorts.Repositories;
+using CommandSide.CommandSidePorts.Repositories;
+using CommandSide.Domain;
 using Common;
 using Common.Messaging;
-using Domain;
 using Shared.CustomerQueue;
-using static System.Guid;
-using static Domain.AvailableCounters;
-using static Domain.CustomerQueue;
-using static Domain.QueuedTickets;
 
-namespace InMemory
+namespace CommandSide.Adapters.InMemory
 {
     public sealed class CustomerQueueInMemoryRepository : InMemoryRepository<CustomerQueue, CustomerQueueCreated>, ICustomerQueueRepository
     {
@@ -21,14 +17,14 @@ namespace InMemory
             new CustomerQueue(
                 customerQueueCreated.AggregateRootId,
                 customerQueueCreated.Version,
-                NoAvailableCounters,
-                EmptyQueuedTickets);
+                AvailableCounters.NoAvailableCounters,
+                QueuedTickets.EmptyQueuedTickets);
 
         public Result<CustomerQueue> BorrowSingle(Func<CustomerQueue, Result<CustomerQueue>> transformer) =>
             ExecuteTransformerAndPurgeEvents(
                 MaybeFirst.Unwrap(
                     customerQueue => customerQueue,
-                    () =>  AddNew(NewCustomerQueueFrom(NewGuid())).Value),
+                    () =>  AddNew(CustomerQueue.NewCustomerQueueFrom(Guid.NewGuid())).Value),
                 transformer);
     }
 }

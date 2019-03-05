@@ -1,7 +1,7 @@
 using Newtonsoft.Json;
-using QueryCommon;
+using QuerySide.QueryCommon;
 
-namespace WebsocketClientNotifier
+namespace QuerySide.Adapters.WebsocketClientNotifier
 {
     internal sealed class WebsocketMessage
     {

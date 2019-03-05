@@ -1,10 +1,8 @@
 using System;
-using Common;
-using QueryCommon;
 using WebSocketSharp;
 using WebSocketSharp.Server;
 
-namespace WebsocketClientNotifier
+namespace QuerySide.Adapters.WebsocketClientNotifier
 {
     public sealed class Connection : WebSocketBehavior
     {

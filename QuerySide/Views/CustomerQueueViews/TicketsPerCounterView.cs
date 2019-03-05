@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Text;
-using QueryCommon;
+using QuerySide.QueryCommon;
 using Shared.CustomerQueue;
 
-namespace CustomerQueueViews
+namespace QuerySide.Views.CustomerQueueViews
 {
     internal sealed class TicketsPerCounterView : View,
         IHandle<CounterAdded>,

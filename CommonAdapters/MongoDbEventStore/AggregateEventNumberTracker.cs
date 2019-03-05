@@ -1,6 +1,6 @@
 using System.Collections.Concurrent;
 
-namespace MongoDbEventStore
+namespace CommonAdapters.MongoDbEventStore
 {
     public sealed class AggregateEventNumberTracker
     {

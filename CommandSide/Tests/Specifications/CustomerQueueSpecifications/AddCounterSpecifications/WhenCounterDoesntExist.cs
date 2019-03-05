@@ -1,21 +1,20 @@
 using System.Collections.Generic;
+using CommandSide.Domain.Commands;
+using CommandSide.DomainServices.CommandHandlers;
 using Common.Messaging;
-using Domain.Commands;
-using DomainServices.CommandHandlers;
 using FluentAssertions;
 using Shared.CustomerQueue;
 using Xunit;
-using static Tests.CustomerQueueTestValues;
 
-namespace Tests.Specifications.CustomerQueueSpecifications.AddCounterSpecifications
+namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.AddCounterSpecifications
 {
     public sealed class AddingCounterSpecification : CustomerQueueSpecification<AddCounter>
     {
-        public AddingCounterSpecification() : base(SingleCustomerQueueId)
+        public AddingCounterSpecification() : base(CustomerQueueTestValues.SingleCustomerQueueId)
         {
         }
         
-        protected override AddCounter CommandToExecute => new AddCounter(CounterA_Name);
+        protected override AddCounter CommandToExecute => new AddCounter(CustomerQueueTestValues.CounterA_Name);
 
         public override IEnumerable<CustomerQueueEvent> Given()
         {
@@ -26,8 +25,8 @@ namespace Tests.Specifications.CustomerQueueSpecifications.AddCounterSpecificati
 
         [Fact]
         public void contains_counter_added_event() => ProducedEvents.Should().Contain(new CounterAdded(
-            SingleCustomerQueueId,
-            CounterA_Name));
+            CustomerQueueTestValues.SingleCustomerQueueId,
+            CustomerQueueTestValues.CounterA_Name));
 
         [Fact]
         public void returns_success() => Result.IsSuccess.Should().BeTrue();

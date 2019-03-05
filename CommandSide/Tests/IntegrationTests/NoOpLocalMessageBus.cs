@@ -1,10 +1,7 @@
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Common;
 using Common.Messaging;
-using static Common.Result;
 
-namespace Tests.IntegrationTests
+namespace CommandSide.Tests.IntegrationTests
 {
     public sealed class NoOpDomainEventBus : IDomainEventBus
     {

@@ -1,6 +1,6 @@
 using Autofac;
-using CommandSidePorts.Repositories;
-using InMemory;
+using CommandSide.Adapters.InMemory;
+using CommandSide.CommandSidePorts.Repositories;
 
 namespace AutofacApplicationWrapUp.CommandSide
 {

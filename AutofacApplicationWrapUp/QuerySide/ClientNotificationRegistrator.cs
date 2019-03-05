@@ -1,6 +1,6 @@
 using Autofac;
-using QuerySidePorts;
-using WebsocketClientNotifier;
+using QuerySide.Adapters.WebsocketClientNotifier;
+using QuerySide.QuerySidePorts;
 
 namespace AutofacApplicationWrapUp.QuerySide
 {

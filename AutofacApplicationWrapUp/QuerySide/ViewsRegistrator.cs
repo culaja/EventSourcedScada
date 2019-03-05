@@ -1,5 +1,5 @@
 using Autofac;
-using CustomerQueueViews;
+using QuerySide.Views.CustomerQueueViews;
 
 namespace AutofacApplicationWrapUp.QuerySide
 {

@@ -6,7 +6,7 @@ using MongoDB.Driver;
 using MongoDB.Driver.Linq;
 using Ports.EventStore;
 
-namespace MongoDbEventStore
+namespace CommonAdapters.MongoDbEventStore
 {
     public sealed class EventStore : IEventStore
     {

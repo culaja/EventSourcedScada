@@ -1,11 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Common;
 using Common.Messaging;
-using static Common.Result;
 
-namespace Tests.Specifications
+namespace CommandSide.Tests.Specifications
 {
     public sealed class DomainEventMessageBusAggregator : IDomainEventBus
     {

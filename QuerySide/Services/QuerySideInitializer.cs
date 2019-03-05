@@ -1,13 +1,11 @@
 using System;
-using Common;
 using Common.Messaging;
-using CustomerQueueViews;
 using Ports.EventStore;
-using QuerySidePorts;
+using QuerySide.QuerySidePorts;
+using QuerySide.Views.CustomerQueueViews;
 using Shared.CustomerQueue;
-using static Common.Nothing;
 
-namespace Services
+namespace QuerySide.Services
 {
     public sealed class QuerySideInitializer
     {

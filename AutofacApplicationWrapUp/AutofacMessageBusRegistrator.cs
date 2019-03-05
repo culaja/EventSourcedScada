@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Autofac;
-using AutofacMessageBus;
-using Domain;
-using DomainServices.EventHandlers;
-using Services;
-using Services.EventHandlers;
+using CommandSide.Domain;
+using CommandSide.DomainServices.EventHandlers;
+using CommonAdapters.AutofacMessageBus;
+using QuerySide.Services;
+using QuerySide.Services.EventHandlers;
 using Module = Autofac.Module;
 
 namespace AutofacApplicationWrapUp

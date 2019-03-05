@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 using Autofac;
 using Common;
 using Common.Messaging;
-using static Common.Result;
 
-namespace AutofacMessageBus
+namespace CommonAdapters.AutofacMessageBus
 {
 	public sealed class AutofacLocalMessageBus : IDomainEventBus, ICommandBus, IDisposable
 	{
@@ -72,7 +71,7 @@ namespace AutofacMessageBus
 			}
 		}
 
-		private Result DispatchMessageToAllRegisteredHandlers(IMessage message) => Combine(
+		private Result DispatchMessageToAllRegisteredHandlers(IMessage message) => Result.Combine(
 			_messageResolver
 				.GetMessageHandlersFor(message)
 				.Select(handler => DispatchTo(message, handler))

@@ -1,9 +1,9 @@
 using System;
+using CommandSide.Domain;
 using Common;
-using Domain;
 using Shared.CustomerQueue;
 
-namespace CommandSidePorts.Repositories
+namespace CommandSide.CommandSidePorts.Repositories
 {
     public interface ICustomerQueueRepository : IRepository<CustomerQueue, CustomerQueueCreated>
     {

@@ -1,8 +1,7 @@
 ﻿using Common.Messaging;
-using static Newtonsoft.Json.Formatting;
-using static Newtonsoft.Json.JsonConvert;
+using Newtonsoft.Json;
 
-namespace QueryCommon
+namespace QuerySide.QueryCommon
 {
     public abstract class View : IView
     {
@@ -16,6 +15,6 @@ namespace QueryCommon
             }
         }
 
-        public string SerializeToJson() => SerializeObject(this, Indented);
+        public string SerializeToJson() => JsonConvert.SerializeObject(this, Formatting.Indented);
     }
 }

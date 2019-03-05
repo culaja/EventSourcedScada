@@ -1,7 +1,6 @@
 using Common;
-using static Common.Maybe<Domain.Ticket>;
 
-namespace Domain
+namespace CommandSide.Domain
 {
     public sealed class Counter : Entity<CounterName>
     {
@@ -13,6 +12,6 @@ namespace Domain
 
         public void SetServingTicket(Ticket ticket) => MaybeServingTicket = ticket;
 
-        public void RemoveServingTicket() => MaybeServingTicket = None;
+        public void RemoveServingTicket() => MaybeServingTicket = Maybe<Ticket>.None;
     }
 }

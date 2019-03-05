@@ -1,9 +1,9 @@
-using CommandSidePorts.Repositories;
+using CommandSide.CommandSidePorts.Repositories;
+using CommandSide.Domain.Commands;
 using Common;
 using Common.Messaging;
-using Domain.Commands;
 
-namespace DomainServices.CommandHandlers
+namespace CommandSide.DomainServices.CommandHandlers
 {
     public sealed class TakeNextCustomerHandler : CommandHandler<TakeNextCustomer>
     {

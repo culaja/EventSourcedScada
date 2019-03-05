@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Common;
 
-namespace Domain
+namespace CommandSide.Domain
 {
     public sealed class CounterName : Id
     {

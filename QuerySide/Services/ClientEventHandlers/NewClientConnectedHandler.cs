@@ -1,9 +1,9 @@
 using Common;
 using Common.Messaging;
-using CustomerQueueViews;
-using QuerySidePorts;
+using QuerySide.QuerySidePorts;
+using QuerySide.Views.CustomerQueueViews;
 
-namespace Services.ClientEventHandlers
+namespace QuerySide.Services.ClientEventHandlers
 {
     public sealed class NewClientConnectedHandler : MessageHandler<NewClientConnected>
     {

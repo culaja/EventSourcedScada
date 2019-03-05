@@ -1,39 +1,38 @@
 using System.Collections.Generic;
+using CommandSide.Domain.Commands;
+using CommandSide.DomainServices.CommandHandlers;
 using Common.Messaging;
-using Domain.Commands;
-using DomainServices.CommandHandlers;
 using FluentAssertions;
 using Shared.CustomerQueue;
 using Xunit;
-using static Tests.CustomerQueueTestValues;
 
-namespace Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpecifications
+namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.TakeNextCustomerSpecifications
 {
     public sealed class WhenSecondCustomerIsTaken : CustomerQueueSpecification<TakeNextCustomer>
     {
-        public WhenSecondCustomerIsTaken() : base(SingleCustomerQueueId)
+        public WhenSecondCustomerIsTaken() : base(CustomerQueueTestValues.SingleCustomerQueueId)
         {
         }
         
-        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CounterA_Name);
+        protected override TakeNextCustomer CommandToExecute => new TakeNextCustomer(CustomerQueueTestValues.CounterA_Name);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
-            yield return new CounterAdded(SingleCustomerQueueId, CounterA_Name);
-            yield return new TicketAdded(SingleCustomerQueueId, Ticket1_Id, Ticket1_Number);
-            yield return new TicketAdded(SingleCustomerQueueId, Ticket2_Id, Ticket2_Number);
-            yield return new CustomerTaken(SingleCustomerQueueId, CounterA_Name, Ticket1_Id);
-            yield return new CustomerServed(SingleCustomerQueueId, CounterA_Name, Ticket1_Id);
-            yield return new CustomerTaken(SingleCustomerQueueId, CounterA_Name, Ticket2_Id);
+            yield return new CounterAdded(CustomerQueueTestValues.SingleCustomerQueueId, CustomerQueueTestValues.CounterA_Name);
+            yield return new TicketAdded(CustomerQueueTestValues.SingleCustomerQueueId, CustomerQueueTestValues.Ticket1_Id, CustomerQueueTestValues.Ticket1_Number);
+            yield return new TicketAdded(CustomerQueueTestValues.SingleCustomerQueueId, CustomerQueueTestValues.Ticket2_Id, CustomerQueueTestValues.Ticket2_Number);
+            yield return new CustomerTaken(CustomerQueueTestValues.SingleCustomerQueueId, CustomerQueueTestValues.CounterA_Name, CustomerQueueTestValues.Ticket1_Id);
+            yield return new CustomerServed(CustomerQueueTestValues.SingleCustomerQueueId, CustomerQueueTestValues.CounterA_Name, CustomerQueueTestValues.Ticket1_Id);
+            yield return new CustomerTaken(CustomerQueueTestValues.SingleCustomerQueueId, CustomerQueueTestValues.CounterA_Name, CustomerQueueTestValues.Ticket2_Id);
         }
 
         public override CommandHandler<TakeNextCustomer> When() => new TakeNextCustomerHandler(CustomerQueueRepository);
         
         [Fact]
         public void customer_served_event_not_produced_again_for_the_same_ticket() => ProducedEvents.Should().Contain(new CustomerServed(
-            SingleCustomerQueueId,
-            CounterA_Name,
-            Ticket2_Id));
+            CustomerQueueTestValues.SingleCustomerQueueId,
+            CustomerQueueTestValues.CounterA_Name,
+            CustomerQueueTestValues.Ticket2_Id));
         
         [Fact]
         public void returns_success() => Result.IsSuccess.Should().BeTrue();

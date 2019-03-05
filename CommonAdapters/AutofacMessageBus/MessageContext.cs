@@ -2,7 +2,7 @@ using System.Threading.Tasks;
 using Common;
 using Common.Messaging;
 
-namespace AutofacMessageBus
+namespace CommonAdapters.AutofacMessageBus
 {
     internal sealed class MessageContext
     {

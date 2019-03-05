@@ -1,10 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Autofac;
-using AutofacMessageBus;
-using Domain;
-using DomainServices;
-using DomainServices.EventHandlers;
+using CommandSide.DomainServices;
 using Shared.CustomerQueue;
 using Module = Autofac.Module;
 

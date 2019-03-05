@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Common.Messaging;
-using QueryCommon;
+using QuerySide.QueryCommon;
 
-namespace CustomerQueueViews
+namespace QuerySide.Views.CustomerQueueViews
 {
     public sealed class ViewHolder
     {

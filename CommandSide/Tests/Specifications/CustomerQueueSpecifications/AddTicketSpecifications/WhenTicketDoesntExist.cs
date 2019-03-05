@@ -1,21 +1,20 @@
 using System.Collections.Generic;
+using CommandSide.Domain.Commands;
+using CommandSide.DomainServices.CommandHandlers;
 using Common.Messaging;
-using Domain.Commands;
-using DomainServices.CommandHandlers;
 using FluentAssertions;
 using Shared.CustomerQueue;
 using Xunit;
-using static Tests.CustomerQueueTestValues;
 
-namespace Tests.Specifications.CustomerQueueSpecifications.AddTicketSpecifications
+namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.AddTicketSpecifications
 {
     public sealed class WhenTicketDoesntExist : CustomerQueueSpecification<AddTicket>
     {
-        public WhenTicketDoesntExist() : base(SingleCustomerQueueId)
+        public WhenTicketDoesntExist() : base(CustomerQueueTestValues.SingleCustomerQueueId)
         {
         }
         
-        protected override AddTicket CommandToExecute => new AddTicket(Ticket1_Id, Ticket1_Number);
+        protected override AddTicket CommandToExecute => new AddTicket(CustomerQueueTestValues.Ticket1_Id, CustomerQueueTestValues.Ticket1_Number);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
@@ -26,9 +25,9 @@ namespace Tests.Specifications.CustomerQueueSpecifications.AddTicketSpecificatio
 
         [Fact]
         public void ticket_added_event_exists() => ProducedEvents.Should().Contain(new TicketAdded(
-            SingleCustomerQueueId,
-            Ticket1_Id,
-            Ticket1_Number));
+            CustomerQueueTestValues.SingleCustomerQueueId,
+            CustomerQueueTestValues.Ticket1_Id,
+            CustomerQueueTestValues.Ticket1_Number));
 
         [Fact]
         public void returns_success() => Result.IsSuccess.Should().BeTrue();

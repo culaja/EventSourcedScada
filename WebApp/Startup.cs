@@ -2,13 +2,13 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using AutofacApplicationWrapUp;
-using DomainServices;
+using CommandSide.DomainServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Services;
+using QuerySide.Services;
 
 namespace WebApp
 {

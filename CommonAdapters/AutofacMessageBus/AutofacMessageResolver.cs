@@ -5,7 +5,7 @@ using System.Linq;
 using Autofac;
 using Common.Messaging;
 
-namespace AutofacMessageBus
+namespace CommonAdapters.AutofacMessageBus
 {
     public sealed class AutofacMessageResolver
 	{

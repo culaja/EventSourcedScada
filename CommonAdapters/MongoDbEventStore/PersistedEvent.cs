@@ -3,9 +3,8 @@ using Common.Messaging;
 using Common.Messaging.Serialization;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using static MongoDB.Bson.ObjectId;
 
-namespace MongoDbEventStore
+namespace CommonAdapters.MongoDbEventStore
 {
     public sealed class PersistedEvent
     {
@@ -24,7 +23,7 @@ namespace MongoDbEventStore
 
         public PersistedEvent(IDomainEvent domainEvent)
         {
-            Id = GenerateNewId();
+            Id = ObjectId.GenerateNewId();
             AggregateTopicName = domainEvent.AggregateTopicName;
             AggregateRootVersion = domainEvent.Version;
             Number = domainEvent.Number;

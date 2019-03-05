@@ -1,11 +1,11 @@
 using System;
-using QueryCommon;
-using QuerySidePorts;
+using QuerySide.QueryCommon;
+using QuerySide.QuerySidePorts;
 using WebSocketSharp;
 using WebSocketSharp.Net;
 using WebSocketSharp.Server;
 
-namespace WebsocketClientNotifier
+namespace QuerySide.Adapters.WebsocketClientNotifier
 {
     public sealed class WebSocketNotifier : IClientNotifier, IDisposable
     {

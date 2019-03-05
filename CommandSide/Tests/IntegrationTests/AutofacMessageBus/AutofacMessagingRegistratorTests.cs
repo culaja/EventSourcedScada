@@ -1,8 +1,7 @@
 using Autofac;
 using AutofacApplicationWrapUp;
-using Xunit;
 
-namespace Tests.IntegrationTests.AutofacMessageBus
+namespace CommandSide.Tests.IntegrationTests.AutofacMessageBus
 {
     public sealed class AutofacMessagingRegistratorTests
     {

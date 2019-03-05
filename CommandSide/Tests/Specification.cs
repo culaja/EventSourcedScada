@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using CommandSide.Tests.Specifications;
 using Common;
 using Common.Messaging;
-using Tests.Specifications;
 
-namespace Tests
+namespace CommandSide.Tests
 {
     public abstract class Specification<T, TJ, TK, TL> 
         where T : AggregateRoot

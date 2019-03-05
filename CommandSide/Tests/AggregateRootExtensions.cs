@@ -1,6 +1,6 @@
 using Common;
 
-namespace Tests
+namespace CommandSide.Tests
 {
     public static class AggregateRootExtensions
     {
