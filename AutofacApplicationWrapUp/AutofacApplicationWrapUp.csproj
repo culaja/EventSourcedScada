@@ -1,0 +1,20 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <RootNamespace>AutofacApplicationWrapup</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="4.9.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\CommonAdapters\AutofacMessageBus\AutofacMessageBus.csproj" />
+      <ProjectReference Include="..\CommandSide\DomainServices\DomainServices.csproj" />
+      <ProjectReference Include="..\CommandSide\Domain\Domain.csproj" />
+      <ProjectReference Include="..\CommandSide\Adapters\InMemory\InMemory.csproj" />
+      <ProjectReference Include="..\CommonAdapters\MongoDbEventStore\MongoDbEventStore.csproj" />
+    </ItemGroup>
+
+</Project>
