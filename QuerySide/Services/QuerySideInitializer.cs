@@ -2,7 +2,8 @@ using System;
 using Common;
 using Common.Messaging;
 using CustomerQueueViews;
-using Ports;
+using Ports.EventStore;
+using QuerySidePorts;
 using Shared.CustomerQueue;
 using static Common.Nothing;
 
@@ -10,27 +11,27 @@ namespace Services
 {
     public sealed class QuerySideInitializer
     {
-        private readonly IEventStoreSubscription<CustomerQueueSubscription> _customerQueueEventStoreSubscription;
+        private readonly IEventStore _eventStore;
         private readonly IDomainEventBus _domainEventBus;
         private readonly IClientNotifier _clientNotifier;
         private readonly ViewHolder _viewHolder;
 
         public QuerySideInitializer(
-            IEventStoreSubscription<CustomerQueueSubscription> customerQueueEventStoreSubscription,
+            IEventStore eventStore,
+            ViewHolder viewHolder, 
             IDomainEventBus domainEventBus,
-            IClientNotifier clientNotifier,
-            ViewHolder viewHolder)
+            IClientNotifier clientNotifier)
         {
-            _customerQueueEventStoreSubscription = customerQueueEventStoreSubscription;
+            _eventStore = eventStore;
+            _viewHolder = viewHolder;
             _domainEventBus = domainEventBus;
             _clientNotifier = clientNotifier;
-            _viewHolder = viewHolder;
         }
 
         public void Initialize()
         {
             StartClientNotifier();
-            FeedFromEventStore();
+            IntegrityLoadEventsFromEventStore();
         }
 
         private void StartClientNotifier()
@@ -38,19 +39,12 @@ namespace Services
             _clientNotifier.StartClientNotifier(() => _domainEventBus.Dispatch(new NewClientConnected()));
         }
 
-        private void FeedFromEventStore()
+        private void IntegrityLoadEventsFromEventStore()
         {
             Console.WriteLine("Performing integrity read of domain events ...");
-            var domainEvents = _customerQueueEventStoreSubscription.IntegrityLoadEvents(OnEachNewDomainEventDispatchItToEventBus);
-            foreach (var e in domainEvents) _viewHolder.Apply(e);
+            foreach (var e in _eventStore.LoadAllFor<CustomerQueueSubscription>()) _viewHolder.Apply(e);
             Console.WriteLine("Integrity read finished");
             Console.WriteLine(_viewHolder);
-        }
-
-        private Nothing OnEachNewDomainEventDispatchItToEventBus(IDomainEvent e)
-        {
-            _domainEventBus.Dispatch(e);
-            return NotAtAll;
         }
     }
 }

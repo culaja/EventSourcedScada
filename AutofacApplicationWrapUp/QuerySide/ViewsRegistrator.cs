@@ -1,7 +1,7 @@
 using Autofac;
 using CustomerQueueViews;
 
-namespace AutofacApplicationWrapUp
+namespace AutofacApplicationWrapUp.QuerySide
 {
     public sealed class ViewsRegistrator : Module
     {

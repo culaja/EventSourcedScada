@@ -1,8 +1,8 @@
 using Autofac;
-using Ports;
+using QuerySidePorts;
 using WebsocketClientNotifier;
 
-namespace AutofacApplicationWrapUp
+namespace AutofacApplicationWrapUp.QuerySide
 {
     public sealed class ClientNotificationRegistrator : Module
     {

@@ -2,7 +2,6 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <RootNamespace>AutofacApplicationWrapup</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -15,6 +14,12 @@
       <ProjectReference Include="..\CommandSide\Domain\Domain.csproj" />
       <ProjectReference Include="..\CommandSide\Adapters\InMemory\InMemory.csproj" />
       <ProjectReference Include="..\CommonAdapters\MongoDbEventStore\MongoDbEventStore.csproj" />
+      <ProjectReference Include="..\Ports\Ports.csproj" />
+      <ProjectReference Include="..\QuerySide\Adapters\WebsocketClientNotifier\WebsocketClientNotifier.csproj" />
+      <ProjectReference Include="..\QuerySide\QueryCommon\QueryCommon.csproj" />
+      <ProjectReference Include="..\QuerySide\QuerySidePorts\QuerySidePorts.csproj" />
+      <ProjectReference Include="..\QuerySide\Services\Services.csproj" />
+      <ProjectReference Include="..\QuerySide\Views\CustomerQueueViews\CustomerQueueViews.csproj" />
     </ItemGroup>
 
 </Project>

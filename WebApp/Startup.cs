@@ -1,13 +1,14 @@
 ﻿using System;
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
-using AutofacApplicationWrapup;
+using AutofacApplicationWrapUp;
 using DomainServices;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Services;
 
 namespace WebApp
 {
@@ -32,7 +33,7 @@ namespace WebApp
             containerBuilder.Populate(services);
             var container = containerBuilder.Build();
             
-            ReConstructAllAggregates(container);
+            ReConstructAllAggregatesAndViews(container);
             
             return new AutofacServiceProvider(container);
         }
@@ -53,10 +54,10 @@ namespace WebApp
             app.UseMvc();
         }
 
-        private static void ReConstructAllAggregates(IContainer container)
+        private static void ReConstructAllAggregatesAndViews(IComponentContext componentContext)
         {
-            container.Resolve<AggregateConstructor>().ReconstructAllAggregates();
-            
+            componentContext.Resolve<AggregateConstructor>().ReconstructAllAggregates();
+            componentContext.Resolve<QuerySideInitializer>().Initialize();
         }
     }
 }

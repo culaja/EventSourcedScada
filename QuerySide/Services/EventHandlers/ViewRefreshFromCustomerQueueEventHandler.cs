@@ -1,7 +1,7 @@
 using System;
 using Common;
 using CustomerQueueViews;
-using Ports;
+using QuerySidePorts;
 using Shared.CustomerQueue;
 using static Common.Result;
 

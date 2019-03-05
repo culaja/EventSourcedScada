@@ -1,7 +1,7 @@
 using System;
 using QueryCommon;
 
-namespace Ports
+namespace QuerySidePorts
 {
     public interface IClientNotifier
     {

@@ -2,7 +2,7 @@ using Autofac;
 using CommandSidePorts.Repositories;
 using InMemory;
 
-namespace AutofacApplicationWrapup
+namespace AutofacApplicationWrapUp.CommandSide
 {
     public sealed class RepositoryRegistrator : Module
     {

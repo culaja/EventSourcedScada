@@ -5,9 +5,10 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\..\Ports\Ports.csproj" />
       <ProjectReference Include="..\..\Shared.CustomerQueue\Shared.CustomerQueue.csproj" />
-      <ProjectReference Include="..\Ports\Ports.csproj" />
       <ProjectReference Include="..\QueryCommon\QueryCommon.csproj" />
+      <ProjectReference Include="..\QuerySidePorts\QuerySidePorts.csproj" />
       <ProjectReference Include="..\Views\CustomerQueueViews\CustomerQueueViews.csproj" />
     </ItemGroup>
 

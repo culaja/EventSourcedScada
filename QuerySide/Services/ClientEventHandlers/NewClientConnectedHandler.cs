@@ -1,7 +1,7 @@
 using Common;
 using Common.Messaging;
 using CustomerQueueViews;
-using Ports;
+using QuerySidePorts;
 
 namespace Services.ClientEventHandlers
 {

@@ -1,5 +1,6 @@
 using Autofac;
-using AutofacApplicationWrapup;
+using AutofacApplicationWrapUp;
+using Xunit;
 
 namespace Tests.IntegrationTests.AutofacMessageBus
 {
