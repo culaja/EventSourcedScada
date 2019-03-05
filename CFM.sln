@@ -30,7 +30,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuerySidePorts", "QuerySide
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QueryCommon", "QuerySide\QueryCommon\QueryCommon.csproj", "{2BEF89A3-B8C3-46F4-A00B-E2046C09396B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Services", "QuerySide\Services\Services.csproj", "{6A7F570F-72A7-4157-9556-42FEDA8FB90F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuerySideServices", "QuerySide\QuerySideServices\QuerySideServices.csproj", "{6A7F570F-72A7-4157-9556-42FEDA8FB90F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommonAdapters", "CommonAdapters", "{63E2ED40-9260-4E8A-8EC4-F333FB51F6A1}"
 EndProject
