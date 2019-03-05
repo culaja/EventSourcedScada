@@ -1,6 +1,6 @@
 using Autofac;
+using CommandSidePorts.Repositories;
 using InMemory;
-using Ports.Repositories;
 
 namespace AutofacApplicationWrapup
 {

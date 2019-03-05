@@ -14,8 +14,7 @@
       <ProjectReference Include="..\DomainServices\DomainServices.csproj" />
       <ProjectReference Include="..\Domain\Domain.csproj" />
       <ProjectReference Include="..\Adapters\InMemory\InMemory.csproj" />
-      <ProjectReference Include="..\Adapters\MongoDbEventStore\MongoDbEventStore.csproj" />
-      <ProjectReference Include="..\Adapters\RabbitMqMessageBus\RabbitMqMessageBus.csproj" />
+      <ProjectReference Include="..\..\CommonAdapters\MongoDbEventStore\MongoDbEventStore.csproj" />
     </ItemGroup>
 
 </Project>

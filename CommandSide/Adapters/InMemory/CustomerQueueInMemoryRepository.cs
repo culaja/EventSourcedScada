@@ -1,11 +1,10 @@
 using System;
+using CommandSidePorts.Repositories;
 using Common;
 using Common.Messaging;
 using Domain;
-using Ports.Repositories;
 using Shared.CustomerQueue;
 using static System.Guid;
-using static Common.Result;
 using static Domain.AvailableCounters;
 using static Domain.CustomerQueue;
 using static Domain.QueuedTickets;

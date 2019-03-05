@@ -6,8 +6,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\Common.csproj" />
+      <ProjectReference Include="..\..\CommandSidePorts\CommandSidePorts.csproj" />
       <ProjectReference Include="..\..\Domain\Domain.csproj" />
-      <ProjectReference Include="..\..\Ports\Ports.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 using System;
+using CommandSidePorts.Repositories;
 using Domain;
 using Ports.EventStore;
-using Ports.Repositories;
 using Shared.CustomerQueue;
 using static System.Console;
 

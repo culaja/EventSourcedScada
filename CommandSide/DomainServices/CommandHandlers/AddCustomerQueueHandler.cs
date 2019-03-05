@@ -1,7 +1,7 @@
+using CommandSidePorts.Repositories;
 using Common;
 using Common.Messaging;
 using Domain.Commands;
-using Ports.Repositories;
 using static Domain.CustomerQueue;
 
 namespace DomainServices.CommandHandlers

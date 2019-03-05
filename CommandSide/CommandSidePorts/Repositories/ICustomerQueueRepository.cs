@@ -3,7 +3,7 @@ using Common;
 using Domain;
 using Shared.CustomerQueue;
 
-namespace Ports.Repositories
+namespace CommandSidePorts.Repositories
 {
     public interface ICustomerQueueRepository : IRepository<CustomerQueue, CustomerQueueCreated>
     {

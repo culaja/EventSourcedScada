@@ -28,7 +28,7 @@ namespace AutofacApplicationWrapup
                 },
                 new List<Assembly>()
                 {   
-                    typeof(CustomerQueueEventRemoteNotifier).Assembly
+                    typeof(CustomerQueuePersistenceHandler).Assembly
                 }));
         }
 

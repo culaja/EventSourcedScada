@@ -1,10 +1,9 @@
 using System;
+using CommandSidePorts.Repositories;
 using Common.Messaging;
 using Domain;
 using InMemory;
-using Ports.Repositories;
 using Shared.CustomerQueue;
-using Tests.IntegrationTests;
 using static Domain.AvailableCounters;
 using static Domain.QueuedTickets;
 
