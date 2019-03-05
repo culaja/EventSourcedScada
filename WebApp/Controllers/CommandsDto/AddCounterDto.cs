@@ -1,5 +1,3 @@
-using System;
-
 namespace WebApp.Controllers.CommandsDto
 {
     public sealed class AddCounterDto
