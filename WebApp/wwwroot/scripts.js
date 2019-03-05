@@ -3,14 +3,14 @@ $(document).ready(function(){
     var url = "http://localhost:5000/api";
     var maxTicketNumber = 0;
     
-    var exampleSocket = new WebSocket("ws://AnyClient:AnyClientPass@localhost/ClientHub");
+    var exampleSocket = new WebSocket("ws://localhost/ClientHub");
     window.onbeforeunload = function() {
         exampleSocket.onclose = function () {}; // disable onclose handler first
         exampleSocket.close();
     };
     
     exampleSocket.onopen = function (event) {
-        console.log('Websocket connection opened');
+        console.log('Connection with server established.');
     };
     
     exampleSocket.onmessage = function (event) {
@@ -18,17 +18,16 @@ $(document).ready(function(){
         var data = JSON.parse(msg.Event);
         switch(msg.Type) {
             case "CountersView":
-                console.log(data);
                 populateCounterStates(data.CountersState);
                 break;
             case "TicketsPerCounterView":
-                console.log(data);
                 populateCounterStats(data.CountersDetails);
                 break;
             case "TicketQueueView":
-                console.log(data);
                 populateTicketQueue(data.TicketStates);
                 break;
+            default:
+            console.log("Unsupported event received: " + msg.Type);        
         }
     }
     

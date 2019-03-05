@@ -20,12 +20,6 @@ namespace WebApp.Controllers
         }
         
         [HttpPost]
-        [Route(nameof(AddCustomerQueue))]
-        public Task<IActionResult> AddCustomerQueue() => _commandBus
-            .ExecuteAsync(new AddCustomerQueue(NewGuid()))
-            .ToActionResultAsync();
-
-        [HttpPost]
         [Route(nameof(AddCounter))]
         public Task<IActionResult> AddCounter([FromBody] AddCounterDto dto) => _commandBus
                 .ExecuteAsync(new AddCounter(dto.CounterName.ToCounterName()))
