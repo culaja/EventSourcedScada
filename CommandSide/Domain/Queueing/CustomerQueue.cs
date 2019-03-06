@@ -1,6 +1,10 @@
 using System;
+using System.Linq;
+using CommandSide.Domain.Queueing.Commands;
+using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using Shared.CustomerQueue;
+using static Common.Result;
 
 namespace CommandSide.Domain.Queueing
 {
@@ -24,5 +28,14 @@ namespace CommandSide.Domain.Queueing
         }
 
         private CustomerQueue Apply(CustomerQueueCreated _) => this;
+
+        public Result<CustomerQueue> SetConfiguration(Configuration c)
+        {
+            var firstCounterDetails = c.CountersDetails.Items.First();
+            ApplyChange(new CounterAdded(Id, firstCounterDetails.Id, firstCounterDetails.Name));
+            return Ok(this);
+        }
+        
+        private CustomerQueue Apply(CounterAdded e) => this;
     }
 }

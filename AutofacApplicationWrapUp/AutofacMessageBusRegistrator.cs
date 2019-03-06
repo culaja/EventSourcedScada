@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Autofac;
 using CommandSide.Domain.Queueing;
-using CommandSide.DomainServices.EventHandlers;
+using CommandSide.DomainServices.Queueing.EventHandlers;
 using CommonAdapters.AutofacMessageBus;
 using QuerySide.Services;
 using QuerySide.Services.EventHandlers;

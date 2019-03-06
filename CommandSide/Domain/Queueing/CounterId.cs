@@ -20,6 +20,6 @@ namespace CommandSide.Domain.Queueing
 
         public override string ToString() => _id.ToString();
 
-        public static implicit operator string(CounterId id) => id.ToString();
+        public static implicit operator Guid(CounterId id) => id._id;
     }
 }

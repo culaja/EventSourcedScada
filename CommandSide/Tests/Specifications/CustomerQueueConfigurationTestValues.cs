@@ -9,7 +9,7 @@ namespace CommandSide.Tests.Specifications
     public static class CustomerQueueConfigurationTestValues
     {
         #region Open times
-        private static DateTime FromHour(int hour) => new DateTime(0, 0, 0, hour, 0, 0);
+        private static DateTime FromHour(int hour) => new DateTime(1, 1, 1, hour, 0, 0);
         public static readonly DateTime Hour9 = FromHour(9);
         public static readonly DateTime Hour10 = FromHour(10);
         public static readonly DateTime Hour11 = FromHour(11);
