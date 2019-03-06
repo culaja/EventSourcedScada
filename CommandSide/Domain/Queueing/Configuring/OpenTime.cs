@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Common;
 
 namespace CommandSide.Domain.Queueing.Configuring
-{   
+{
     public sealed class OpenTime : ValueObject<OpenTime>
     {
         public DayOfWeek Day { get; }

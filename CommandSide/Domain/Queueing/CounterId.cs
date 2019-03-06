@@ -8,7 +8,7 @@ namespace CommandSide.Domain.Queueing
     {
         private readonly Guid _id;
 
-        private CounterId(Guid id)
+        public CounterId(Guid id)
         {
             _id = id;
         }

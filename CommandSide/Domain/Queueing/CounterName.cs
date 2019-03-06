@@ -7,7 +7,7 @@ namespace CommandSide.Domain.Queueing
     {
         private readonly string _name;
 
-        private CounterName(string name)
+        public CounterName(string name)
         {
             _name = name;
         }

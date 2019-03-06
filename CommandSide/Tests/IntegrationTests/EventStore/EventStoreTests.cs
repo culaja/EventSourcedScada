@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using CommandSide.Tests.Specifications;
 using Common.Messaging;
 using CommonAdapters.MongoDbEventStore;
 using FluentAssertions;
