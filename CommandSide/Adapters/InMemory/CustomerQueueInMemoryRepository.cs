@@ -16,9 +16,7 @@ namespace CommandSide.Adapters.InMemory
         protected override CustomerQueue CreateInternalFrom(CustomerQueueCreated customerQueueCreated) =>
             new CustomerQueue(
                 customerQueueCreated.AggregateRootId,
-                customerQueueCreated.Version,
-                AvailableCounters.NoAvailableCounters,
-                QueuedTickets.EmptyQueuedTickets);
+                customerQueueCreated.Version);
 
         public Result<CustomerQueue> BorrowSingle(Func<CustomerQueue, Result<CustomerQueue>> transformer) =>
             ExecuteTransformerAndPurgeEvents(

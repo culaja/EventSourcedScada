@@ -32,21 +32,11 @@ namespace CommandSide.Tests.IntegrationTests.EventStore
         public void _1()
         {
             _eventStore.Append(CustomerQueueTestValues.SingleCustomerQueueCreated.SetAnyVersionAndTimestamp());
-            _eventStore.Append(CustomerQueueTestValues.CounterA_Added.SetAnyVersionAndTimestamp());
-            _eventStore.Append(CustomerQueueTestValues.Ticket1_Added.SetAnyVersionAndTimestamp());
-            _eventStore.Append(CustomerQueueTestValues.CustomerWithTicket1_Taken.SetAnyVersionAndTimestamp());
-            _eventStore.Append(CustomerQueueTestValues.CustomerWithTicket1_Served.SetAnyVersionAndTimestamp());
-            _eventStore.Append(CustomerQueueTestValues.CustomerWithTicket1_Revoked.SetAnyVersionAndTimestamp());
            
             var allEvents =  _eventStore.LoadAllFor<CustomerQueueSubscription>().ToList();
 
             ListsAreEquivalent(allEvents, 
-                CustomerQueueTestValues.SingleCustomerQueueCreated,
-                CustomerQueueTestValues.CounterA_Added,
-                CustomerQueueTestValues.Ticket1_Added,
-                CustomerQueueTestValues.CustomerWithTicket1_Taken,
-                CustomerQueueTestValues.CustomerWithTicket1_Served,
-                CustomerQueueTestValues.CustomerWithTicket1_Revoked);
+                CustomerQueueTestValues.SingleCustomerQueueCreated);
         }
 
         private static void ListsAreEquivalent(IReadOnlyList<IDomainEvent> a, params IDomainEvent[] b)

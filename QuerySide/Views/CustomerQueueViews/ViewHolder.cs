@@ -12,9 +12,6 @@ namespace QuerySide.Views.CustomerQueueViews
     {
         private readonly IReadOnlyList<View> _views = new View[]
         {
-            new CountersView(),
-            new TicketsPerCounterView(),
-            new TicketQueueView()
         };
 
         public Nothing Apply(IDomainEvent e)

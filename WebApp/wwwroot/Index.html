@@ -14,67 +14,7 @@
 </head>
 
 <body>
-
-<div class="alert" id="rootErrorBox" >
-    <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
-    <div id="errorMessage"></div> 
-</div>
-
-<div id="results">
-    <h2>Customer queue stats:</h2>
-    <div class="container">    
-        <h3>Counters state</h3>
-        <form id="submitCounter">
-            <input id="name" type="text" placeholder="Counter name">
-            <input type="submit" value="Add counter">
-        </form>
-        <div id="countersState">
-            <table>
-                <thead>
-                <tr>
-                    <th>Counter</th>
-                    <th>Ticket</th>
-                </tr>                
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="container">
-        <h3>Tickets per counter</h3>
-        <div id="ticketsPerCounter">
-            <table>
-                <thead>
-                <tr>
-                    <th>Counter</th>
-                    <th>Served</th>
-                    <th>Revoked</th>
-                </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    
-    <div>
-        <h3>Ticket queue</h3>
-        <div id="ticketQueue">
-        </div>
-    </div>
-
-    <i class="fas fa-print fa-2x"></i>
-</div>
-
-<div id="root"></div>
-
-<script
-        src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
-<script src="scripts.js"></script>
+<h1>CFM server simulator</h1>
 </body>
 
 </html>
