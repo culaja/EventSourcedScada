@@ -31,11 +31,21 @@ namespace CommandSide.Domain.Queueing
 
         public Result<CustomerQueue> SetConfiguration(Configuration c)
         {
-            var firstCounterDetails = c.CountersDetails.Items.First();
-            ApplyChange(new CounterAdded(Id, firstCounterDetails.Id, firstCounterDetails.Name));
+            foreach (var counterDetail in c.CountersDetails)
+            {
+                ApplyChange(new CounterAdded(Id, counterDetail.Id, counterDetail.Name));  
+            }
+            
+            foreach (var openTime in c.OpenTimes)
+            {
+                ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp));  
+            }
+            
             return Ok(this);
         }
         
         private CustomerQueue Apply(CounterAdded e) => this;
+        
+        private CustomerQueue Apply(OpenTimeAdded e) => this;
     }
 }

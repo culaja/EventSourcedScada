@@ -25,6 +25,9 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.SetConfig
         public override CommandHandler<SetConfiguration> When() => new SetConfigurationHandler(CustomerQueueRepository);
 
         [Fact]
-        public void Counter1_is_added() => ProducedEvents.Should().Contain(Counter1Added);
+        public void AllCounters_are_added() => ProducedEvents.Should().ContainInOrder(Counter1Added, Counter2Added, Counter3Added);
+
+        [Fact]
+        public void AllOpenTimes_are_added() => ProducedEvents.Should().ContainInOrder(Monday9To12Added, Monday14To16Added, Tuesday9To12Added);
     }
 }
