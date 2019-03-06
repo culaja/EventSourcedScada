@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using CommandSide.Tests.Specifications;
 using Common.Messaging;
 using CommonAdapters.MongoDbEventStore;
 using FluentAssertions;
@@ -9,6 +8,7 @@ using Mongo2Go;
 using Ports.EventStore;
 using Shared.CustomerQueue;
 using Xunit;
+using static CommandSide.Tests.Specifications.CustomerQueueTestValues;
 
 namespace CommandSide.Tests.IntegrationTests.EventStore
 {
@@ -32,12 +32,14 @@ namespace CommandSide.Tests.IntegrationTests.EventStore
         [Fact]
         public void _1()
         {
-            _eventStore.Append(CustomerQueueTestValues.SingleCustomerQueueCreated.SetAnyVersionAndTimestamp());
+            _eventStore.Append(SingleCustomerQueueCreated.SetAnyVersionAndTimestamp());
+            _eventStore.Append(Counter1Added.SetAnyVersionAndTimestamp());
            
             var allEvents =  _eventStore.LoadAllFor<CustomerQueueSubscription>().ToList();
 
             ListsAreEquivalent(allEvents, 
-                CustomerQueueTestValues.SingleCustomerQueueCreated);
+                SingleCustomerQueueCreated,
+                Counter1Added);
         }
 
         private static void ListsAreEquivalent(IReadOnlyList<IDomainEvent> a, params IDomainEvent[] b)
