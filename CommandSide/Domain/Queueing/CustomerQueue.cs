@@ -2,7 +2,7 @@ using System;
 using Common;
 using Shared.CustomerQueue;
 
-namespace CommandSide.Domain
+namespace CommandSide.Domain.Queueing
 {
     public sealed class CustomerQueue : AggregateRoot
     {

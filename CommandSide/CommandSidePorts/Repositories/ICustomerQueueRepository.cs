@@ -1,5 +1,5 @@
 using System;
-using CommandSide.Domain;
+using CommandSide.Domain.Queueing;
 using Common;
 using Shared.CustomerQueue;
 

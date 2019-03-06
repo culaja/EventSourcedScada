@@ -1,6 +1,6 @@
 using System;
 using CommandSide.CommandSidePorts.Repositories;
-using CommandSide.Domain;
+using CommandSide.Domain.Queueing;
 using Common;
 using Common.Messaging;
 using Shared.CustomerQueue;

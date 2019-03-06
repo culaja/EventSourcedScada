@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Autofac;
-using CommandSide.Domain;
+using CommandSide.Domain.Queueing;
 using CommandSide.DomainServices.EventHandlers;
 using CommonAdapters.AutofacMessageBus;
 using QuerySide.Services;

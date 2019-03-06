@@ -1,5 +1,5 @@
 using CommandSide.CommandSidePorts.Repositories;
-using CommandSide.Domain;
+using CommandSide.Domain.Queueing;
 using Common;
 using Ports.EventStore;
 using Shared.CustomerQueue;

@@ -1,7 +1,7 @@
 using System;
 using CommandSide.Adapters.InMemory;
 using CommandSide.CommandSidePorts.Repositories;
-using CommandSide.Domain;
+using CommandSide.Domain.Queueing;
 using Common.Messaging;
 using Shared.CustomerQueue;
 
