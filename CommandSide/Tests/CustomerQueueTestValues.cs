@@ -1,5 +1,4 @@
 using System;
-using CommandSide.Domain;
 using Shared.CustomerQueue;
 
 namespace CommandSide.Tests

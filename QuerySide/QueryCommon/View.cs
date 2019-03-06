@@ -1,11 +1,13 @@
-﻿using Common.Messaging;
+﻿using Common;
+using Common.Messaging;
 using Newtonsoft.Json;
+using static Common.Nothing;
 
 namespace QuerySide.QueryCommon
 {
     public abstract class View : IView
     {
-        public void Apply(IDomainEvent e)
+        public Nothing Apply(IDomainEvent e)
         {
             var applyMethodInfo = GetType().GetMethod("Handle", new[] { e.GetType() });
 
@@ -13,6 +15,8 @@ namespace QuerySide.QueryCommon
             {
                 applyMethodInfo.Invoke(this, new object[] {e});
             }
+            
+            return NotAtAll;
         }
 
         public string SerializeToJson() => JsonConvert.SerializeObject(this, Formatting.Indented);

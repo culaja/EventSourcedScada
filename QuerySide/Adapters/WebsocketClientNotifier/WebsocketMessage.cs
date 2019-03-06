@@ -1,5 +1,6 @@
-using Newtonsoft.Json;
 using QuerySide.QueryCommon;
+using static Newtonsoft.Json.Formatting;
+using static Newtonsoft.Json.JsonConvert;
 
 namespace QuerySide.Adapters.WebsocketClientNotifier
 {
@@ -17,6 +18,6 @@ namespace QuerySide.Adapters.WebsocketClientNotifier
         
         public static WebsocketMessage WebsocketMessageFrom(IView v) => new WebsocketMessage(v);
 
-        public string Serialize() => JsonConvert.SerializeObject(this, Formatting.Indented);
+        public string Serialize() => SerializeObject(this, Indented);
     }
 }
