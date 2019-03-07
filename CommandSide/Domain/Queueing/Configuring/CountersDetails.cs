@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Common;
 
 namespace CommandSide.Domain.Queueing.Configuring
@@ -14,6 +15,9 @@ namespace CommandSide.Domain.Queueing.Configuring
         }
         
         public static CountersDetails EmptyCountersDetails => new CountersDetails(new List<CounterDetails>());
+        
+        public CountersDetails Except(IReadOnlyList<CounterId> counterIds) => new CountersDetails(
+            _items.Where(cd => !counterIds.Contains(cd.Id)).ToList());
         
         protected override IEnumerable<object> GetEqualityComponents()
         {

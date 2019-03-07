@@ -15,11 +15,13 @@ namespace CommandSide.Tests.Specifications
         public static readonly CounterAdded Counter2Added = new CounterAdded(SingleCustomerQueueId, Counter2Id, Counter2Name);
         public static readonly CounterAdded Counter3Added = new CounterAdded(SingleCustomerQueueId, Counter3Id, Counter3Name);
         public static readonly IReadOnlyList<CounterAdded> AllCountersAdded = new[] {Counter1Added, Counter2Added, Counter3Added};
+        public static readonly IReadOnlyList<CounterAdded> FirstTwoCountersAdded = new[] {Counter1Added, Counter2Added};
         
         public static readonly OpenTimeAdded Monday9To12Added = new OpenTimeAdded(SingleCustomerQueueId, Monday9To12.Day, Monday9To12.BeginTimestamp, Monday9To12.EndTimestamp);
         public static readonly OpenTimeAdded Monday14To16Added = new OpenTimeAdded(SingleCustomerQueueId, Monday14To16.Day, Monday14To16.BeginTimestamp, Monday14To16.EndTimestamp);
         public static readonly OpenTimeAdded Tuesday9To12Added = new OpenTimeAdded(SingleCustomerQueueId, Tuesday9To12.Day, Tuesday9To12.BeginTimestamp, Tuesday9To12.EndTimestamp);
         public static readonly IReadOnlyList<OpenTimeAdded> AllOpenTimesAdded = new[] {Monday9To12Added, Monday14To16Added, Tuesday9To12Added};
+        public static readonly IReadOnlyList<OpenTimeAdded> MondayOpenTimesAdded = new[] {Monday9To12Added, Monday14To16Added};
         
         public static readonly CounterRemoved Counter1Removed = new CounterRemoved(SingleCustomerQueueId, Counter1Id);
         public static readonly CounterRemoved Counter2Removed = new CounterRemoved(SingleCustomerQueueId, Counter2Id);

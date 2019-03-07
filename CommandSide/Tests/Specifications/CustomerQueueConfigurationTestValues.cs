@@ -76,12 +76,8 @@ namespace CommandSide.Tests.Specifications
             ThreeCountersDetails,
             AllOpenTimes);
         
-        public static readonly Configuration ConfigurationWithMondayOpenTimes = new Configuration(
-            ThreeCountersDetails,
+        public static readonly Configuration ConfigurationWithMondayOpenTimesAndFirstTwoCounters = new Configuration(
+            TwoCountersDetails,
             MondayOpenTimes);
-        
-        public static readonly Configuration ConfigurationWithTuesdayOpenTimes = new Configuration(
-            ThreeCountersDetails,
-            TuesdayOpenTimes);
     }
 }

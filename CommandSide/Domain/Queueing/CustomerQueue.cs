@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using Shared.CustomerQueue;
@@ -30,17 +31,18 @@ namespace CommandSide.Domain.Queueing
 
         public Result<CustomerQueue> SetConfiguration(Configuration c)
         {
-            foreach (var counterDetail in c.CountersDetails)
+            foreach (var counterDetail in c.CountersDetails.Except(_countersAdded))
             {
                 ApplyChange(new CounterAdded(Id, counterDetail.Id, counterDetail.Name));  
             }
             
             foreach (var openTime in c.OpenTimes)
             {
-                ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp));  
+                ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp));
             }
 
-            foreach (var counterId in _countersAdded)
+            var countersToRemove = _countersAdded.Except(c.CountersDetails.Select(cd => cd.Id)).ToList();
+            foreach (var counterId in countersToRemove)
             {
                 ApplyChange(new CounterRemoved(Id, counterId));
             }
@@ -63,6 +65,7 @@ namespace CommandSide.Domain.Queueing
 
         private CustomerQueue Apply(CounterRemoved e)
         {
+            _countersAdded.Remove(e.CounterId.ToCounterId());
             return this;
         }
         
