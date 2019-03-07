@@ -15,7 +15,14 @@ namespace CommandSide.Domain.Queueing.Configuring
             Id = id;
             Name = name;
         }
-        
+
+        public bool IsTheSameCounterWithDifferentNameAs(CounterDetails counterDetails) =>
+            IsTheSameCounterAs(counterDetails) && HasDifferentNameThan(counterDetails);
+
+        public bool IsNotTheSameCounterAs(CounterDetails counterDetails) => Id != counterDetails.Id;
+        private bool IsTheSameCounterAs(CounterDetails counterDetails) => Id == counterDetails.Id;
+        private bool HasDifferentNameThan(CounterDetails counterDetails) => Name != counterDetails.Name;
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Id;

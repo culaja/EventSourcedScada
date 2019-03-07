@@ -47,21 +47,41 @@ namespace CommandSide.Tests.Specifications
         
         public static readonly CounterId Counter1Id = new CounterId(NewGuid());
         public static readonly CounterName Counter1Name = new CounterName("Counter1");
+        public static readonly CounterName Counter1ChangedName = new CounterName("Counter1ChangedName");
         public static readonly CounterDetails Counter1Details = new CounterDetails(Counter1Id, Counter1Name);
+        public static readonly CounterDetails Counter1DetailsWithChangedName = new CounterDetails(Counter1Id, Counter1ChangedName);
         
         public static readonly CounterId Counter2Id = new CounterId(NewGuid());
         public static readonly CounterName Counter2Name = new CounterName("Counter2");
+        public static readonly CounterName Counter2ChangedName = new CounterName("Counter2ChangedName");
         public static readonly CounterDetails Counter2Details = new CounterDetails(Counter2Id, Counter2Name);
+        public static readonly CounterDetails Counter2DetailsWithChangedName = new CounterDetails(Counter2Id, Counter2ChangedName);
         
         public static readonly CounterId Counter3Id = new CounterId(NewGuid());
         public static readonly CounterName Counter3Name = new CounterName("Counter3");
+        public static readonly CounterName Counter3ChangedName = new CounterName("Counter3ChangedName");
         public static readonly CounterDetails Counter3Details = new CounterDetails(Counter3Id, Counter3Name);
+        public static readonly CounterDetails Counter3DetailsWithChangedName = new CounterDetails(Counter3Id, Counter3ChangedName);
         
         public static readonly CountersDetails ThreeCountersDetails = new CountersDetails(new []
         {
             Counter1Details,
             Counter2Details,
             Counter3Details
+        });
+        
+        public static readonly CountersDetails ThreeCountersDetailsWithAllChangedNames = new CountersDetails(new []
+        {
+            Counter1DetailsWithChangedName,
+            Counter2DetailsWithChangedName,
+            Counter3DetailsWithChangedName
+        });
+        
+        public static readonly CountersDetails ThreeCountersDetailsWithTwoChangedNames = new CountersDetails(new []
+        {
+            Counter1DetailsWithChangedName,
+            Counter2Details,
+            Counter3DetailsWithChangedName
         });
         
         public static readonly CountersDetails TwoCountersDetails = new CountersDetails(new []
@@ -74,6 +94,14 @@ namespace CommandSide.Tests.Specifications
         
         public static readonly Configuration FullConfiguration = new Configuration(
             ThreeCountersDetails,
+            AllOpenTimes);
+        
+        public static readonly Configuration FullConfigurationWithAllChangedCounterNames = new Configuration(
+            ThreeCountersDetailsWithAllChangedNames,
+            AllOpenTimes);
+        
+        public static readonly Configuration FullConfigurationWithTwoChangedCounterNames = new Configuration(
+            ThreeCountersDetailsWithTwoChangedNames,
             AllOpenTimes);
         
         public static readonly Configuration ConfigurationWithMondayOpenTimesAndFirstTwoCounters = new Configuration(

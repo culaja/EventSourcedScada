@@ -22,18 +22,21 @@ namespace CommandSide.Domain.Queueing.Configuring
         
         public Configuration AddOpenTime(OpenTime openTime) => new Configuration(CountersDetails, OpenTimes.Add(openTime));
 
-        public CountersDetails IsolateCountersToAdd(IReadOnlyList<CounterId> counterIds) =>
-            CountersDetails.IsolateCountersToAdd(counterIds);
+        public CountersDetails IsolateCountersToAdd(CountersDetails countersDetails) =>
+            CountersDetails.IsolateCountersToAdd(countersDetails);
 
-        public IReadOnlyList<CounterId> IsolateCounterIdsToRemove(IReadOnlyList<CounterId> counterIds) =>
-            CountersDetails.IsolateCounterIdsToRemove(counterIds);
-        
+        public IReadOnlyList<CounterId> IsolateCounterIdsToRemove(CountersDetails countersDetails) =>
+            CountersDetails.IsolateCounterIdsToRemove(countersDetails);
+
+        public CountersDetails IsolateCountersDetailsWhereNameChanged(CountersDetails countersDetails) =>
+            CountersDetails.IsolateCountersDetailsWhereNameDiffers(countersDetails);
+
         public OpenTimes IsolateOpenTimesToAdd(OpenTimes currentOpenTimes) =>
             OpenTimes.IsolateOpenTimesToAdd(currentOpenTimes);
 
         public OpenTimes IsolateOpenTimesToRemove(OpenTimes currentOpenTimes) =>
             OpenTimes.IsolateOpenTimesToRemove(currentOpenTimes);
-        
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return CountersDetails;

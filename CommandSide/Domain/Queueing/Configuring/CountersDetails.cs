@@ -16,12 +16,21 @@ namespace CommandSide.Domain.Queueing.Configuring
         
         public static CountersDetails EmptyCountersDetails => new CountersDetails(new List<CounterDetails>());
         
-        public CountersDetails IsolateCountersToAdd(IReadOnlyList<CounterId> counterIds) => new CountersDetails(
-            _items.Where(cd => !counterIds.Contains(cd.Id)).ToList());
+        public CountersDetails IsolateCountersToAdd(CountersDetails countersDetails) => new CountersDetails(
+            _items.Where(countersDetails.DoesntContain).ToList());
+
+        private bool DoesntContain(CounterDetails counterDetails) =>
+            _items.All(counterDetails.IsNotTheSameCounterAs);
         
-        public IReadOnlyList<CounterId> IsolateCounterIdsToRemove(IReadOnlyList<CounterId> counterIds) => 
-            counterIds.Except(_items.Select(cd => cd.Id)).ToList();
-        
+        public IReadOnlyList<CounterId> IsolateCounterIdsToRemove(CountersDetails countersDetails) => 
+            countersDetails.Where(DoesntContain).Select(cd => cd.Id).ToList();
+
+        public CountersDetails IsolateCountersDetailsWhereNameDiffers(CountersDetails countersDetails) => new CountersDetails(
+            _items.Where(countersDetails.HasTheSameCounterWithDifferentNameAs).ToList());
+
+        private bool HasTheSameCounterWithDifferentNameAs(CounterDetails counterDetails) => 
+            _items.Any(counterDetails.IsTheSameCounterWithDifferentNameAs);
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             foreach (var item in _items) yield return item;

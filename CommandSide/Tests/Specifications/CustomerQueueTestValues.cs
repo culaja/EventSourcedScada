@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using CommandSide.Domain.Queueing;
 using Shared.CustomerQueue;
 using static CommandSide.Tests.Specifications.CustomerQueueConfigurationTestValues;
 
@@ -32,5 +33,10 @@ namespace CommandSide.Tests.Specifications
         public static readonly OpenTimeRemoved Monday14To16Removed = new OpenTimeRemoved(SingleCustomerQueueId, Monday14To16.Day, Monday14To16.BeginTimestamp, Monday14To16.EndTimestamp);
         public static readonly OpenTimeRemoved Tuesday9To12Removed = new OpenTimeRemoved(SingleCustomerQueueId, Tuesday9To12.Day, Tuesday9To12.BeginTimestamp, Tuesday9To12.EndTimestamp);
         public static readonly IReadOnlyList<OpenTimeRemoved> AllOpenTimesRemoved = new[] {Monday9To12Removed, Monday14To16Removed, Tuesday9To12Removed};
+        
+        public static readonly CounterNameChanged Counter1NameChanged = new CounterNameChanged(SingleCustomerQueueId, Counter1Id, Counter1ChangedName);
+        public static readonly CounterNameChanged Counter2NameChanged = new CounterNameChanged(SingleCustomerQueueId, Counter2Id, Counter2ChangedName);
+        public static readonly CounterNameChanged Counter3NameChanged = new CounterNameChanged(SingleCustomerQueueId, Counter3Id, Counter3ChangedName);
+        public static readonly IReadOnlyList<CounterNameChanged> AllCountersNamesChanged = new[] {Counter1NameChanged, Counter2NameChanged, Counter3NameChanged};    
     }
 }

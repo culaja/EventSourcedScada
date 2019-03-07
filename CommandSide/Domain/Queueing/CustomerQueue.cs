@@ -5,6 +5,7 @@ using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using Shared.CustomerQueue;
 using static CommandSide.Domain.Queueing.Configuring.OpenTimes;
+using static CommandSide.Domain.Queueing.Counters;
 using static Common.Result;
 
 namespace CommandSide.Domain.Queueing
@@ -35,35 +36,44 @@ namespace CommandSide.Domain.Queueing
                 () => Fail<CustomerQueue>($"One of the open times in {c.OpenTimes} is overlapping with an open time in {_currentOpenTimes}."),
                 () =>
                 {
-                    c.IsolateCountersToAdd(_countersAdded).Map(counterDetails =>
+                    c.IsolateCountersToAdd(_counters.CountersDetails).Map(counterDetails =>
                         ApplyChange(new CounterAdded(Id, counterDetails.Id, counterDetails.Name)));
 
-                    c.IsolateCounterIdsToRemove(_countersAdded).Map(counterId =>
+                    c.IsolateCounterIdsToRemove(_counters.CountersDetails).Map(counterId =>
                         ApplyChange(new CounterRemoved(Id, counterId)));
 
+                    c.IsolateCountersDetailsWhereNameChanged(_counters.CountersDetails).Map( counterDetails =>
+                        ApplyChange(new CounterNameChanged(Id, counterDetails.Id, counterDetails.Name)));
+                    
                     c.IsolateOpenTimesToAdd(_currentOpenTimes).Map(openTime =>
                         ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
 
                     c.IsolateOpenTimesToRemove(_currentOpenTimes).Map(openTime =>
                         ApplyChange(new OpenTimeRemoved(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
-                    
+
+
                     return Ok(this);
                 });
 
-        private readonly List<CounterId> _countersAdded = new List<CounterId>();
+        private Counters _counters = NoCounters;
 
         private CustomerQueue Apply(CounterAdded e)
         {
-            _countersAdded.Add(e.CounterId.ToCounterId());
+            _counters = _counters.AddCounterWith(e.CounterId.ToCounterId(), e.CounterName.ToCounterName());
             return this;
         }
 
         private CustomerQueue Apply(CounterRemoved e)
         {
-            _countersAdded.Remove(e.CounterId.ToCounterId());
+            _counters = _counters.Remove(e.CounterId.ToCounterId());
             return this;
         }
-        
+
+        private CustomerQueue Apply(CounterNameChanged e)
+        {
+            return this;
+        }
+
         private OpenTimes _currentOpenTimes = NoOpenTimes;
 
         private CustomerQueue Apply(OpenTimeAdded e)
