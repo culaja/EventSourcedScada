@@ -31,20 +31,15 @@ namespace CommandSide.Domain.Queueing
 
         public Result<CustomerQueue> SetConfiguration(Configuration c)
         {
-            foreach (var counterDetail in c.CountersDetails.Except(_countersAdded))
-            {
-                ApplyChange(new CounterAdded(Id, counterDetail.Id, counterDetail.Name));  
-            }
+            c.IsolateCountersToAdd(_countersAdded).Map(counterDetails => 
+                ApplyChange(new CounterAdded(Id, counterDetails.Id, counterDetails.Name)));
+
+            c.IsolateCounterIdsToRemove(_countersAdded).Map(counterId =>
+                ApplyChange(new CounterRemoved(Id, counterId)));
             
             foreach (var openTime in c.OpenTimes)
             {
                 ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp));
-            }
-
-            var countersToRemove = _countersAdded.Except(c.CountersDetails.Select(cd => cd.Id)).ToList();
-            foreach (var counterId in countersToRemove)
-            {
-                ApplyChange(new CounterRemoved(Id, counterId));
             }
 
             foreach (var openTime in _openTimesAdded)

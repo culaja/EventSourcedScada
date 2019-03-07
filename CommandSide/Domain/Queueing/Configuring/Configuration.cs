@@ -19,6 +19,12 @@ namespace CommandSide.Domain.Queueing.Configuring
         }
         
         public static Configuration EmptyConfiguration => new Configuration(EmptyCountersDetails, NoOpenTimes);
+
+        public CountersDetails IsolateCountersToAdd(IReadOnlyList<CounterId> counterIds) =>
+            CountersDetails.IsolateCountersToAdd(counterIds);
+
+        public IReadOnlyList<CounterId> IsolateCounterIdsToRemove(IReadOnlyList<CounterId> counterIds) =>
+            CountersDetails.IsolateCounterIdsToRemove(counterIds);
         
         protected override IEnumerable<object> GetEqualityComponents()
         {

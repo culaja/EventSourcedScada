@@ -16,8 +16,11 @@ namespace CommandSide.Domain.Queueing.Configuring
         
         public static CountersDetails EmptyCountersDetails => new CountersDetails(new List<CounterDetails>());
         
-        public CountersDetails Except(IReadOnlyList<CounterId> counterIds) => new CountersDetails(
+        public CountersDetails IsolateCountersToAdd(IReadOnlyList<CounterId> counterIds) => new CountersDetails(
             _items.Where(cd => !counterIds.Contains(cd.Id)).ToList());
+        
+        public IReadOnlyList<CounterId> IsolateCounterIdsToRemove(IReadOnlyList<CounterId> counterIds) => 
+            counterIds.Except(_items.Select(cd => cd.Id)).ToList();
         
         protected override IEnumerable<object> GetEqualityComponents()
         {
