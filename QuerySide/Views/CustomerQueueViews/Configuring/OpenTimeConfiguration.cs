@@ -4,7 +4,7 @@ using Common;
 
 namespace QuerySide.Views.CustomerQueueViews.Configuring
 {
-    internal sealed class OpenTimeConfiguration : ValueObject<OpenTimeConfiguration>
+    public sealed class OpenTimeConfiguration : ValueObject<OpenTimeConfiguration>
     {
         public DayOfWeek Day { get; }
         public DateTime BeginTimestamp { get; }

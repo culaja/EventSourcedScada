@@ -1,9 +1,9 @@
-using System;
-using System.Linq.Expressions;
+using System.Collections.Generic;
+using Common;
 
 namespace QuerySide.Views.CustomerQueueViews.Configuring
 {
-    internal sealed class CounterConfiguration
+    public sealed class CounterConfiguration : ValueObject<CounterConfiguration>
     {
         public int Id { get; }
         public string Name { get; set; }
@@ -14,6 +14,12 @@ namespace QuerySide.Views.CustomerQueueViews.Configuring
         {
             Id = id;
             Name = name;
-        } 
+        }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Id;
+            yield return Name;
+        }
     }
 }

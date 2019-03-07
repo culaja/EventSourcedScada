@@ -7,7 +7,7 @@ namespace AutofacApplicationWrapUp.QuerySide
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ViewHolder>().SingleInstance();
+            builder.RegisterType<CustomerQueueViewHolder>().SingleInstance();
         }
     }
 }

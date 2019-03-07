@@ -7,11 +7,11 @@ namespace QuerySide.Services.EventHandlers
 {
     public sealed class ViewRefreshFromCustomerQueueEventHandler : Common.Messaging.EventHandler<CustomerQueueEvent>
     {
-        private readonly ViewHolder _viewHolder;
+        private readonly CustomerQueueViewHolder _viewHolder;
         private readonly IClientNotifier _clientNotifier;
 
         public ViewRefreshFromCustomerQueueEventHandler(
-            ViewHolder viewHolder,
+            CustomerQueueViewHolder viewHolder,
             IClientNotifier clientNotifier)
         {
             _viewHolder = viewHolder;

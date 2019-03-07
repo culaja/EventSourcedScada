@@ -8,7 +8,7 @@ namespace QuerySide.QueryCommon
     {
         ulong Version { get; }
         
-        Nothing Apply(IDomainEvent e);
+        IView Apply(IDomainEvent e);
         
         string SerializeToJson();
 

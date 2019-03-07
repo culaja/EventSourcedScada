@@ -5,7 +5,7 @@ using Shared.CustomerQueue;
 
 namespace QuerySide.Views.CustomerQueueViews.Configuring
 {
-    internal sealed class ConfigurationView : SynchronizedView,
+    public sealed class ConfigurationView : SynchronizedView,
         IHandle<CounterAdded>,
         IHandle<CounterRemoved>,
         IHandle<CounterNameChanged>,

@@ -14,11 +14,11 @@ namespace QuerySide.Services
         private readonly IEventStore _eventStore;
         private readonly IDomainEventBus _domainEventBus;
         private readonly IClientNotifier _clientNotifier;
-        private readonly ViewHolder _viewHolder;
+        private readonly CustomerQueueViewHolder _viewHolder;
 
         public QuerySideInitializer(
             IEventStore eventStore,
-            ViewHolder viewHolder, 
+            CustomerQueueViewHolder viewHolder, 
             IDomainEventBus domainEventBus,
             IClientNotifier clientNotifier)
         {

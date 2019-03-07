@@ -31,9 +31,11 @@ namespace QuerySide.QueryCommon
             return NotAtAll;
         }
 
-        protected Nothing PassEventToViewWithId(T id, IDomainEvent e) =>
-            GetViewBy(id)
-            .Apply(e);
+        protected Nothing PassEventToViewWithId(T id, IDomainEvent e)
+        {
+            GetViewBy(id).Apply(e);
+            return NotAtAll;
+        }
 
         private TK GetViewBy(T id)
         {

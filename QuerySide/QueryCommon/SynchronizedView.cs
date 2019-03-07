@@ -11,7 +11,7 @@ namespace QuerySide.QueryCommon
     {
         private readonly object _syncObject = new object();
 
-        public override Nothing Apply(IDomainEvent e)
+        public override IView Apply(IDomainEvent e)
         {
             lock (_syncObject)
             {

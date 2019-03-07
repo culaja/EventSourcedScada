@@ -12,7 +12,7 @@ namespace QuerySide.QueryCommon
         
         public ulong Version { get; private set; }
 
-        public virtual Nothing Apply(IDomainEvent e)
+        public virtual IView Apply(IDomainEvent e)
         {
             var applyMethodInfo = GetType().GetMethod("Handle", new[] { e.GetType() });
 
@@ -22,7 +22,7 @@ namespace QuerySide.QueryCommon
                 IncrementVersion();
             }
             
-            return NotAtAll;
+            return this;
         }
 
         private Nothing IncrementVersion()

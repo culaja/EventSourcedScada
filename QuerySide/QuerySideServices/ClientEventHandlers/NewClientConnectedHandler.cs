@@ -7,11 +7,11 @@ namespace QuerySide.Services.ClientEventHandlers
 {
     public sealed class NewClientConnectedHandler : MessageHandler<NewClientConnected>
     {
-        private readonly ViewHolder _viewHolder;
+        private readonly CustomerQueueViewHolder _viewHolder;
         private readonly IClientNotifier _clientNotifier;
 
         public NewClientConnectedHandler(
-            ViewHolder viewHolder,
+            CustomerQueueViewHolder viewHolder,
             IClientNotifier clientNotifier)
         {
             _viewHolder = viewHolder;

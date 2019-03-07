@@ -9,17 +9,17 @@ using static Common.Nothing;
 
 namespace QuerySide.Views.CustomerQueueViews
 {
-    public sealed class ViewHolder
+    public sealed class CustomerQueueViewHolder
     {
         private readonly IReadOnlyList<View> _views = new View[]
         {
-            new ConfigurationView()    
+            new ConfigurationView()
         };
 
-        public Nothing Apply(IDomainEvent e)
+        public CustomerQueueViewHolder Apply(IDomainEvent e)
         {
             foreach (var v in _views) v.Apply(e);
-            return NotAtAll;
+            return this;
         }
 
         public override string ToString()
@@ -29,7 +29,7 @@ namespace QuerySide.Views.CustomerQueueViews
             return builder.ToString();
         }
 
-        public ViewHolder ForEachView(Func<IView, IView> transformer)
+        public CustomerQueueViewHolder ForEachView(Func<IView, IView> transformer)
         {
             foreach (var v in _views) transformer(v);
             return this;
