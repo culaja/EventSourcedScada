@@ -12,7 +12,7 @@ namespace QuerySide.QueryCommon
         
         public ulong Version { get; private set; }
 
-        public Nothing Apply(IDomainEvent e)
+        public virtual Nothing Apply(IDomainEvent e)
         {
             var applyMethodInfo = GetType().GetMethod("Handle", new[] { e.GetType() });
 
@@ -32,7 +32,7 @@ namespace QuerySide.QueryCommon
             return NotAtAll;
         }
 
-        public string SerializeToJson() => JsonConvert.SerializeObject(this, Formatting.Indented);
+        public virtual string SerializeToJson() => JsonConvert.SerializeObject(this, Formatting.Indented);
         
         public Task WaitNewVersionAsync()
         {

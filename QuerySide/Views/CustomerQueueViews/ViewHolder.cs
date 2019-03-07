@@ -4,6 +4,7 @@ using System.Text;
 using Common;
 using Common.Messaging;
 using QuerySide.QueryCommon;
+using QuerySide.Views.CustomerQueueViews.Configuring;
 using static Common.Nothing;
 
 namespace QuerySide.Views.CustomerQueueViews
@@ -12,6 +13,7 @@ namespace QuerySide.Views.CustomerQueueViews
     {
         private readonly IReadOnlyList<View> _views = new View[]
         {
+            new ConfigurationView()    
         };
 
         public Nothing Apply(IDomainEvent e)
