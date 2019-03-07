@@ -14,7 +14,7 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications
         
         protected CustomerQueueSpecification(Guid aggregateRootId) : base(
             new CustomerQueueInMemoryRepository(new DomainEventMessageBusAggregator()), 
-            () => new CustomerQueue(aggregateRootId, 0))
+            () => new CustomerQueue(aggregateRootId))
         {
         }
     }

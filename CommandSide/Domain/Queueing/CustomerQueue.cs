@@ -12,18 +12,14 @@ namespace CommandSide.Domain.Queueing
 {
     public sealed class CustomerQueue : AggregateRoot
     {
-        public CustomerQueue(
-            Guid id,
-            ulong version) : base(id, version)
+        public CustomerQueue(Guid id) : base(id)
         {
         }
         
         public static CustomerQueue NewCustomerQueueFrom(
             Guid id)
         {
-            var customerQueue = new CustomerQueue(
-                id,
-                0);
+            var customerQueue = new CustomerQueue(id);
             customerQueue.ApplyChange(new CustomerQueueCreated(
                 customerQueue.Id));
             return customerQueue;
