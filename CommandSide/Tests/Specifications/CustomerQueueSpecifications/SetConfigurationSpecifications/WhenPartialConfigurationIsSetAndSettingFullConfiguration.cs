@@ -28,12 +28,21 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.SetConfig
         public override CommandHandler<SetConfiguration> When() => new SetConfigurationHandler(CustomerQueueRepository);
 
         [Fact]
-        public void Customer3_is_Added() => ProducedEvents.Should().Contain(Counter3Added);
+        public void Customer3_is_added() => ProducedEvents.Should().Contain(Counter3Added);
 
         [Fact]
-        public void Counter1_is_not_Added() => ProducedEvents.Should().NotContain(Counter1Added);
+        public void Counter1_is_not_added() => ProducedEvents.Should().NotContain(Counter1Added);
         
         [Fact]
-        public void Counter2_is_not_Added() => ProducedEvents.Should().NotContain(Counter2Added);
+        public void Counter2_is_not_added() => ProducedEvents.Should().NotContain(Counter2Added);
+
+        [Fact]
+        public void Tuesday9to12_is_added() => ProducedEvents.Should().Contain(Tuesday9To12Added);
+
+        [Fact]
+        public void Monday9to12_is_not_added() => ProducedEvents.Should().NotContain(Monday9To12Added);
+        
+        [Fact]
+        public void Monday14to16_is_not_added() => ProducedEvents.Should().NotContain(Monday14To16Added);
     }
 }

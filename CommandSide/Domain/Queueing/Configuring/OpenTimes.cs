@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Common;
 
 namespace CommandSide.Domain.Queueing.Configuring
@@ -27,5 +28,20 @@ namespace CommandSide.Domain.Queueing.Configuring
         public int Count => _items.Count;
 
         public OpenTime this[int index] => _items[index];
+
+        public OpenTimes IsolateOpenTimesToAdd(OpenTimes currentOpenTimes) => new OpenTimes(
+            _items.Where(cd => !currentOpenTimes.Contains(cd)).ToList());
+        
+        public OpenTimes IsolateOpenTimesToRemove(OpenTimes currentOpenTimes) => new OpenTimes(
+            currentOpenTimes.Except(_items).ToList());
+
+        public OpenTimes Add(OpenTime openTime) => new OpenTimes(new List<OpenTime>(_items) {openTime});
+        
+        public OpenTimes Remove(OpenTime openTime)
+        {
+            var newList = new List<OpenTime>(_items);
+            newList.Remove(openTime);
+            return new OpenTimes(newList);
+        }
     }
 }

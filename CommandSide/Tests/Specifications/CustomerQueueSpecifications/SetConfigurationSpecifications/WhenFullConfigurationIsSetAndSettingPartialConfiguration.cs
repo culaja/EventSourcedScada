@@ -37,5 +37,14 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.SetConfig
         
         [Fact]
         public void Counter2_is_not_removed() => ProducedEvents.Should().NotContain(Counter2Removed);
+
+        [Fact]
+        public void Tuesday9To12_is_removed() => ProducedEvents.Should().Contain(Tuesday9To12Removed);
+
+        [Fact]
+        public void Monday9To12_is_not_removed() => ProducedEvents.Should().NotContain(Monday9To12Removed);
+        
+        [Fact]
+        public void Monday14To16_is_not_removed() => ProducedEvents.Should().NotContain(Monday14To16Removed);
     }
 }

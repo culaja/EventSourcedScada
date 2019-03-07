@@ -26,6 +26,12 @@ namespace CommandSide.Domain.Queueing.Configuring
         public IReadOnlyList<CounterId> IsolateCounterIdsToRemove(IReadOnlyList<CounterId> counterIds) =>
             CountersDetails.IsolateCounterIdsToRemove(counterIds);
         
+        public OpenTimes IsolateOpenTimesToAdd(OpenTimes currentOpenTimes) =>
+            OpenTimes.IsolateOpenTimesToAdd(currentOpenTimes);
+
+        public OpenTimes IsolateOpenTimesToRemove(OpenTimes currentOpenTimes) =>
+            OpenTimes.IsolateOpenTimesToRemove(currentOpenTimes);
+        
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return CountersDetails;

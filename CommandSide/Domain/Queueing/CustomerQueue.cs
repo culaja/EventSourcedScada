@@ -4,6 +4,7 @@ using System.Linq;
 using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using Shared.CustomerQueue;
+using static CommandSide.Domain.Queueing.Configuring.OpenTimes;
 using static Common.Result;
 
 namespace CommandSide.Domain.Queueing
@@ -36,16 +37,12 @@ namespace CommandSide.Domain.Queueing
 
             c.IsolateCounterIdsToRemove(_countersAdded).Map(counterId =>
                 ApplyChange(new CounterRemoved(Id, counterId)));
-            
-            foreach (var openTime in c.OpenTimes)
-            {
-                ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp));
-            }
 
-            foreach (var openTime in _openTimesAdded)
-            {
-                ApplyChange(new OpenTimeRemoved(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp));
-            }
+            c.IsolateOpenTimesToAdd(_currentOpenTimes).Map(openTime =>
+                ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
+
+            c.IsolateOpenTimesToRemove(_currentOpenTimes).Map(openTime =>
+                ApplyChange(new OpenTimeRemoved(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
             
             return Ok(this);
         }
@@ -64,16 +61,17 @@ namespace CommandSide.Domain.Queueing
             return this;
         }
         
-        private readonly List<OpenTime> _openTimesAdded = new List<OpenTime>();
+        private OpenTimes _currentOpenTimes = NoOpenTimes;
 
         private CustomerQueue Apply(OpenTimeAdded e)
         {
-            _openTimesAdded.Add(e.ToOpenTime());
+            _currentOpenTimes = _currentOpenTimes.Add(e.ToOpenTime());
             return this;
         }
 
         private CustomerQueue Apply(OpenTimeRemoved e)
         {
+            _currentOpenTimes = _currentOpenTimes.Remove(e.ToOpenTime());
             return this;
         }
     }
