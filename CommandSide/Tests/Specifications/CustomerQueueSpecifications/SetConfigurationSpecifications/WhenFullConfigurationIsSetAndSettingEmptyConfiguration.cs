@@ -28,6 +28,9 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.SetConfig
         public override CommandHandler<SetConfiguration> When() => new SetConfigurationHandler(CustomerQueueRepository);
 
         [Fact]
+        public void returns_success() => Result.IsSuccess.Should().BeTrue();
+
+        [Fact]
         public void AllCounters_are_removed() => ProducedEvents.Should().ContainInOrder(AllCountersRemoved);
         
         [Fact]

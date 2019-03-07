@@ -19,6 +19,8 @@ namespace CommandSide.Domain.Queueing.Configuring
         }
         
         public static Configuration EmptyConfiguration => new Configuration(EmptyCountersDetails, NoOpenTimes);
+        
+        public Configuration AddOpenTime(OpenTime openTime) => new Configuration(CountersDetails, OpenTimes.Add(openTime));
 
         public CountersDetails IsolateCountersToAdd(IReadOnlyList<CounterId> counterIds) =>
             CountersDetails.IsolateCountersToAdd(counterIds);
@@ -37,5 +39,8 @@ namespace CommandSide.Domain.Queueing.Configuring
             yield return CountersDetails;
             yield return OpenTimes;
         }
+
+        public bool ContainsOverlappingOpenTimeWith(OpenTimes currentOpenTimes) => 
+            OpenTimes.ContainsOverlappingOpenTimeWith(currentOpenTimes);
     }
 }

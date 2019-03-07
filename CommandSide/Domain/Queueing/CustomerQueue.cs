@@ -30,22 +30,25 @@ namespace CommandSide.Domain.Queueing
 
         private CustomerQueue Apply(CustomerQueueCreated _) => this;
 
-        public Result<CustomerQueue> SetConfiguration(Configuration c)
-        {
-            c.IsolateCountersToAdd(_countersAdded).Map(counterDetails => 
-                ApplyChange(new CounterAdded(Id, counterDetails.Id, counterDetails.Name)));
+        public Result<CustomerQueue> SetConfiguration(Configuration c) =>
+            c.ContainsOverlappingOpenTimeWith(_currentOpenTimes).OnBoth(
+                () => Fail<CustomerQueue>($"One of the open times in {c.OpenTimes} is overlapping with an open time in {_currentOpenTimes}."),
+                () =>
+                {
+                    c.IsolateCountersToAdd(_countersAdded).Map(counterDetails =>
+                        ApplyChange(new CounterAdded(Id, counterDetails.Id, counterDetails.Name)));
 
-            c.IsolateCounterIdsToRemove(_countersAdded).Map(counterId =>
-                ApplyChange(new CounterRemoved(Id, counterId)));
+                    c.IsolateCounterIdsToRemove(_countersAdded).Map(counterId =>
+                        ApplyChange(new CounterRemoved(Id, counterId)));
 
-            c.IsolateOpenTimesToAdd(_currentOpenTimes).Map(openTime =>
-                ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
+                    c.IsolateOpenTimesToAdd(_currentOpenTimes).Map(openTime =>
+                        ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
 
-            c.IsolateOpenTimesToRemove(_currentOpenTimes).Map(openTime =>
-                ApplyChange(new OpenTimeRemoved(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
-            
-            return Ok(this);
-        }
+                    c.IsolateOpenTimesToRemove(_currentOpenTimes).Map(openTime =>
+                        ApplyChange(new OpenTimeRemoved(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
+                    
+                    return Ok(this);
+                });
 
         private readonly List<CounterId> _countersAdded = new List<CounterId>();
 

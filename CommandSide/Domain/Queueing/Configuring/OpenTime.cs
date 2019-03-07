@@ -26,5 +26,14 @@ namespace CommandSide.Domain.Queueing.Configuring
             yield return BeginTimestamp;
             yield return EndTimestamp;
         }
+
+        public bool OverlapsWith(OpenTime ot)
+        {
+            if (this == ot) return false;
+            if (Day != ot.Day) return false;
+            if (BeginTimestamp >= ot.EndTimestamp) return false;
+            if (EndTimestamp <= ot.BeginTimestamp) return false;
+            return true;
+        }
     }
 }
