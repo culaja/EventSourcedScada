@@ -13,6 +13,8 @@ namespace CommandSide.Domain.Queueing.Configuring
             _items = items;
         }
         
+        public static OpenTimes NoOpenTimes => new OpenTimes(new List<OpenTime>());
+        
         protected override IEnumerable<object> GetEqualityComponents()
         {
             foreach (var item in _items) yield return item;

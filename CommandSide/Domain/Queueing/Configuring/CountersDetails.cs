@@ -13,6 +13,8 @@ namespace CommandSide.Domain.Queueing.Configuring
             _items = items;
         }
         
+        public static CountersDetails EmptyCountersDetails => new CountersDetails(new List<CounterDetails>());
+        
         protected override IEnumerable<object> GetEqualityComponents()
         {
             foreach (var item in _items) yield return item;

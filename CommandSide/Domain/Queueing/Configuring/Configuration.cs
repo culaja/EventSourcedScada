@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using Common;
+using static CommandSide.Domain.Queueing.Configuring.CountersDetails;
+using static CommandSide.Domain.Queueing.Configuring.OpenTimes;
 
 namespace CommandSide.Domain.Queueing.Configuring
 {
@@ -15,6 +17,8 @@ namespace CommandSide.Domain.Queueing.Configuring
             CountersDetails = countersDetails;
             OpenTimes = openTimes;
         }
+        
+        public static Configuration EmptyConfiguration => new Configuration(EmptyCountersDetails, NoOpenTimes);
         
         protected override IEnumerable<object> GetEqualityComponents()
         {

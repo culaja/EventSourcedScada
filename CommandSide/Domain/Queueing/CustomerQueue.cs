@@ -1,6 +1,5 @@
 using System;
-using System.Linq;
-using CommandSide.Domain.Queueing.Commands;
+using System.Collections.Generic;
 using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using Shared.CustomerQueue;
@@ -40,12 +39,44 @@ namespace CommandSide.Domain.Queueing
             {
                 ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp));  
             }
+
+            foreach (var counterId in _countersAdded)
+            {
+                ApplyChange(new CounterRemoved(Id, counterId));
+            }
+
+            foreach (var openTime in _openTimesAdded)
+            {
+                ApplyChange(new OpenTimeRemoved(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp));
+            }
             
             return Ok(this);
         }
+
+        private readonly List<CounterId> _countersAdded = new List<CounterId>();
+
+        private CustomerQueue Apply(CounterAdded e)
+        {
+            _countersAdded.Add(e.CounterId.ToCounterId());
+            return this;
+        }
+
+        private CustomerQueue Apply(CounterRemoved e)
+        {
+            return this;
+        }
         
-        private CustomerQueue Apply(CounterAdded e) => this;
-        
-        private CustomerQueue Apply(OpenTimeAdded e) => this;
+        private readonly List<OpenTime> _openTimesAdded = new List<OpenTime>();
+
+        private CustomerQueue Apply(OpenTimeAdded e)
+        {
+            _openTimesAdded.Add(e.ToOpenTime());
+            return this;
+        }
+
+        private CustomerQueue Apply(OpenTimeRemoved e)
+        {
+            return this;
+        }
     }
 }
