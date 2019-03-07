@@ -5,11 +5,11 @@ namespace QuerySide.Views.CustomerQueueViews.Configuring
 {
     internal sealed class CounterConfiguration
     {
-        public Guid Id { get; }
+        public int Id { get; }
         public string Name { get; set; }
 
         public CounterConfiguration(
-            Guid id,
+            int id,
             string name)
         {
             Id = id;

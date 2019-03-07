@@ -5,11 +5,11 @@ namespace Shared.CustomerQueue
 {
     public sealed class CounterRemoved : CustomerQueueEvent
     {
-        public Guid CounterId { get; }
+        public int CounterId { get; }
 
         public CounterRemoved(
             Guid aggregateRootId,
-            Guid counterId) : base(aggregateRootId)
+            int counterId) : base(aggregateRootId)
         {
             CounterId = counterId;
         }

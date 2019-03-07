@@ -6,9 +6,9 @@ namespace CommandSide.Domain.Queueing
 {
     public sealed class CounterId : Id
     {
-        private readonly Guid _id;
+        private readonly int _id;
 
-        public CounterId(Guid id)
+        public CounterId(int id)
         {
             _id = id;
         }
@@ -20,6 +20,6 @@ namespace CommandSide.Domain.Queueing
 
         public override string ToString() => _id.ToString();
 
-        public static implicit operator Guid(CounterId id) => id._id;
+        public static implicit operator int(CounterId id) => id._id;
     }
 }

@@ -12,7 +12,7 @@ namespace QuerySide.Views.CustomerQueueViews.Configuring
         IHandle<OpenTimeAdded>,
         IHandle<OpenTimeRemoved>
     {
-        private readonly Dictionary<Guid, CounterConfiguration> _countersById = new Dictionary<Guid, CounterConfiguration>();
+        private readonly Dictionary<int, CounterConfiguration> _countersById = new Dictionary<int, CounterConfiguration>();
         private readonly List<OpenTimeConfiguration> _openTimeConfigurations = new List<OpenTimeConfiguration>();
 
         public IReadOnlyList<CounterConfiguration> Counters => new List<CounterConfiguration>(_countersById.Values);
