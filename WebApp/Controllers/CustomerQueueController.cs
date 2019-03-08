@@ -1,7 +1,10 @@
-﻿using Common.Messaging;
+﻿using System.Threading.Tasks;
+using CommandSide.Domain.Queueing.Commands;
+using Common.Messaging;
 using Microsoft.AspNetCore.Mvc;
 using QuerySide.Views.CustomerQueueViews;
 using QuerySide.Views.CustomerQueueViews.Configuring;
+using static CommandSide.Domain.Queueing.CounterId;
 
 namespace WebApp.Controllers
 {
@@ -23,5 +26,17 @@ namespace WebApp.Controllers
         [HttpGet]
         [Route(nameof(GetConfiguration))]
         public IActionResult GetConfiguration() => Ok(_viewHolder.View<ConfigurationView>());
+
+        [HttpPost]
+        [Route(nameof(OpenCounter))]
+        public Task<IActionResult> OpenCounter(int counterId) => _commandBus
+            .ExecuteAsync(new OpenCounter(NewCounterIdFrom(counterId)))
+            .ToActionResultAsync();
+        
+        [HttpPost]
+        [Route(nameof(CloseCounter))]
+        public Task<IActionResult> CloseCounter(int counterId) => _commandBus
+            .ExecuteAsync(new CloseCounter(NewCounterIdFrom(counterId)))
+            .ToActionResultAsync();
     }
 }
