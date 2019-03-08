@@ -103,5 +103,27 @@ namespace CommandSide.Domain.Queueing
             _counters.OpenCounterWith(e.CounterId.ToCounterId());
             return this;
         }
+
+        public Result<CustomerQueue> CloseCounter(CounterId counterId)
+        {
+            switch (_counters.CanCloseCounter(counterId))
+            {
+                case var s when s == CanCloseCounterResult.CounterCanBeClosed :
+                    ApplyChange(new CounterClosed(Id, counterId));
+                    return Ok(this);
+                case var s when s == CanCloseCounterResult.CounterIsAlreadyClosed:
+                    return Ok(this);
+                case var s when s == CanCloseCounterResult.CounterDoesntExist:
+                    return Fail<CustomerQueue>($"Counter with ID {counterId} doesn't exist.");
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        
+        private CustomerQueue Apply(CounterClosed e)
+        {
+            _counters.CloseCounterWith(e.CounterId.ToCounterId());
+            return this;
+        }
     }
 }

@@ -1,5 +1,6 @@
 using CommandSide.Domain.Queueing.Configuring;
 using Common;
+using static Common.Nothing;
 
 namespace CommandSide.Domain.Queueing
 {
@@ -20,9 +21,17 @@ namespace CommandSide.Domain.Queueing
         public Nothing Open()
         {
             _isOpened = true;
-            return Nothing.NotAtAll;
+            return NotAtAll;
+        }
+
+        public Nothing Close()
+        {
+            _isOpened = false;
+            return NotAtAll;
         }
 
         public bool CanOpen() => !_isOpened;
+        
+        public bool CanClose() => !CanOpen();
     }
 }

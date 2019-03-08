@@ -5,18 +5,19 @@ using Common.Messaging;
 using FluentAssertions;
 using Shared.CustomerQueue;
 using Xunit;
+using static CommandSide.Tests.AssertionsHelpers;
 using static CommandSide.Tests.Specifications.CustomerQueueConfigurationTestValues;
 using static CommandSide.Tests.Specifications.CustomerQueueTestValues;
 
-namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.OpenCounterSpecifications
+namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.CloseCounterSpecifications
 {
-    public sealed class WhenCounterExists : CustomerQueueSpecification<OpenCounter>
+    public sealed class WhenCounterIsAlreadyClosed : CustomerQueueSpecification<CloseCounter>
     {
-        public WhenCounterExists() : base(SingleCustomerQueueId)
+        public WhenCounterIsAlreadyClosed() : base(SingleCustomerQueueId)
         {
         }
 
-        protected override OpenCounter CommandToExecute => new OpenCounter(Counter1Id); 
+        protected override CloseCounter CommandToExecute => new CloseCounter(Counter1Id);
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
@@ -24,12 +25,12 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.OpenCount
             yield return Counter1Added;
         }
 
-        public override CommandHandler<OpenCounter> When() => new OpenCounterHandler(CustomerQueueRepository);
+        public override CommandHandler<CloseCounter> When() => new CloseCounterHandler(CustomerQueueRepository);
 
         [Fact]
         public void returns_success() => Result.IsSuccess.Should().BeTrue();
 
         [Fact]
-        public void Counter1_is_opened() => ProducedEvents.Should().Contain(Counter1Opened);
+        public void no_counter_is_closed() => ProducedEvents.Should().NotContain(EventOf<CloseCounter>());
     }
 }

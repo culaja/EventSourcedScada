@@ -46,6 +46,14 @@ namespace CommandSide.Domain.Queueing
             .Map(c => c.Open())
             .ToNothing();
         
+        public CanCloseCounterResult CanCloseCounter(CounterId counterId) => MaybeCounterWith(counterId)
+            .Map(c => c.CanClose() ? CanCloseCounterResult.CounterCanBeClosed : CanCloseCounterResult.CounterIsAlreadyClosed)
+            .Unwrap(CanCloseCounterResult.CounterDoesntExist);
+
+        public Nothing CloseCounterWith(CounterId counterId) => MaybeCounterWith(counterId)
+            .Map(c => c.Close())
+            .ToNothing();
+
         private Maybe<Counter> MaybeCounterWith(CounterId counterId) => _collection.MaybeFirst(c => c.AreYou(counterId));
     }
 }

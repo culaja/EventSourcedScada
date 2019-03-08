@@ -11,17 +11,18 @@ using static CommandSide.Tests.Specifications.CustomerQueueTestValues;
 
 namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.OpenCounterSpecifications
 {
-    public sealed class WhenCounterDoesntExist : CustomerQueueSpecification<OpenCounter>
+    public sealed class WhenAnotherCounterExists : CustomerQueueSpecification<OpenCounter>
     {
-        public WhenCounterDoesntExist() : base(SingleCustomerQueueId)
+        public WhenAnotherCounterExists() : base(SingleCustomerQueueId)
         {
         }
 
-        protected override OpenCounter CommandToExecute => new OpenCounter(Counter1Id); 
+        protected override OpenCounter CommandToExecute => new OpenCounter(Counter2Id); 
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;
+            yield return Counter1Added;
         }
 
         public override CommandHandler<OpenCounter> When() => new OpenCounterHandler(CustomerQueueRepository);

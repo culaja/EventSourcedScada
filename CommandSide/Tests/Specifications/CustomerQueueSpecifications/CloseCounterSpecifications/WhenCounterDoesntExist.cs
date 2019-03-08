@@ -9,28 +9,27 @@ using static CommandSide.Tests.AssertionsHelpers;
 using static CommandSide.Tests.Specifications.CustomerQueueConfigurationTestValues;
 using static CommandSide.Tests.Specifications.CustomerQueueTestValues;
 
-namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.OpenCounterSpecifications
+namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.CloseCounterSpecifications
 {
-    public sealed class WhenAnotherCounterIsAdded : CustomerQueueSpecification<OpenCounter>
+    public sealed class WhenCounterDoesntExist : CustomerQueueSpecification<CloseCounter>
     {
-        public WhenAnotherCounterIsAdded() : base(SingleCustomerQueueId)
+        public WhenCounterDoesntExist() : base(SingleCustomerQueueId)
         {
         }
 
-        protected override OpenCounter CommandToExecute => new OpenCounter(Counter2Id); 
+        protected override CloseCounter CommandToExecute => new CloseCounter(Counter1Id); 
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;
-            yield return Counter1Added;
         }
 
-        public override CommandHandler<OpenCounter> When() => new OpenCounterHandler(CustomerQueueRepository);
+        public override CommandHandler<CloseCounter> When() => new CloseCounterHandler(CustomerQueueRepository);
 
         [Fact]
         public void returns_failure() => Result.IsFailure.Should().BeTrue();
 
         [Fact]
-        public void no_counter_is_opened() => ProducedEvents.Should().NotContain(EventOf<CounterOpened>());
+        public void no_counter_is_closed() => ProducedEvents.Should().NotContain(EventOf<CloseCounter>());
     }
 }
