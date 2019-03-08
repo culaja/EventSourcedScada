@@ -1,6 +1,7 @@
 ﻿using Common.Messaging;
 using Microsoft.AspNetCore.Mvc;
 using QuerySide.Views.CustomerQueueViews;
+using QuerySide.Views.CustomerQueueViews.Configuring;
 
 namespace WebApp.Controllers
 {
@@ -21,6 +22,6 @@ namespace WebApp.Controllers
 
         [HttpGet]
         [Route(nameof(GetConfiguration))]
-        public IActionResult GetConfiguration() => Ok(_viewHolder);
+        public IActionResult GetConfiguration() => Ok(_viewHolder.View<ConfigurationView>());
     }
 }
