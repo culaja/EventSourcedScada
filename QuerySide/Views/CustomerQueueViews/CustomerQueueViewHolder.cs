@@ -1,24 +1,23 @@
 using System;
-using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
-using Common;
 using Common.Messaging;
 using QuerySide.QueryCommon;
 using QuerySide.Views.CustomerQueueViews.Configuring;
-using static Common.Nothing;
 
 namespace QuerySide.Views.CustomerQueueViews
 {
     public sealed class CustomerQueueViewHolder
     {
-        private readonly IReadOnlyList<View> _views = new View[]
-        {
-            new ConfigurationView()
-        };
+        private readonly ImmutableDictionary<Type, View> _views = ImmutableDictionary.CreateBuilder<Type, View>()
+            .AddOne(typeof(ConfigurationView), new ConfigurationView())
+            .ToImmutable();
+
+        public IView View<T>() where T : IView => _views[typeof(T)];
 
         public CustomerQueueViewHolder Apply(IDomainEvent e)
         {
-            foreach (var v in _views) v.Apply(e);
+            foreach (var v in _views.Values) v.Apply(e);
             return this;
         }
 
@@ -31,7 +30,7 @@ namespace QuerySide.Views.CustomerQueueViews
 
         public CustomerQueueViewHolder ForEachView(Func<IView, IView> transformer)
         {
-            foreach (var v in _views) transformer(v);
+            foreach (var v in _views.Values) transformer(v);
             return this;
         }
     }

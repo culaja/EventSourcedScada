@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using CommandSide.Domain.Queueing.Commands;
 using CommandSide.DomainServices.Queueing.CommandHandlers;

@@ -2,7 +2,6 @@ using System;
 using CommandSide.Domain.Queueing;
 using CommandSide.Domain.Queueing.Configuring;
 using static System.DayOfWeek;
-using static System.Guid;
 
 namespace CommandSide.Tests.Specifications
 {

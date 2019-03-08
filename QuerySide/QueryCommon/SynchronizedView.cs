@@ -1,4 +1,3 @@
-using Common;
 using Common.Messaging;
 
 namespace QuerySide.QueryCommon

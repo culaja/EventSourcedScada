@@ -1,4 +1,3 @@
-using System;
 using CommandSide.Domain.Queueing.Configuring;
 using Shared.CustomerQueue;
 

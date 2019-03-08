@@ -3,6 +3,7 @@ using Common;
 using Common.Messaging;
 using Newtonsoft.Json;
 using static Common.Nothing;
+using static Newtonsoft.Json.JsonConvert;
 
 namespace QuerySide.QueryCommon
 {
@@ -32,8 +33,10 @@ namespace QuerySide.QueryCommon
             return NotAtAll;
         }
 
-        public virtual string SerializeToJson() => JsonConvert.SerializeObject(this, Formatting.Indented);
-        
+        public virtual string SerializeToJson() => SerializeObject(this, Formatting.Indented);
+
+        public override string ToString() => SerializeToJson();
+
         public Task WaitNewVersionAsync()
         {
             _versionIncrementedEvent.Reset();

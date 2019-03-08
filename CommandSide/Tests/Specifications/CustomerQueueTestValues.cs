@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using CommandSide.Domain.Queueing;
 using Shared.CustomerQueue;
 using static CommandSide.Tests.Specifications.CustomerQueueConfigurationTestValues;
 

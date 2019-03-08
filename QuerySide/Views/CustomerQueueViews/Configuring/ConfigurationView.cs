@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using QuerySide.QueryCommon;
 using Shared.CustomerQueue;
