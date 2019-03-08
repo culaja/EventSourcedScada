@@ -20,7 +20,7 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.SetConfig
         
         public override IEnumerable<CustomerQueueEvent> Given()
         {
-            yield break;
+            yield return SingleCustomerQueueCreated;
         }
 
         public override CommandHandler<SetConfiguration> When() => new SetConfigurationHandler(CustomerQueueRepository);

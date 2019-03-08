@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CommandSide.Domain.Queueing.Configuring;
 using Common;
+using static CommandSide.Domain.Queueing.CanOpenCounterResult;
 
 namespace CommandSide.Domain.Queueing
 {
@@ -36,5 +37,15 @@ namespace CommandSide.Domain.Queueing
         public int Count => _collection.Count;
 
         public Counter this[int index] => _collection[index];
+        
+        public CanOpenCounterResult CanOpenCounter(CounterId counterId) => MaybeCounterWith(counterId)
+            .Map(c => c.CanOpen() ? CounterCanBeOpened : CounterIsAlreadyOpened)
+            .Unwrap(CounterDoesntExist);
+
+        public Nothing OpenCounterWith(CounterId counterId) => MaybeCounterWith(counterId)
+            .Map(c => c.Open())
+            .ToNothing();
+        
+        private Maybe<Counter> MaybeCounterWith(CounterId counterId) => _collection.MaybeFirst(c => c.AreYou(counterId));
     }
 }
