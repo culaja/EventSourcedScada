@@ -10,10 +10,10 @@ namespace WebApp.Controllers
     public static class ToDomainObjectsExtensions
     {
         public static Result<Configuration> ToConfiguration(this SetConfigurationDto setConfigurationDto)
-            => setConfigurationDto.Counters.ToCountersDetails()
-                .OnSuccess(counterDetails => setConfigurationDto.OpenTimes.ToOpenTimes()
-                    .OnSuccess(openTimes => new Configuration(counterDetails, openTimes)));
-
+            => Configuration.ConfigurationFrom(
+                setConfigurationDto.Counters.ToCountersDetails(),
+                setConfigurationDto.OpenTimes.ToOpenTimes());
+        
         private static Result<CountersDetails> ToCountersDetails(this IList<CounterDetailsDto> countersDetailsDto)
         {
             IList<Result<CounterDetails>> countersDetails = new List<Result<CounterDetails>>();

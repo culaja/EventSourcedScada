@@ -22,6 +22,10 @@ namespace CommandSide.Domain.Queueing.Configuring
         
         public Configuration AddOpenTime(OpenTime openTime) => new Configuration(CountersDetails, OpenTimes.Add(openTime));
 
+        public static Result<Configuration> ConfigurationFrom(Result<CountersDetails> countersDetailsResult, Result<OpenTimes> openTimesResult) 
+            => Result.Combine(countersDetailsResult, openTimesResult)
+                .Map(() => new Configuration(countersDetailsResult.Value, openTimesResult.Value));
+
         public CountersDetails IsolateCountersToAdd(CountersDetails countersDetails) =>
             CountersDetails.IsolateCountersToAdd(countersDetails);
 
