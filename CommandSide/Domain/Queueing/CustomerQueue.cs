@@ -2,6 +2,7 @@ using System;
 using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using Shared.CustomerQueue;
+using static CommandSide.Domain.Queueing.CanOpenCounterResult;
 using static CommandSide.Domain.Queueing.Configuring.OpenTimes;
 using static CommandSide.Domain.Queueing.Counters;
 using static Common.Result;
@@ -10,6 +11,9 @@ namespace CommandSide.Domain.Queueing
 {
     public sealed class CustomerQueue : AggregateRoot
     {
+        private Counters _counters = NoCounters;
+        private OpenTimes _currentOpenTimes = NoOpenTimes;
+        
         public CustomerQueue(Guid id) : base(id)
         {
         }
@@ -49,8 +53,6 @@ namespace CommandSide.Domain.Queueing
                     return Ok(this);
                 });
 
-        private Counters _counters = NoCounters;
-
         private CustomerQueue Apply(CounterAdded e)
         {
             _counters = _counters.AddCounterWith(e.CounterId.ToCounterId(), e.CounterName.ToCounterName());
@@ -68,8 +70,6 @@ namespace CommandSide.Domain.Queueing
             return this;
         }
 
-        private OpenTimes _currentOpenTimes = NoOpenTimes;
-
         private CustomerQueue Apply(OpenTimeAdded e)
         {
             _currentOpenTimes = _currentOpenTimes.Add(e.ToOpenTime());
@@ -79,6 +79,50 @@ namespace CommandSide.Domain.Queueing
         private CustomerQueue Apply(OpenTimeRemoved e)
         {
             _currentOpenTimes = _currentOpenTimes.Remove(e.ToOpenTime());
+            return this;
+        }
+
+        public Result<CustomerQueue> OpenCounter(CounterId counterId)
+        {
+            switch (_counters.CanOpenCounter(counterId))
+            {
+                case var s when s == CounterCanBeOpened :
+                    ApplyChange(new CounterOpened(Id, counterId));
+                    return Ok(this);
+                case var s when s == CounterIsAlreadyOpened:
+                    return Ok(this);
+                case var s when s == CounterDoesntExist:
+                    return Fail<CustomerQueue>($"Counter with ID {counterId} doesn't exist.");
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private CustomerQueue Apply(CounterOpened e)
+        {
+            _counters.OpenCounterWith(e.CounterId.ToCounterId());
+            return this;
+        }
+
+        public Result<CustomerQueue> CloseCounter(CounterId counterId)
+        {
+            switch (_counters.CanCloseCounter(counterId))
+            {
+                case var s when s == CanCloseCounterResult.CounterCanBeClosed :
+                    ApplyChange(new CounterClosed(Id, counterId));
+                    return Ok(this);
+                case var s when s == CanCloseCounterResult.CounterIsAlreadyClosed:
+                    return Ok(this);
+                case var s when s == CanCloseCounterResult.CounterDoesntExist:
+                    return Fail<CustomerQueue>($"Counter with ID {counterId} doesn't exist.");
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+        
+        private CustomerQueue Apply(CounterClosed e)
+        {
+            _counters.CloseCounterWith(e.CounterId.ToCounterId());
             return this;
         }
     }

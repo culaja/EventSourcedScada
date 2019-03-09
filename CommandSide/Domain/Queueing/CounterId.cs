@@ -21,6 +21,8 @@ namespace CommandSide.Domain.Queueing
             return Result.Fail<CounterId>("Counter id must have value.");
         }
         
+        public static CounterId NewCounterIdFrom(int id) => new CounterId(id);
+        
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return _id;

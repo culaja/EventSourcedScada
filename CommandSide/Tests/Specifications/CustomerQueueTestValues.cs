@@ -36,6 +36,14 @@ namespace CommandSide.Tests.Specifications
         public static readonly CounterNameChanged Counter1NameChanged = new CounterNameChanged(SingleCustomerQueueId, Counter1Id, Counter1ChangedName);
         public static readonly CounterNameChanged Counter2NameChanged = new CounterNameChanged(SingleCustomerQueueId, Counter2Id, Counter2ChangedName);
         public static readonly CounterNameChanged Counter3NameChanged = new CounterNameChanged(SingleCustomerQueueId, Counter3Id, Counter3ChangedName);
-        public static readonly IReadOnlyList<CounterNameChanged> AllCountersNamesChanged = new[] {Counter1NameChanged, Counter2NameChanged, Counter3NameChanged};    
+        public static readonly IReadOnlyList<CounterNameChanged> AllCountersNamesChanged = new[] {Counter1NameChanged, Counter2NameChanged, Counter3NameChanged};
+        
+        public static readonly CounterOpened Counter1Opened = new CounterOpened(SingleCustomerQueueId, Counter1Id);
+        public static readonly CounterOpened Counter2Opened = new CounterOpened(SingleCustomerQueueId, Counter2Id);
+        public static readonly CounterOpened Counter3Opened = new CounterOpened(SingleCustomerQueueId, Counter3Id);
+        
+        public static readonly CounterClosed Counter1Closed = new CounterClosed(SingleCustomerQueueId, Counter1Id);
+        public static readonly CounterClosed Counter2Closed = new CounterClosed(SingleCustomerQueueId, Counter2Id);
+        public static readonly CounterClosed Counter3Closed = new CounterClosed(SingleCustomerQueueId, Counter3Id);
     }
 }

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using QuerySide.Views.CustomerQueueViews;
 using QuerySide.Views.CustomerQueueViews.Configuring;
 using WebApp.Controllers.CommandsDto;
+using static CommandSide.Domain.Queueing.CounterId;
 
 namespace WebApp.Controllers
 {
@@ -35,5 +36,17 @@ namespace WebApp.Controllers
                 .OnSuccess(configuration => _commandBus
                     .ExecuteAsync(new SetConfiguration(configuration)))
                 .ToActionResultAsyncFromResult();
+
+        [HttpPost]
+        [Route(nameof(OpenCounter))]
+        public Task<IActionResult> OpenCounter(int counterId) => _commandBus
+            .ExecuteAsync(new OpenCounter(NewCounterIdFrom(counterId)))
+            .ToActionResultAsync();
+        
+        [HttpPost]
+        [Route(nameof(CloseCounter))]
+        public Task<IActionResult> CloseCounter(int counterId) => _commandBus
+            .ExecuteAsync(new CloseCounter(NewCounterIdFrom(counterId)))
+            .ToActionResultAsync();
     }
 }
