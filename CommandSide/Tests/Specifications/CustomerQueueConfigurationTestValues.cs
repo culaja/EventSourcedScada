@@ -1,20 +1,20 @@
-using System;
 using CommandSide.Domain.Queueing;
 using CommandSide.Domain.Queueing.Configuring;
+using Common.Time;
 using static System.DayOfWeek;
+using static Common.Time.TimeOfDay;
 
 namespace CommandSide.Tests.Specifications
 {
     public static class CustomerQueueConfigurationTestValues
     {
         #region Open times
-        private static DateTime FromHour(int hour) => new DateTime(1, 1, 1, hour, 0, 0);
-        public static readonly DateTime Hour9 = FromHour(9);
-        public static readonly DateTime Hour10 = FromHour(10);
-        public static readonly DateTime Hour11 = FromHour(11);
-        public static readonly DateTime Hour12 = FromHour(12);
-        public static readonly DateTime Hour14 = FromHour(14);
-        public static readonly DateTime Hour16 = FromHour(16);
+        public static readonly TimeOfDay Hour9 = TimeOfDayFromHour(9);
+        public static readonly TimeOfDay Hour10 = TimeOfDayFromHour(10);
+        public static readonly TimeOfDay Hour11 = TimeOfDayFromHour(11);
+        public static readonly TimeOfDay Hour12 = TimeOfDayFromHour(12);
+        public static readonly TimeOfDay Hour14 = TimeOfDayFromHour(14);
+        public static readonly TimeOfDay Hour16 = TimeOfDayFromHour(16);
         
         public static readonly OpenTime Monday9To12 = new OpenTime(Monday, Hour9, Hour12);
         public static readonly OpenTime Monday10To11 = new OpenTime(Monday, Hour10, Hour11);

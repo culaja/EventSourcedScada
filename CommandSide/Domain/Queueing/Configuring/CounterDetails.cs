@@ -16,6 +16,10 @@ namespace CommandSide.Domain.Queueing.Configuring
             Name = name;
         }
 
+        public static Result<CounterDetails> CounterDetailsFrom(Result<CounterId> counterIdResult, Result<CounterName> counterNameResult)
+            => Result.Combine(counterIdResult, counterNameResult)
+                .Map(() => new CounterDetails(counterIdResult.Value, counterNameResult.Value));
+        
         public bool IsTheSameCounterWithDifferentNameAs(CounterDetails counterDetails) =>
             IsTheSameCounterAs(counterDetails) && HasDifferentNameThan(counterDetails);
 

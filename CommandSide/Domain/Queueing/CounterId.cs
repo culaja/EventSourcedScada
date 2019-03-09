@@ -11,6 +11,15 @@ namespace CommandSide.Domain.Queueing
         {
             _id = id;
         }
+
+        public static Result<CounterId> CounterIdFrom(int? maybeId)
+        {
+            if (maybeId.HasValue)
+            {
+                return Result.Ok(new CounterId(maybeId.Value));
+            }
+            return Result.Fail<CounterId>("Counter id must have value.");
+        }
         
         protected override IEnumerable<object> GetEqualityComponents()
         {

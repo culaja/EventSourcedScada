@@ -1,18 +1,19 @@
 using System;
 using System.Collections.Generic;
+using Common.Time;
 
 namespace Shared.CustomerQueue
 {
     public sealed class OpenTimeAdded : CustomerQueueEvent
     {
         public DayOfWeek DayOfWeek { get; }
-        public DateTime BeginTimestamp { get; }
-        public DateTime EndTimestamp { get; }
+        public TimeOfDay BeginTimestamp { get; }
+        public TimeOfDay EndTimestamp { get; }
         public OpenTimeAdded(
             Guid aggregateRootId,
             DayOfWeek dayOfWeek,
-            DateTime beginTimestamp,
-            DateTime endTimestamp) : base(aggregateRootId)
+            TimeOfDay beginTimestamp,
+            TimeOfDay endTimestamp) : base(aggregateRootId)
         {
             DayOfWeek = dayOfWeek;
             BeginTimestamp = beginTimestamp;

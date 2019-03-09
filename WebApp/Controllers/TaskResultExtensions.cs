@@ -11,6 +11,11 @@ namespace WebApp.Controllers
             var result = await taskResult;
             return result.IsSuccess ? new JsonResult("OK") : BadRequestWith(result.Error);
         }
+        
+        public static async Task<IActionResult> ToActionResultAsyncFromResult(this Result<Task<Result>> taskResult)
+            => taskResult.IsSuccess ?
+                await taskResult.Value.ToActionResultAsync() :
+                BadRequestWith(taskResult.Error);
 
         private static JsonResult BadRequestWith(string error) => new JsonResult(error) {StatusCode = 400};
     }

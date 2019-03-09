@@ -11,7 +11,16 @@ namespace CommandSide.Domain.Queueing
         {
             _name = name;
         }
-        
+
+        public static Result<CounterName> CounterNameFrom(Maybe<string> maybeName)
+        {
+            if (maybeName.HasValue)
+            {
+                return Result.Ok(new CounterName(maybeName.Value));
+            }
+            return Result.Fail<CounterName>("Counter name must have value.");
+        }
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return _name;

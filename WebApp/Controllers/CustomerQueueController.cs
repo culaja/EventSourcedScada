@@ -1,7 +1,11 @@
-﻿using Common.Messaging;
+﻿using System.Threading.Tasks;
+using CommandSide.Domain.Queueing.Commands;
+using Common;
+using Common.Messaging;
 using Microsoft.AspNetCore.Mvc;
 using QuerySide.Views.CustomerQueueViews;
 using QuerySide.Views.CustomerQueueViews.Configuring;
+using WebApp.Controllers.CommandsDto;
 
 namespace WebApp.Controllers
 {
@@ -23,5 +27,13 @@ namespace WebApp.Controllers
         [HttpGet]
         [Route(nameof(GetConfiguration))]
         public IActionResult GetConfiguration() => Ok(_viewHolder.View<ConfigurationView>());
+
+        [HttpPost]
+        [Route(nameof(SetConfiguration))]
+        public Task<IActionResult> SetConfiguration([FromBody] SetConfigurationDto setConfigurationDto)
+            => setConfigurationDto.ToConfiguration()
+                .OnSuccess(configuration => _commandBus
+                    .ExecuteAsync(new SetConfiguration(configuration)))
+                .ToActionResultAsyncFromResult();
     }
 }
