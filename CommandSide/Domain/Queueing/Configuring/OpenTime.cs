@@ -21,28 +21,22 @@ namespace CommandSide.Domain.Queueing.Configuring
             BeginTimestamp = beginTimestamp;
             EndTimestamp = endTimestamp;
         }
-        
+
         public static OpenTime OpenTimeFrom(Maybe<string> maybeDayOfWeek, Maybe<string> maybeBeginTimestamp, Maybe<string> maybeEndTimestamp)
         {
             if (maybeDayOfWeek.HasValue && maybeBeginTimestamp.HasValue && maybeEndTimestamp.HasValue)
             {
                 var beginTime = TimeOfDayFrom(maybeBeginTimestamp);
                 var endTime = TimeOfDayFrom(maybeEndTimestamp);
-                
+
                 var isDayOfWeek = Enum.TryParse(maybeDayOfWeek.Value, out DayOfWeek dow);
                 if (isDayOfWeek && beginTime.IsTimeBeforeAnother(endTime))
                 {
                     return new OpenTime(dow, beginTime, endTime);
                 }
             }
-            throw new UnableToCreateOpenTimeException(maybeDayOfWeek, maybeBeginTimestamp, maybeEndTimestamp);
-        }
 
-        protected override IEnumerable<object> GetEqualityComponents()
-        {
-            yield return Day;
-            yield return BeginTimestamp;
-            yield return EndTimestamp;
+            throw new UnableToCreateOpenTimeException(maybeDayOfWeek, maybeBeginTimestamp, maybeEndTimestamp);
         }
 
         public bool OverlapsWith(OpenTime ot)
@@ -53,5 +47,14 @@ namespace CommandSide.Domain.Queueing.Configuring
             if (EndTimestamp.IsTimeEqualOrBeforeAnother(ot.BeginTimestamp)) return false;
             return true;
         }
+
+        protected override IEnumerable<object> GetEqualityComponents()
+        {
+            yield return Day;
+            yield return BeginTimestamp;
+            yield return EndTimestamp;
+        }
+
+        public override string ToString() => $"{nameof(Day)}: {Day}, {nameof(BeginTimestamp)}: {BeginTimestamp}, {nameof(EndTimestamp)}: {EndTimestamp}";
     }
 }

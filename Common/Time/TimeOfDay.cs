@@ -38,5 +38,7 @@ namespace Common.Time
         {
             yield return Time;
         }
+
+        public override string ToString() => Time.ToString();
     }
 }

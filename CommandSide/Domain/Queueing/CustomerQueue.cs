@@ -29,29 +29,25 @@ namespace CommandSide.Domain.Queueing
 
         private CustomerQueue Apply(CustomerQueueCreated _) => this;
 
-        public Result<CustomerQueue> SetConfiguration(Configuration c) =>
-            c.ContainsOverlappingOpenTimeWith(_currentOpenTimes).OnBoth(
-                () => Fail<CustomerQueue>($"One of the open times in {c.OpenTimes} is overlapping with an open time in {_currentOpenTimes}."),
-                () =>
-                {
-                    c.IsolateCountersToAdd(_counters.CountersDetails).Map(counterDetails =>
-                        ApplyChange(new CounterAdded(Id, counterDetails.Id, counterDetails.Name)));
+        public Result<CustomerQueue> SetConfiguration(Configuration c)
+        {
+            c.IsolateCountersToAdd(_counters.CountersDetails).Map(counterDetails =>
+                ApplyChange(new CounterAdded(Id, counterDetails.Id, counterDetails.Name)));
 
-                    c.IsolateCounterIdsToRemove(_counters.CountersDetails).Map(counterId =>
-                        ApplyChange(new CounterRemoved(Id, counterId)));
+            c.IsolateCounterIdsToRemove(_counters.CountersDetails).Map(counterId =>
+                ApplyChange(new CounterRemoved(Id, counterId)));
 
-                    c.IsolateCountersDetailsWhereNameChanged(_counters.CountersDetails).Map( counterDetails =>
-                        ApplyChange(new CounterNameChanged(Id, counterDetails.Id, counterDetails.Name)));
-                    
-                    c.IsolateOpenTimesToAdd(_currentOpenTimes).Map(openTime =>
-                        ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
+            c.IsolateCountersDetailsWhereNameChanged(_counters.CountersDetails).Map( counterDetails =>
+                ApplyChange(new CounterNameChanged(Id, counterDetails.Id, counterDetails.Name)));
+            
+            c.IsolateOpenTimesToAdd(_currentOpenTimes).Map(openTime =>
+                ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
 
-                    c.IsolateOpenTimesToRemove(_currentOpenTimes).Map(openTime =>
-                        ApplyChange(new OpenTimeRemoved(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
+            c.IsolateOpenTimesToRemove(_currentOpenTimes).Map(openTime =>
+                ApplyChange(new OpenTimeRemoved(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
 
-
-                    return Ok(this);
-                });
+            return Ok(this);
+        }
 
         private CustomerQueue Apply(CounterAdded e)
         {

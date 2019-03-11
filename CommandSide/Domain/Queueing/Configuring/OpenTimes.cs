@@ -59,11 +59,5 @@ namespace CommandSide.Domain.Queueing.Configuring
             newList.Remove(openTime);
             return new OpenTimes(newList);
         }
-
-        public bool ContainsOverlappingOpenTimeWith(OpenTimes currentOpenTimes) => 
-            _items.Any(currentOpenTimes.ContainsAnyOverlappingOpenTimeWith);
-
-        private bool ContainsAnyOverlappingOpenTimeWith(OpenTime openTime) => 
-            _items.Any(openTime.OverlapsWith);
     }
 }

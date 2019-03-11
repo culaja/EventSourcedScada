@@ -45,8 +45,5 @@ namespace CommandSide.Domain.Queueing.Configuring
             yield return CountersDetails;
             yield return OpenTimes;
         }
-
-        public bool ContainsOverlappingOpenTimeWith(OpenTimes currentOpenTimes) => 
-            OpenTimes.ContainsOverlappingOpenTimeWith(currentOpenTimes);
     }
 }
