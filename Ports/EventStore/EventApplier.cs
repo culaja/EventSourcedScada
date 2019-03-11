@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Common;
 using Common.Messaging;
+using static Common.Nothing;
 
 namespace Ports.EventStore
 {
@@ -38,14 +39,21 @@ namespace Ports.EventStore
 
         private static Result<T> TryToApplyToAggregate<T>(T aggregateRoot, IDomainEvent e) where T : AggregateRoot
         {
+            aggregateRoot.CheckAggregateRootVersionAgainst(e);
+            
+            aggregateRoot.ApplyFrom(e);
+            return aggregateRoot.ToOkResult();
+        }
+        
+        private static Nothing CheckAggregateRootVersionAgainst<T>(this T aggregateRoot, IDomainEvent e) where T : AggregateRoot
+        {
             var expectedVersion = aggregateRoot.Version + 1;
             if (expectedVersion != e.Version)
             {
                 throw new InvalidOperationException($"Expected to apply {expectedVersion} event version of Aggregate '{typeof(T).Name}' with ID '{aggregateRoot.Id}', but version {e.Version} received. (Event: {e})");
             }
-            
-            aggregateRoot.ApplyFrom(e);
-            return aggregateRoot.ToOkResult();
+
+            return NotAtAll;
         }
     }
 }
