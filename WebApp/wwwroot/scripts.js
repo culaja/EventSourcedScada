@@ -34,39 +34,41 @@ $(document).ready(function() {
     var populateConfigurationTable = function(data) {
         if(!data) return;
         
-        var countersDetailsTableBody = $('#countersDetails tbody');
-        countersDetailsTableBody.empty();
-
+        $(".configurationCounterDetails").empty();
+        $(".configurationOpenTimes").empty();
+        
         var counters = data.counters;
         for (i = 0, len = counters.length, text = ""; i < len; i++) {
-            var row = $("<tr>");
-            var number = $("<td>").text(counters[i].id);
-            var name = $("<td>").text(counters[i].name);
-
-            row.append(number);
-            row.append(name);
-
-            countersDetailsTableBody.append(row);
+            var $form = $("<form class=\"configurationCounterDetails\">\n" +
+                        "                                    <div class=\"form-row\">\n" +
+                        "                                        <div class=\"col\">\n" +
+                        "                                            <input id=\"number\" name=\"number\" type=\"number\" class=\"form-control\" placeholder=\"Number\" value=\"" + counters[i].id + "\">\n" +
+                        "                                        </div>\n" +
+                        "                                        <div class=\"col\">\n" +
+                        "                                            <input id=\"name\" name=\"name\" type=\"text\" class=\"form-control\" placeholder=\"Name\" value=\"" + counters[i].name + "\">\n" + 
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "                                </form>");
+            $(".configurationCounterDetails").last().append($form.clone());
         }
-        
-        var openTimesTableBody = $('#openTimes tbody');
-        openTimesTableBody.empty();
         
         var openTimes = data.openTimes;
         for (i = 0, len = openTimes.length, text = ""; i < len; i++) {
-            var row = $("<tr>");
-            var dayOfWeek = $("<td>").text(openTimes[i].day);
-            var from = $("<td>").text(openTimes[i].beginTimestamp.time);
-            var to = $("<td>").text(openTimes[i].endTimestamp.time);
-
-            row.append(dayOfWeek);
-            row.append(from);
-            row.append(to);
-
-            openTimesTableBody.append(row);
+            var $form = $("<form class=\"configurationOpenTimes\">\n" +
+                        "                                    <div class=\"form-row\">\n" +
+                        "                                        <div class=\"col\">\n" +
+                        "                                            <input id=\"day\" name=\"day\" type=\"text\" class=\"form-control\" placeholder=\"Day\" value=\"" + openTimes[i].day + "\">\n" +
+                        "                                        </div>\n" +
+                        "                                        <div class=\"col\">\n" +
+                        "                                            <input id=\"from\" name=\"from\" type=\"text\" class=\"form-control\" placeholder=\"From\" value=\"" + openTimes[i].beginTimestamp.time + "\">\n" +
+                        "                                        </div>\n" +
+                        "                                        <div class=\"col\">\n" +
+                        "                                            <input id=\"to\" name=\"to\" type=\"text\" class=\"form-control\" placeholder=\"To\" value=\"" + openTimes[i].endTimestamp.time + "\">\n" +
+                        "                                        </div>\n" +
+                        "                                    </div>\n" +
+                        "                                </form>");
+            $(".configurationOpenTimes").last().append($form.clone());
         }
-        
-        $('.configuration').addClass('active');
     }
     
     $('#addCounterDetails').on('click', function() {

@@ -11,7 +11,7 @@ namespace CommandSide.Domain.Queueing.Configuring
 
         public OpenTimes(IReadOnlyList<OpenTime> items)
         {
-            _items = items;
+            _items = new HashSet<OpenTime>(items).ToList();
         }
 
         public static OpenTimes OpenTimesFrom(IReadOnlyList<OpenTime> items)

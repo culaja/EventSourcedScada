@@ -11,7 +11,7 @@ namespace CommandSide.Domain.Queueing.Configuring
 
         public CountersDetails(IReadOnlyList<CounterDetails> items)
         {
-            _items = items;
+            _items = new HashSet<CounterDetails>(items).ToList();
         }
         
         public static CountersDetails EmptyCountersDetails => new CountersDetails(new List<CounterDetails>());
