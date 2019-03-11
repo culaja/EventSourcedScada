@@ -22,21 +22,20 @@ namespace CommandSide.Domain.Queueing.Configuring
             EndTimestamp = endTimestamp;
         }
         
-        public static Result<OpenTime> OpenTimeFrom(Maybe<string> maybeDayOfWeek, Maybe<string> maybeBeginTimestamp, Maybe<string> maybeEndTimestamp)
+        public static OpenTime OpenTimeFrom(Maybe<string> maybeDayOfWeek, Maybe<string> maybeBeginTimestamp, Maybe<string> maybeEndTimestamp)
         {
             if (maybeDayOfWeek.HasValue && maybeBeginTimestamp.HasValue && maybeEndTimestamp.HasValue)
             {
                 var beginTime = TimeOfDayFrom(maybeBeginTimestamp);
                 var endTime = TimeOfDayFrom(maybeEndTimestamp);
                 
-                var isDayOfWeek = Enum.TryParse(maybeDayOfWeek.Value, out DayOfWeek day);
-                if (isDayOfWeek && beginTime.IsSuccess && endTime.IsSuccess && beginTime.Value.IsTimeBeforeAnother(endTime.Value))
+                var isDayOfWeek = Enum.TryParse(maybeDayOfWeek.Value, out DayOfWeek dow);
+                if (isDayOfWeek && beginTime.IsTimeBeforeAnother(endTime))
                 {
-                    return Result.Ok(new OpenTime(day, beginTime.Value, endTime.Value));
+                    return new OpenTime(dow, beginTime, endTime);
                 }
             }
-            return Result.Fail<OpenTime>($"Unable to create open time with provided arguments: DayOfWeek '{maybeDayOfWeek}'," +
-                                         $" BeginTimestamp '{maybeBeginTimestamp}', EndTimestamp '{maybeEndTimestamp}'");
+            throw new UnableToCreateOpenTimeException(maybeDayOfWeek, maybeBeginTimestamp, maybeEndTimestamp);
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
@@ -51,7 +50,7 @@ namespace CommandSide.Domain.Queueing.Configuring
             if (this == ot) return false;
             if (Day != ot.Day) return false;
             if (BeginTimestamp.IsTimeEqualOrAfterAnother(ot.EndTimestamp)) return false;
-            if (ot.BeginTimestamp.IsTimeEqualOrAfterAnother(EndTimestamp)) return false;
+            if (EndTimestamp.IsTimeEqualOrBeforeAnother(ot.BeginTimestamp)) return false;
             return true;
         }
     }

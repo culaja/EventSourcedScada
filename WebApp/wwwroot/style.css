@@ -4,6 +4,24 @@
     margin-bottom: 20px;
 }
 
+#rootErrorBox {
+    display: none;
+    position: absolute;
+    width: 100%;
+    z-index: 10;
+}
+
+.closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
 .collapsable-header {
     width: 100%;
     background-color: #f3f3f3;
