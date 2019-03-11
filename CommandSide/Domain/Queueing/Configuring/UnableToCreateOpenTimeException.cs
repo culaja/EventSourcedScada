@@ -1,13 +1,12 @@
-using Common;
 using Common.Exceptions;
+using Common.Time;
 
 namespace CommandSide.Domain.Queueing.Configuring
 {
-    public sealed class UnableToCreateOpenTimeException : BadRequestException
+    public sealed class BeginTimeNeedsToBeBeforeEndTimeException : BadRequestException
     {
-        public UnableToCreateOpenTimeException(Maybe<string> maybeDayOfWeek, Maybe<string> maybeBeginTimestamp, Maybe<string> maybeEndTimestamp) 
-            : base($"Unable to create open time with provided arguments: DayOfWeek '{maybeDayOfWeek}'," +
-                   $" BeginTimestamp '{maybeBeginTimestamp}', EndTimestamp '{maybeEndTimestamp}'")
+        public BeginTimeNeedsToBeBeforeEndTimeException(TimeOfDay beginTimeOfDay, TimeOfDay endTimeOfDay)
+            : base($"Begin time needs to be before end t ime. (Begin {beginTimeOfDay}, End: {endTimeOfDay})" )
         {
         }
     }

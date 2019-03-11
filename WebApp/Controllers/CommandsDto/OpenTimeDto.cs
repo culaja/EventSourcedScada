@@ -1,12 +1,14 @@
+using System;
+
 namespace WebApp.Controllers.CommandsDto
 {
     public sealed class OpenTimeDto
     {
-        public string DayOfWeek { get; }
-        public string From { get; }
-        public string To { get; }
+        public DayOfWeek DayOfWeek { get; }
+        public TimeSpan From { get; }
+        public TimeSpan To { get; }
 
-        public OpenTimeDto(string dayOfWeek, string from, string to)
+        public OpenTimeDto(DayOfWeek dayOfWeek, TimeSpan from, TimeSpan to)
         {
             DayOfWeek = dayOfWeek;
             From = from;

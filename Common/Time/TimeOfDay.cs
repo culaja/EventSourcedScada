@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using static System.String;
 using static System.TimeSpan;
 
 namespace Common.Time
@@ -19,19 +18,16 @@ namespace Common.Time
             Timespan = timespan;
         }
 
-        public static TimeOfDay TimeOfDayFrom(Maybe<string> maybeTime)
+        public static TimeOfDay TimeOfDayFrom(TimeSpan timeSpan)
         {
-            if (!TryParse(maybeTime.Unwrap(Empty), out var timespan))
-            {
-                throw new TimeOfDayFormatException(maybeTime); 
-            }
-                
-            return new TimeOfDay(timespan);
+            return new TimeOfDay(timeSpan);
         }
         
         public static TimeOfDay TimeOfDayFromHour(int hour) => new TimeOfDay(FromHours(hour));
 
         public bool IsTimeBeforeAnother(TimeOfDay otherTime) => Timespan.CompareTo(otherTime.Timespan) < 0;
+        
+        public bool IsTimeAfterAnother(TimeOfDay otherTime) => Timespan.CompareTo(otherTime.Timespan) > 0;
         
         public bool IsTimeEqualOrAfterAnother(TimeOfDay otherTime) => Timespan.CompareTo(otherTime.Timespan) >= 0;
         

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using CommandSide.Domain.Queueing.Configuring;
 using Common;
+using Common.Time;
 using WebApp.Controllers.CommandsDto;
 using static CommandSide.Domain.Queueing.Configuring.CounterDetails;
 using static CommandSide.Domain.Queueing.Configuring.OpenTime;
@@ -22,6 +23,6 @@ namespace WebApp.Controllers
                 CounterIdFrom(counterDetail.Number), CounterNameFrom(counterDetail.Name))));
         
         private static OpenTimes ToOpenTimes(this IList<OpenTimeDto> openTimeDtos)
-            => OpenTimesFrom(openTimeDtos.Map(openTime => OpenTimeFrom(openTime.DayOfWeek, openTime.From, openTime.To)));
+            => OpenTimesFrom(openTimeDtos.Map(openTime => OpenTimeFrom(openTime.DayOfWeek, new TimeOfDay(openTime.From), new TimeOfDay(openTime.To))));
     }
 }

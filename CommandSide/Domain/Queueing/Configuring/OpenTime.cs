@@ -2,15 +2,14 @@ using System;
 using System.Collections.Generic;
 using Common;
 using Common.Time;
-using static Common.Time.TimeOfDay;
 
 namespace CommandSide.Domain.Queueing.Configuring
 {
     public sealed class OpenTime : ValueObject<OpenTime>
     {
         public DayOfWeek Day { get; }
-        public TimeOfDay BeginTimestamp { get; }
-        public TimeOfDay EndTimestamp { get; }
+        public TimeOfDay BeginTimeOfDay { get; }
+        public TimeOfDay EndTimeOfDay { get; }
 
         public OpenTime(
             DayOfWeek day,
@@ -18,43 +17,36 @@ namespace CommandSide.Domain.Queueing.Configuring
             TimeOfDay endTimestamp)
         {
             Day = day;
-            BeginTimestamp = beginTimestamp;
-            EndTimestamp = endTimestamp;
+            BeginTimeOfDay = beginTimestamp;
+            EndTimeOfDay = endTimestamp;
         }
 
-        public static OpenTime OpenTimeFrom(Maybe<string> maybeDayOfWeek, Maybe<string> maybeBeginTimestamp, Maybe<string> maybeEndTimestamp)
+        public static OpenTime OpenTimeFrom(DayOfWeek dayOfWeek, TimeOfDay beginTimeOfDay, TimeOfDay endTimeOfDay)
         {
-            if (maybeDayOfWeek.HasValue && maybeBeginTimestamp.HasValue && maybeEndTimestamp.HasValue)
+            if (beginTimeOfDay.IsTimeEqualOrAfterAnother(endTimeOfDay))
             {
-                var beginTime = TimeOfDayFrom(maybeBeginTimestamp);
-                var endTime = TimeOfDayFrom(maybeEndTimestamp);
-
-                var isDayOfWeek = Enum.TryParse(maybeDayOfWeek.Value, out DayOfWeek dow);
-                if (isDayOfWeek && beginTime.IsTimeBeforeAnother(endTime))
-                {
-                    return new OpenTime(dow, beginTime, endTime);
-                }
+                throw new BeginTimeNeedsToBeBeforeEndTimeException(beginTimeOfDay, endTimeOfDay);
             }
-
-            throw new UnableToCreateOpenTimeException(maybeDayOfWeek, maybeBeginTimestamp, maybeEndTimestamp);
+            
+            return new OpenTime(dayOfWeek, beginTimeOfDay, endTimeOfDay);
         }
 
         public bool OverlapsWith(OpenTime ot)
         {
             if (this == ot) return false;
             if (Day != ot.Day) return false;
-            if (BeginTimestamp.IsTimeEqualOrAfterAnother(ot.EndTimestamp)) return false;
-            if (EndTimestamp.IsTimeEqualOrBeforeAnother(ot.BeginTimestamp)) return false;
+            if (BeginTimeOfDay.IsTimeEqualOrAfterAnother(ot.EndTimeOfDay)) return false;
+            if (EndTimeOfDay.IsTimeEqualOrBeforeAnother(ot.BeginTimeOfDay)) return false;
             return true;
         }
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return Day;
-            yield return BeginTimestamp;
-            yield return EndTimestamp;
+            yield return BeginTimeOfDay;
+            yield return EndTimeOfDay;
         }
 
-        public override string ToString() => $"{nameof(Day)}: {Day.ToString()}, {nameof(BeginTimestamp)}: {BeginTimestamp}, {nameof(EndTimestamp)}: {EndTimestamp}";
+        public override string ToString() => $"{nameof(Day)}: {Day.ToString()}, {nameof(BeginTimeOfDay)}: {BeginTimeOfDay}, {nameof(EndTimeOfDay)}: {EndTimeOfDay}";
     }
 }

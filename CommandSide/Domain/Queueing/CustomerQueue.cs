@@ -41,10 +41,10 @@ namespace CommandSide.Domain.Queueing
                 ApplyChange(new CounterNameChanged(Id, counterDetails.Id, counterDetails.Name)));
 
             c.IsolateOpenTimesToRemove(_currentOpenTimes).Map(openTime =>
-                ApplyChange(new OpenTimeRemoved(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
+                ApplyChange(new OpenTimeRemoved(Id, openTime.Day, openTime.BeginTimeOfDay, openTime.EndTimeOfDay)));
             
             c.IsolateOpenTimesToAdd(_currentOpenTimes).Map(openTime =>
-                ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
+                ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimeOfDay, openTime.EndTimeOfDay)));
 
             return Ok(this);
         }
