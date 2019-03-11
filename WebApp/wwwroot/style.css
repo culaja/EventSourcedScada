@@ -54,6 +54,7 @@ h3 {
     visibility: visible;
 }
 
-.configurationCounterDetails .form-row, .configurationOpenTimes .form-row .counterManagement {
+.configurationCounterDetails .form-row, .configurationOpenTimes .form-row .counterManagement,
+#collapseOpenCloseCounter .form-row {
     margin-bottom: 10px;
 }
