@@ -9,7 +9,7 @@ namespace Common
     public abstract class AggregateRoot
     {
         public Guid Id { get; }
-        public ulong Version { get; private set; } = 1;
+        public ulong Version { get; private set; } = 0;
         
         private readonly List<IDomainEvent> _domainEvents = new List<IDomainEvent>();
         public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents;

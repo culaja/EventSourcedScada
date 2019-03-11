@@ -1,6 +1,6 @@
 namespace Common.Messaging
 {
-    public interface IAggregateRootCreated
+    public interface IAggregateRootCreated : IDomainEvent
     {
     }
 }

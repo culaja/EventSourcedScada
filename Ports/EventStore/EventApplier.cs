@@ -25,7 +25,8 @@ namespace Ports.EventStore
             switch (domainEvent)
             {
                 case Tk aggregateRootCreated:
-                    repository.CreateFrom(aggregateRootCreated);
+                    repository.CreateFrom(aggregateRootCreated)
+                        .OnSuccess(aggregateRoot => TryToApplyToAggregate(aggregateRoot, aggregateRootCreated));
                     break;
                 default:
                     repository.BorrowBy(
@@ -40,7 +41,6 @@ namespace Ports.EventStore
         private static Result<T> TryToApplyToAggregate<T>(T aggregateRoot, IDomainEvent e) where T : AggregateRoot
         {
             aggregateRoot.CheckAggregateRootVersionAgainst(e);
-            
             aggregateRoot.ApplyFrom(e);
             return aggregateRoot.ToOkResult();
         }
