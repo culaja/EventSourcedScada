@@ -1,17 +1,16 @@
 using System;
 using System.Net;
-using System.Security.Authentication;
 using System.Threading.Tasks;
 using Common.Exceptions;
 using Microsoft.AspNetCore.Http;
-using Newtonsoft.Json;
+using static System.Net.HttpStatusCode;
+using static Newtonsoft.Json.JsonConvert;
 
 namespace WebApp.Middlewares
 {
     public sealed class ExceptionToHttpResponseMiddleware
     {
         private readonly RequestDelegate _next;
-// TODO        private readonly ILogger _logger = Log.Logger;
 
         public ExceptionToHttpResponseMiddleware(RequestDelegate next)
         {
@@ -26,7 +25,6 @@ namespace WebApp.Middlewares
             }
             catch (Exception ex)
             {
-//                LogException(ex);
                 await HandleExceptionAsync(context, ex);
             }
         }
@@ -43,18 +41,11 @@ namespace WebApp.Middlewares
         {
             switch (exception)
             {
-                case var ex when ex is AuthenticationException:
-                    return new Tuple<HttpStatusCode, string>(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(new { error = "Username or password is incorrect." }));
                 case var ex when ex is BadRequestException:
-                    return new Tuple<HttpStatusCode, string>(HttpStatusCode.BadRequest, JsonConvert.SerializeObject(new { error = exception.Message }));
+                    return new Tuple<HttpStatusCode, string>(BadRequest, SerializeObject(new { error = exception.Message }));
                 default:
-                    return new Tuple<HttpStatusCode, string>(HttpStatusCode.InternalServerError, JsonConvert.SerializeObject(new { error = "Internal server error, please contact your administrator." }));
+                    return new Tuple<HttpStatusCode, string>(InternalServerError, SerializeObject(new { error = "Internal server error, please contact your administrator." }));
             }
         }
-
-//        private void LogException(Exception ex)
-//        {
-//            _logger.Error(ex, "Unhandled exception");
-//        }
     }
 }

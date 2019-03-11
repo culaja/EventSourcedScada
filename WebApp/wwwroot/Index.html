@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="#">
 
-    <title>Customer Queue</title>
+    <title>V-Max Simulator</title>
 
     <link href="https://fonts.googleapis.com/css?family=Dosis:400,700" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
@@ -21,7 +21,7 @@
     
     <div class="row heading">
         <div class="col-12">
-            <h1>CFM server simulator</h1>
+            <h1>V-Max Simulator</h1>
         </div>
     </div>
     <div class="container">
@@ -110,6 +110,39 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <button class="collapsable-header" type="button" data-toggle="collapse" data-target="#collapseOpenCloseCounter" aria-expanded="false" aria-controls="collapseExample">
+                    <i class="fas fa-cog"></i> Open/Close counter
+                </button>
+            </div>
+        </div>
+
+        <div class="collapse" id="collapseOpenCloseCounter">
+            <div class="col-md-6 col-12">
+                <form class="counterManagement">
+                    <div class="form-row">
+                        <div class="col">
+                            <input id="openCounterNumber" name="number" type="number" class="form-control" placeholder="Counter Number" value="0" >
+                        </div>
+                        <div class="col">
+                            <button id="openCounterButton" class="btn btn-secondary">Open Counter</button>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col">
+                            <input id="closeCounterNumber" name="number" type="number" class="form-control" placeholder="Counter Number" value="0">
+                        </div>
+                        <div class="col">
+                            <button id="closeCounterButton" class="btn btn-secondary">Close Counter</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

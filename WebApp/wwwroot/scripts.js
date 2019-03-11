@@ -15,7 +15,7 @@ $(document).ready(function() {
     var showErrorBoxWith = function(error) {
         const rootErrorBox = document.getElementById('rootErrorBox');
         const errorMessage = document.getElementById('errorMessage');
-        errorMessage.innerHTML  = error.error;
+        errorMessage.innerHTML  = error.error ? error.error : error;
         rootErrorBox.style.display = 'block';
     }
 
@@ -131,6 +131,39 @@ $(document).ready(function() {
                 showErrorBoxWith(error.responseJSON);
             }
         });
+    });
+    
+    $('#openCounterButton').on('click', function(event) {
+        event.preventDefault();
+        var counterId = $("#openCounterNumber").val();
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            data: null,
+            url: url + "/CustomerQueue/OpenCounter?counterId=" + counterId,
+            error: function(error) {
+                showErrorBoxWith(error.responseJSON);
+            }
+        });
+    });
+
+    $('#closeCounterButton').on('click', function(event) {
+        event.preventDefault();
+        var counterId = $("#closeCounterNumber").val();
+
+        $.ajax({
+            type: "POST",
+            contentType: "application/json",
+            url: url + "/CustomerQueue/CloseCounter?counterId=" + counterId,
+            error: function(error) {
+                showErrorBoxWith(error.responseJSON);
+            }
+        });
+    });
+    
+    $('input[type="number"]').keydown(function (e) {
+      e.preventDefault();
     });
 
 });

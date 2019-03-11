@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using CommandSide.Domain.Queueing.Commands;
-using Common;
 using Common.Messaging;
 using Microsoft.AspNetCore.Mvc;
 using QuerySide.Views.CustomerQueueViews;
