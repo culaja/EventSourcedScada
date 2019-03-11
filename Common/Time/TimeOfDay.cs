@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using static System.TimeSpan;
 
 namespace Common.Time
 {
@@ -16,7 +17,7 @@ namespace Common.Time
         {
             if (maybeTime.HasValue)
             {
-                var isValidTime = TimeSpan.TryParse(maybeTime.Value, out TimeSpan time);
+                var isValidTime = TryParse(maybeTime.Value, out TimeSpan time);
                 if (isValidTime)
                 {
                     return Result.Ok(new TimeOfDay(time));
@@ -25,7 +26,7 @@ namespace Common.Time
             return Result.Fail<TimeOfDay>($"Not able to create time of day with provided time '{maybeTime}'");
         }
         
-        public static TimeOfDay TimeOfDayFromHour(int hour) => new TimeOfDay(TimeSpan.FromHours(hour));
+        public static TimeOfDay TimeOfDayFromHour(int hour) => new TimeOfDay(FromHours(hour));
 
         public bool IsTimeBeforeAnother(TimeOfDay otherTime) => Time.CompareTo(otherTime.Time) < 0;
 

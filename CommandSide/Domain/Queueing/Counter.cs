@@ -6,7 +6,7 @@ namespace CommandSide.Domain.Queueing
 {
     public sealed class Counter : Entity<CounterId>
     {
-        private readonly CounterName _name;
+        private CounterName _name;
         private bool _isOpened = false;
 
         public Counter(CounterId id, CounterName name) : base(id)
@@ -33,5 +33,11 @@ namespace CommandSide.Domain.Queueing
         public bool CanOpen() => !_isOpened;
         
         public bool CanClose() => !CanOpen();
+
+        public Nothing ChangeName(CounterName newCounterName)
+        {
+            _name = newCounterName;
+            return NotAtAll;
+        }
     }
 }

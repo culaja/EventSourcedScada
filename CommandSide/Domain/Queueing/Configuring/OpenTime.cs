@@ -29,10 +29,10 @@ namespace CommandSide.Domain.Queueing.Configuring
                 var beginTime = TimeOfDayFrom(maybeBeginTimestamp);
                 var endTime = TimeOfDayFrom(maybeEndTimestamp);
                 
-                var isDayOfWeek = Enum.TryParse(maybeDayOfWeek.Value, out DayOfWeek dow);
+                var isDayOfWeek = Enum.TryParse(maybeDayOfWeek.Value, out DayOfWeek day);
                 if (isDayOfWeek && beginTime.IsSuccess && endTime.IsSuccess && beginTime.Value.IsTimeBeforeAnother(endTime.Value))
                 {
-                    return Result.Ok(new OpenTime(dow, beginTime.Value, endTime.Value));
+                    return Result.Ok(new OpenTime(day, beginTime.Value, endTime.Value));
                 }
             }
             return Result.Fail<OpenTime>($"Unable to create open time with provided arguments: DayOfWeek '{maybeDayOfWeek}'," +
@@ -50,7 +50,8 @@ namespace CommandSide.Domain.Queueing.Configuring
         {
             if (this == ot) return false;
             if (Day != ot.Day) return false;
-            if (BeginTimestamp.IsTimeEqualOrAfterAnother(EndTimestamp)) return false;
+            if (BeginTimestamp.IsTimeEqualOrAfterAnother(ot.EndTimestamp)) return false;
+            if (ot.BeginTimestamp.IsTimeEqualOrAfterAnother(EndTimestamp)) return false;
             return true;
         }
     }

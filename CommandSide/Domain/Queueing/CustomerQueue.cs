@@ -67,6 +67,7 @@ namespace CommandSide.Domain.Queueing
 
         private CustomerQueue Apply(CounterNameChanged e)
         {
+            _counters.ChangeCounterName(e.CounterId.ToCounterId(), e.NewCounterName.ToCounterName());
             return this;
         }
 

@@ -4,6 +4,7 @@ using System.Linq;
 using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using static CommandSide.Domain.Queueing.CanOpenCounterResult;
+using static Common.Nothing;
 
 namespace CommandSide.Domain.Queueing
 {
@@ -53,6 +54,10 @@ namespace CommandSide.Domain.Queueing
         public Nothing CloseCounterWith(CounterId counterId) => MaybeCounterWith(counterId)
             .Map(c => c.Close())
             .ToNothing();
+
+        public Nothing ChangeCounterName(CounterId counterId, CounterName newCounterName) => MaybeCounterWith(counterId)
+            .Map(c => c.ChangeName(newCounterName))
+            .Unwrap(NotAtAll);
 
         private Maybe<Counter> MaybeCounterWith(CounterId counterId) => _collection.MaybeFirst(c => c.AreYou(counterId));
     }
