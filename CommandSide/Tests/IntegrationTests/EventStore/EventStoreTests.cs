@@ -35,6 +35,8 @@ namespace CommandSide.Tests.IntegrationTests.EventStore
             _eventStore.Append(SingleCustomerQueueCreated.SetAnyVersionAndTimestamp());
             _eventStore.Append(Counter1Added.SetAnyVersionAndTimestamp());
             _eventStore.Append(Counter1Removed.SetAnyVersionAndTimestamp());
+            _eventStore.Append(Monday9To12Added.SetAnyVersionAndTimestamp());
+            _eventStore.Append(Monday9To12Removed.SetAnyVersionAndTimestamp());
             _eventStore.Append(Counter1Opened.SetAnyVersionAndTimestamp());
             _eventStore.Append(Counter1Closed.SetAnyVersionAndTimestamp());
             
@@ -45,6 +47,8 @@ namespace CommandSide.Tests.IntegrationTests.EventStore
                 SingleCustomerQueueCreated,
                 Counter1Added,
                 Counter1Removed,
+                Monday9To12Added,
+                Monday9To12Removed,
                 Counter1Opened,
                 Counter1Closed);
         }

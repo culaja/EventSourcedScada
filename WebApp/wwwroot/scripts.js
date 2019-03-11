@@ -60,10 +60,10 @@ $(document).ready(function() {
                         "                                            <input id=\"day\" name=\"day\" type=\"text\" class=\"form-control\" placeholder=\"Day\" value=\"" + openTimes[i].day + "\">\n" +
                         "                                        </div>\n" +
                         "                                        <div class=\"col\">\n" +
-                        "                                            <input id=\"from\" name=\"from\" type=\"text\" class=\"form-control\" placeholder=\"From\" value=\"" + openTimes[i].beginTimestamp.time + "\">\n" +
+                        "                                            <input id=\"from\" name=\"from\" type=\"text\" class=\"form-control\" placeholder=\"From\" value=\"" + openTimes[i].beginTimestamp + "\">\n" +
                         "                                        </div>\n" +
                         "                                        <div class=\"col\">\n" +
-                        "                                            <input id=\"to\" name=\"to\" type=\"text\" class=\"form-control\" placeholder=\"To\" value=\"" + openTimes[i].endTimestamp.time + "\">\n" +
+                        "                                            <input id=\"to\" name=\"to\" type=\"text\" class=\"form-control\" placeholder=\"To\" value=\"" + openTimes[i].endTimestamp + "\">\n" +
                         "                                        </div>\n" +
                         "                                    </div>\n" +
                         "                                </form>");

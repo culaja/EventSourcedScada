@@ -8,13 +8,13 @@ namespace QuerySide.Views.CustomerQueueViews.Configuring
     public sealed class OpenTimeConfiguration : ValueObject<OpenTimeConfiguration>
     {
         public DayOfWeek Day { get; }
-        public TimeOfDay BeginTimestamp { get; }
-        public TimeOfDay EndTimestamp { get; }
+        public TimeSpan BeginTimestamp { get; }
+        public TimeSpan EndTimestamp { get; }
 
         public OpenTimeConfiguration(
             DayOfWeek day,
-            TimeOfDay beginTimestamp,
-            TimeOfDay endTimestamp)
+            TimeSpan beginTimestamp,
+            TimeSpan endTimestamp)
         {
             Day = day;
             BeginTimestamp = beginTimestamp;
