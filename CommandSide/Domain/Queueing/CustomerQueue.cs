@@ -31,20 +31,20 @@ namespace CommandSide.Domain.Queueing
 
         public Result<CustomerQueue> SetConfiguration(Configuration c)
         {
+            c.IsolateCounterIdsToRemove(_counters.CountersDetails).Map(counterId =>
+                ApplyChange(new CounterRemoved(Id, counterId)));
+            
             c.IsolateCountersToAdd(_counters.CountersDetails).Map(counterDetails =>
                 ApplyChange(new CounterAdded(Id, counterDetails.Id, counterDetails.Name)));
 
-            c.IsolateCounterIdsToRemove(_counters.CountersDetails).Map(counterId =>
-                ApplyChange(new CounterRemoved(Id, counterId)));
-
             c.IsolateCountersDetailsWhereNameChanged(_counters.CountersDetails).Map( counterDetails =>
                 ApplyChange(new CounterNameChanged(Id, counterDetails.Id, counterDetails.Name)));
-            
-            c.IsolateOpenTimesToAdd(_currentOpenTimes).Map(openTime =>
-                ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
 
             c.IsolateOpenTimesToRemove(_currentOpenTimes).Map(openTime =>
                 ApplyChange(new OpenTimeRemoved(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
+            
+            c.IsolateOpenTimesToAdd(_currentOpenTimes).Map(openTime =>
+                ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimestamp, openTime.EndTimestamp)));
 
             return Ok(this);
         }
