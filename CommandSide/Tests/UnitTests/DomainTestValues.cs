@@ -6,6 +6,7 @@ namespace CommandSide.Tests.UnitTests
 {
     public static class DomainTestValues
     {
+        public static TimeOfDay Time_24 = TimeOfDayFrom("1.00:00");
         public static TimeOfDay Time_09 = TimeOfDayFrom("09:00");
         public static TimeOfDay Time_18 = TimeOfDayFrom("18:00");
 

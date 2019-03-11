@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using static System.String;
 using static System.TimeSpan;
 
 namespace Common.Time
@@ -15,15 +16,17 @@ namespace Common.Time
 
         public static TimeOfDay TimeOfDayFrom(Maybe<string> maybeTime)
         {
-            if (maybeTime.HasValue)
+            if (!TryParse(maybeTime.Unwrap(Empty), out var timespan))
             {
-                var isValidTime = TryParse(maybeTime.Value, out TimeSpan time);
-                if (isValidTime)
-                {
-                    return new TimeOfDay(time);
-                }
+                throw new TimeOfDayFormatException(maybeTime); 
             }
-            throw new UnableToCreateTimeOfDayException(maybeTime);   
+
+            if (timespan > TimeSpan.FromDays(1))
+            {
+                throw new TimeOfDayCantBeGreaterThanDayException(timespan);
+            }
+                
+            return new TimeOfDay(timespan);
         }
         
         public static TimeOfDay TimeOfDayFromHour(int hour) => new TimeOfDay(FromHours(hour));

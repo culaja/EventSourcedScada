@@ -55,6 +55,6 @@ namespace CommandSide.Domain.Queueing.Configuring
             yield return EndTimestamp;
         }
 
-        public override string ToString() => $"{nameof(Day)}: {Day}, {nameof(BeginTimestamp)}: {BeginTimestamp}, {nameof(EndTimestamp)}: {EndTimestamp}";
+        public override string ToString() => $"{nameof(Day)}: {Day.ToString()}, {nameof(BeginTimestamp)}: {BeginTimestamp}, {nameof(EndTimestamp)}: {EndTimestamp}";
     }
 }
