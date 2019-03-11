@@ -5,6 +5,7 @@ using Common.Messaging;
 using FluentAssertions;
 using Shared.CustomerQueue;
 using Xunit;
+using static CommandSide.Tests.AssertionsHelpers;
 using static CommandSide.Tests.Specifications.CustomerQueueConfigurationTestValues;
 using static CommandSide.Tests.Specifications.CustomerQueueTestValues;
 
@@ -47,5 +48,8 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.SetConfig
         
         [Fact]
         public void Monday14To16_is_not_removed() => ProducedEvents.Should().NotContain(Monday14To16Removed);
+
+        [Fact]
+        public void no_counters_are_added() => ProducedEvents.Should().NotContain(EventOf<CounterAdded>());
     }
 }

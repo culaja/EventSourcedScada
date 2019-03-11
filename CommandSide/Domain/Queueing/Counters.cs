@@ -24,7 +24,7 @@ namespace CommandSide.Domain.Queueing
         public Counters AddCounterWith(CounterId id, CounterName name) => 
             new Counters(new List<Counter>(_collection) { new Counter(id, name) });
 
-        public Counters Remove(CounterId id) => new Counters(_collection.Where(c => c.Id == id).ToList());
+        public Counters Remove(CounterId id) => new Counters(_collection.Where(c => c.Id != id).ToList());
         
         protected override IEnumerable<object> GetEqualityComponents()
         {
