@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using QuerySide.Services;
+using WebApp.Middlewares;
 
 namespace WebApp
 {
@@ -49,6 +50,8 @@ namespace WebApp
             {
                 app.UseHsts();
             }
+            
+            app.UseMiddleware<ExceptionToHttpResponseMiddleware>();
 
             app.UseStaticFiles();
             app.UseMvc();

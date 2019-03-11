@@ -12,6 +12,13 @@ $(document).ready(function() {
         console.log('Connection with server established.');
     };
 
+    var showErrorBoxWith = function(error) {
+        const rootErrorBox = document.getElementById('rootErrorBox');
+        const errorMessage = document.getElementById('errorMessage');
+        errorMessage.innerHTML  = error.error;
+        rootErrorBox.style.display = 'block';
+    }
+
     $("#getConfiguration").on("click", function() {
         $.ajax({
             type: "GET",

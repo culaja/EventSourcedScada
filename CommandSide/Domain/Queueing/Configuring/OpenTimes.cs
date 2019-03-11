@@ -13,6 +13,22 @@ namespace CommandSide.Domain.Queueing.Configuring
         {
             _items = items;
         }
+
+        public static OpenTimes OpenTimesFrom(IReadOnlyList<OpenTime> items)
+        {
+            for (int i = 0; i < items.Count; i++)
+            {
+                for (int j = 0; j < items.Count; j++)
+                {
+                    if (i == j) continue;
+                    if (items[j].OverlapsWith(items[i]))
+                    {
+                        throw new OpenTimesAreOverlappingException(items[i]);
+                    }
+                }
+            }
+            return new OpenTimes(items);
+        }
         
         public static OpenTimes NoOpenTimes => new OpenTimes(new List<OpenTime>());
         

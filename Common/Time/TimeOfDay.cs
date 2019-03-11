@@ -12,24 +12,26 @@ namespace Common.Time
             Time = time;
         }
 
-        public static Result<TimeOfDay> TimeOfDayFrom(Maybe<string> maybeTime)
+        public static TimeOfDay TimeOfDayFrom(Maybe<string> maybeTime)
         {
             if (maybeTime.HasValue)
             {
                 var isValidTime = TimeSpan.TryParse(maybeTime.Value, out TimeSpan time);
                 if (isValidTime)
                 {
-                    return Result.Ok(new TimeOfDay(time));
+                    return new TimeOfDay(time);
                 }
             }
-            return Result.Fail<TimeOfDay>($"Not able to create time of day with provided time '{maybeTime}'");
+            throw new UnableToCreateTimeOfDayException(maybeTime);   
         }
         
         public static TimeOfDay TimeOfDayFromHour(int hour) => new TimeOfDay(TimeSpan.FromHours(hour));
 
         public bool IsTimeBeforeAnother(TimeOfDay otherTime) => Time.CompareTo(otherTime.Time) < 0;
-
+        
         public bool IsTimeEqualOrAfterAnother(TimeOfDay otherTime) => Time.CompareTo(otherTime.Time) >= 0;
+        
+        public bool IsTimeEqualOrBeforeAnother(TimeOfDay otherTime) => Time.CompareTo(otherTime.Time) <= 0;
 
         protected override IEnumerable<object> GetEqualityComponents()
         {

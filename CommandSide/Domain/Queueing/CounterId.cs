@@ -12,13 +12,13 @@ namespace CommandSide.Domain.Queueing
             _id = id;
         }
 
-        public static Result<CounterId> CounterIdFrom(int? maybeId)
+        public static CounterId CounterIdFrom(int? maybeId)
         {
             if (maybeId.HasValue)
             {
-                return Result.Ok(new CounterId(maybeId.Value));
+                return new CounterId(maybeId.Value);
             }
-            return Result.Fail<CounterId>("Counter id must have value.");
+            throw new CounterIdCantBeEmptyException();
         }
         
         public static CounterId NewCounterIdFrom(int id) => new CounterId(id);

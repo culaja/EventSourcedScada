@@ -32,10 +32,9 @@ namespace WebApp.Controllers
         [HttpPost]
         [Route(nameof(SetConfiguration))]
         public Task<IActionResult> SetConfiguration([FromBody] SetConfigurationDto setConfigurationDto)
-            => setConfigurationDto.ToConfiguration()
-                .OnSuccess(configuration => _commandBus
-                    .ExecuteAsync(new SetConfiguration(configuration)))
-                .ToActionResultAsyncFromResult();
+            => _commandBus
+                .ExecuteAsync(new SetConfiguration(setConfigurationDto.ToConfiguration()))
+                .ToActionResultAsync();
 
         [HttpPost]
         [Route(nameof(OpenCounter))]
