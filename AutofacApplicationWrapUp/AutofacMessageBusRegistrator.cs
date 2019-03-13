@@ -7,6 +7,7 @@ using CommonAdapters.AutofacMessageBus;
 using QuerySide.Services;
 using QuerySide.Services.EventHandlers;
 using Shared.CustomerQueue;
+using Shared.TicketIssuer;
 using Module = Autofac.Module;
 
 namespace AutofacApplicationWrapUp
@@ -19,6 +20,7 @@ namespace AutofacApplicationWrapUp
                 new List<Assembly>
                 {
                     CustomerQueueSharedEventAssembly,
+                    TicketIssuerSharedEventAssembly,
                     CommandSideEventAssembly,
                     QuerySideEventAssembly
                 },
@@ -30,6 +32,8 @@ namespace AutofacApplicationWrapUp
         }
         
         private static Assembly CustomerQueueSharedEventAssembly => typeof(CustomerQueueEvent).Assembly;
+        
+        private static Assembly TicketIssuerSharedEventAssembly => typeof(TicketIssuerEvent).Assembly;
         
         private static Assembly CommandSideEventAssembly => typeof(CustomerQueue).Assembly;
         
