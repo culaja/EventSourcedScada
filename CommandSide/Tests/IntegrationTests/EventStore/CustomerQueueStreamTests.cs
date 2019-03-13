@@ -37,6 +37,7 @@ namespace CommandSide.Tests.IntegrationTests.EventStore
             _eventStore.Append(Counter1Removed.SetAnyVersionAndTimestamp());
             _eventStore.Append(Counter1Opened.SetAnyVersionAndTimestamp());
             _eventStore.Append(Counter1Closed.SetAnyVersionAndTimestamp());
+            _eventStore.Append(Customer1Enqueued.SetAnyVersionAndTimestamp());
             
            
             var allEvents =  _eventStore.LoadAllFor<CustomerQueueSubscription>().ToList();
@@ -46,7 +47,8 @@ namespace CommandSide.Tests.IntegrationTests.EventStore
                 Counter1Added,
                 Counter1Removed,
                 Counter1Opened,
-                Counter1Closed);
+                Counter1Closed,
+                Customer1Enqueued);
         }
 
         private static void ListsAreEquivalent(IReadOnlyList<IDomainEvent> a, params IDomainEvent[] b)

@@ -104,5 +104,13 @@ namespace CommandSide.Domain.Queueing
             _counters.CloseCounterWith(e.CounterId.ToCounterId());
             return this;
         }
+
+        public Result<CustomerQueue> EnqueueCustomer()
+        {
+            ApplyChange(new CustomerEnqueued(Id));
+            return Ok(this);
+        }
+
+        private CustomerQueue Apply(CustomerEnqueued _) => this;
     }
 }
