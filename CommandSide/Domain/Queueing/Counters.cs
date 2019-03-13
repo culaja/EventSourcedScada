@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using static CommandSide.Domain.Queueing.CanOpenCounterResult;
 using static Common.Nothing;
@@ -17,7 +16,7 @@ namespace CommandSide.Domain.Queueing
             _collection = collection;
         }
 
-        public CountersDetails CountersDetails => new CountersDetails(_collection.Select(c => c.ToCounterDetails()).ToList());
+        public CounterConfiguration CounterConfiguration => new CounterConfiguration(_collection.Select(c => c.ToCounterDetails()).ToList());
 
         public static readonly Counters NoCounters = new Counters(new List<Counter>());
 

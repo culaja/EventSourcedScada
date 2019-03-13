@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using QuerySide.QueryCommon;
 using Shared.CustomerQueue;
+using Shared.TicketIssuer;
 
 namespace QuerySide.Views.CustomerQueueViews.Configuring
 {

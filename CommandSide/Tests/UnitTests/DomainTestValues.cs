@@ -1,5 +1,5 @@
 using System;
-using CommandSide.Domain.Queueing.Configuring;
+using CommandSide.Domain;
 using Common.Time;
 using static System.DayOfWeek;
 using static Common.Time.TimeOfDay;

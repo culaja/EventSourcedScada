@@ -1,4 +1,3 @@
-using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using static Common.Nothing;
 

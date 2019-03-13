@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CommandSide.Domain.Queueing.Commands;
+using CommandSide.Domain.TicketIssuing.Commands;
 using Common.Messaging;
 using Microsoft.AspNetCore.Mvc;
 using QuerySide.Views.CustomerQueueViews;
@@ -30,10 +31,12 @@ namespace WebApp.Controllers
 
         [HttpPost]
         [Route(nameof(SetConfiguration))]
-        public Task<IActionResult> SetConfiguration([FromBody] SetConfigurationDto setConfigurationDto)
-            => _commandBus
-                .ExecuteAsync(new SetConfiguration(setConfigurationDto.ToConfiguration()))
-                .ToActionResultAsync();
+        public async Task<IActionResult> SetConfiguration([FromBody] SetConfigurationDto setConfigurationDto)
+        {
+            var r1 = await _commandBus.ExecuteAsync(new SetCounterConfiguration(setConfigurationDto.Counters.ToCounterConfiguration())).ToActionResultAsync();
+            var r2 = await _commandBus.ExecuteAsync(new SetOpenTimes(setConfigurationDto.OpenTimes.ToOpenTimes())).ToActionResultAsync();
+            return r1.CombineWith(r2);
+        }
 
         [HttpPost]
         [Route(nameof(OpenCounter))]

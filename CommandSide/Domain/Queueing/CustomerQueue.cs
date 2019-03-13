@@ -1,9 +1,8 @@
 using System;
-using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using Shared.CustomerQueue;
 using static CommandSide.Domain.Queueing.CanOpenCounterResult;
-using static CommandSide.Domain.Queueing.Configuring.OpenTimes;
+using static CommandSide.Domain.OpenTimes;
 using static CommandSide.Domain.Queueing.Counters;
 using static Common.Result;
 
@@ -22,30 +21,23 @@ namespace CommandSide.Domain.Queueing
             Guid id)
         {
             var customerQueue = new CustomerQueue(id);
-            customerQueue.ApplyChange(new CustomerQueueCreated(
-                customerQueue.Id));
+            customerQueue.ApplyChange(new CustomerQueueCreated(customerQueue.Id));
             return customerQueue;
         }
 
         private CustomerQueue Apply(CustomerQueueCreated _) => this;
 
-        public Result<CustomerQueue> SetConfiguration(Configuration c)
+        public Result<CustomerQueue> SetCounterConfiguration(CounterConfiguration counterConfiguration)
         {
-            c.IsolateCounterIdsToRemove(_counters.CountersDetails).Map(counterId =>
+            counterConfiguration.IsolateCounterIdsToRemove(_counters.CounterConfiguration).Map(counterId =>
                 ApplyChange(new CounterRemoved(Id, counterId)));
             
-            c.IsolateCountersToAdd(_counters.CountersDetails).Map(counterDetails =>
+            counterConfiguration.IsolateCountersToAdd(_counters.CounterConfiguration).Map(counterDetails =>
                 ApplyChange(new CounterAdded(Id, counterDetails.Id, counterDetails.Name)));
 
-            c.IsolateCountersDetailsWhereNameChanged(_counters.CountersDetails).Map( counterDetails =>
+            counterConfiguration.IsolateCountersDetailsWhereNameDiffers(_counters.CounterConfiguration).Map( counterDetails =>
                 ApplyChange(new CounterNameChanged(Id, counterDetails.Id, counterDetails.Name)));
-
-            c.IsolateOpenTimesToRemove(_currentOpenTimes).Map(openTime =>
-                ApplyChange(new OpenTimeRemoved(Id, openTime.Day, openTime.BeginTimeOfDay, openTime.EndTimeOfDay)));
             
-            c.IsolateOpenTimesToAdd(_currentOpenTimes).Map(openTime =>
-                ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimeOfDay, openTime.EndTimeOfDay)));
-
             return Ok(this);
         }
 
@@ -64,18 +56,6 @@ namespace CommandSide.Domain.Queueing
         private CustomerQueue Apply(CounterNameChanged e)
         {
             _counters.ChangeCounterName(e.CounterId.ToCounterId(), e.NewCounterName.ToCounterName());
-            return this;
-        }
-
-        private CustomerQueue Apply(OpenTimeAdded e)
-        {
-            _currentOpenTimes = _currentOpenTimes.Add(e.ToOpenTime());
-            return this;
-        }
-
-        private CustomerQueue Apply(OpenTimeRemoved e)
-        {
-            _currentOpenTimes = _currentOpenTimes.Remove(e.ToOpenTime());
             return this;
         }
 

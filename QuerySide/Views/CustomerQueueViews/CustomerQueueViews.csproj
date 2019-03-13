@@ -8,6 +8,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\..\Common\Common.csproj" />
       <ProjectReference Include="..\..\..\Shared.CustomerQueue\Shared.CustomerQueue.csproj" />
+      <ProjectReference Include="..\..\..\Shared.TicketIssuer\Shared.TicketIssuer.csproj" />
       <ProjectReference Include="..\..\QueryCommon\QueryCommon.csproj" />
     </ItemGroup>
 

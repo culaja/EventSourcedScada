@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using CommandSide.Domain.Queueing.Configuring;
+using CommandSide.Domain;
 using FluentAssertions;
 using Xunit;
-using static CommandSide.Domain.Queueing.Configuring.OpenTimes;
+using static CommandSide.Domain.OpenTimes;
 using static CommandSide.Tests.UnitTests.DomainTestValues;
 
 namespace CommandSide.Tests.UnitTests

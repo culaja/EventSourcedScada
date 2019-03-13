@@ -4,6 +4,8 @@ using CommandSide.Domain.Queueing;
 using Common;
 using Common.Messaging;
 using Shared.CustomerQueue;
+using static System.Guid;
+using static CommandSide.Domain.Queueing.CustomerQueue;
 
 namespace CommandSide.Adapters.InMemory
 {
@@ -20,7 +22,7 @@ namespace CommandSide.Adapters.InMemory
             ExecuteTransformerAndPurgeEvents(
                 MaybeFirst.Unwrap(
                     customerQueue => customerQueue,
-                    () =>  AddNew(CustomerQueue.NewCustomerQueueFrom(Guid.NewGuid())).Value),
+                    () =>  AddNew(NewCustomerQueueFrom(NewGuid())).Value),
                 transformer);
     }
 }

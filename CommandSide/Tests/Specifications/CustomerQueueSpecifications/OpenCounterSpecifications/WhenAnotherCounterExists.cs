@@ -6,8 +6,8 @@ using FluentAssertions;
 using Shared.CustomerQueue;
 using Xunit;
 using static CommandSide.Tests.AssertionsHelpers;
-using static CommandSide.Tests.Specifications.CustomerQueueConfigurationTestValues;
-using static CommandSide.Tests.Specifications.CustomerQueueTestValues;
+using static CommandSide.Tests.Specifications.CustomerQueueSpecifications.CustomerQueueConfigurationTestValues;
+using static CommandSide.Tests.Specifications.CustomerQueueSpecifications.CustomerQueueTestValues;
 
 namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.OpenCounterSpecifications
 {

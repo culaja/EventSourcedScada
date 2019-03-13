@@ -5,7 +5,7 @@ using Common.Messaging;
 
 namespace CommandSide.DomainServices.Queueing.CommandHandlers
 {
-    public sealed class SetConfigurationHandler : CommandHandler<SetConfiguration>
+    public sealed class SetConfigurationHandler : CommandHandler<SetCounterConfiguration>
     {
         private readonly ICustomerQueueRepository _repository;
 
@@ -14,7 +14,7 @@ namespace CommandSide.DomainServices.Queueing.CommandHandlers
             _repository = repository;
         }
 
-        public override Result Handle(SetConfiguration c) => _repository
-            .BorrowSingle(cq => cq.SetConfiguration(c.Configuration));
+        public override Result Handle(SetCounterConfiguration c) => _repository
+            .BorrowSingle(cq => cq.SetCounterConfiguration(c.CounterConfiguration));
     }
 }

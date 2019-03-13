@@ -1,6 +1,6 @@
 using FluentAssertions;
 using QuerySide.Views.CustomerQueueViews.Configuring;
-using Shared.CustomerQueue;
+using Shared.TicketIssuer;
 using Xunit;
 using static System.DayOfWeek;
 using static Tests.Views.CustomerQueueViewsTestValues;

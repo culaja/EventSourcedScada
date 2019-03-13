@@ -1,4 +1,4 @@
-using CommandSide.Domain.Queueing.Configuring;
+using CommandSide.Domain;
 using Xunit;
 using static System.DayOfWeek;
 using static CommandSide.Tests.UnitTests.DomainTestValues;
