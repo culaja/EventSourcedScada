@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Common;
-using Common.Time;
 
 namespace QuerySide.Views.CustomerQueueViews.Configuring
 {
