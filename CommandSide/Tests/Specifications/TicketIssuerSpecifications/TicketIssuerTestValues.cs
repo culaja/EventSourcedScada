@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using CommandSide.Domain;
+using CommandSide.Domain.TicketIssuing.Configuring;
 using Common.Time;
 using Shared.TicketIssuer;
 using static System.DayOfWeek;

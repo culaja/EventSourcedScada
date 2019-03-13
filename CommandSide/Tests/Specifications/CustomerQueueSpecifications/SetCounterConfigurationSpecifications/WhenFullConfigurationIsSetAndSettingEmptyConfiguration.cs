@@ -5,7 +5,7 @@ using Common.Messaging;
 using FluentAssertions;
 using Shared.CustomerQueue;
 using Xunit;
-using static CommandSide.Domain.CounterConfiguration;
+using static CommandSide.Domain.Queueing.Configuring.CounterConfiguration;
 using static CommandSide.Tests.Specifications.CustomerQueueSpecifications.CustomerQueueTestValues;
 
 namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.SetCounterConfigurationSpecifications

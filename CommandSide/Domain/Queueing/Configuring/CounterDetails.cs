@@ -1,8 +1,7 @@
 using System.Collections.Generic;
-using CommandSide.Domain.Queueing;
 using Common;
 
-namespace CommandSide.Domain
+namespace CommandSide.Domain.Queueing.Configuring
 {
     public sealed class CounterDetails : ValueObject<CounterDetails>
     {

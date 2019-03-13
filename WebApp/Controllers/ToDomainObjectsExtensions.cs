@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using CommandSide.Domain;
+using CommandSide.Domain.Queueing.Configuring;
+using CommandSide.Domain.TicketIssuing.Configuring;
 using Common;
 using Common.Time;
 using WebApp.Controllers.CommandsDto;
-using static CommandSide.Domain.CounterDetails;
-using static CommandSide.Domain.OpenTime;
-using static CommandSide.Domain.OpenTimes;
+using static CommandSide.Domain.Queueing.Configuring.CounterDetails;
+using static CommandSide.Domain.TicketIssuing.Configuring.OpenTime;
+using static CommandSide.Domain.TicketIssuing.Configuring.OpenTimes;
 using static CommandSide.Domain.Queueing.CounterId;
 using static CommandSide.Domain.Queueing.CounterName;
 

@@ -1,7 +1,8 @@
 using System;
+using CommandSide.Domain.TicketIssuing.Configuring;
 using Common;
 using Shared.TicketIssuer;
-using static CommandSide.Domain.OpenTimes;
+using static CommandSide.Domain.TicketIssuing.Configuring.OpenTimes;
 using static Common.Result;
 
 namespace CommandSide.Domain.TicketIssuing

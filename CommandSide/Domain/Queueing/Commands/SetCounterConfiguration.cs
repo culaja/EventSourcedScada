@@ -1,3 +1,4 @@
+using CommandSide.Domain.Queueing.Configuring;
 using Common.Messaging;
 
 namespace CommandSide.Domain.Queueing.Commands

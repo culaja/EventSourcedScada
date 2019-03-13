@@ -5,7 +5,7 @@ using Common.Messaging;
 using FluentAssertions;
 using Shared.TicketIssuer;
 using Xunit;
-using static CommandSide.Domain.OpenTimes;
+using static CommandSide.Domain.TicketIssuing.Configuring.OpenTimes;
 using static CommandSide.Tests.Specifications.TicketIssuerSpecifications.TicketIssuerTestValues;
 
 namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications.SetOpenTimesSpecifications

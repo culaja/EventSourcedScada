@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Common;
 using Common.Time;
 
-namespace CommandSide.Domain
+namespace CommandSide.Domain.TicketIssuing.Configuring
 {
     public sealed class OpenTime : ValueObject<OpenTime>
     {

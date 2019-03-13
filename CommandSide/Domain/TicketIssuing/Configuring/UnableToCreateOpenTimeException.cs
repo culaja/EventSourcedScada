@@ -1,7 +1,7 @@
 using Common.Exceptions;
 using Common.Time;
 
-namespace CommandSide.Domain
+namespace CommandSide.Domain.TicketIssuing.Configuring
 {
     public sealed class BeginTimeNeedsToBeBeforeEndTimeException : BadRequestException
     {

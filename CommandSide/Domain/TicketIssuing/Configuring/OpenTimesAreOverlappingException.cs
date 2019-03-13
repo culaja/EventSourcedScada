@@ -1,6 +1,6 @@
 using Common.Exceptions;
 
-namespace CommandSide.Domain
+namespace CommandSide.Domain.TicketIssuing.Configuring
 {
     public sealed class OpenTimesAreOverlappingException : BadRequestException
     {

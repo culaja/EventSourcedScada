@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using CommandSide.Domain.Queueing;
 using Common;
 
-namespace CommandSide.Domain
+namespace CommandSide.Domain.Queueing.Configuring
 {
     public sealed class CounterConfiguration : ValueObject<CounterConfiguration>, IReadOnlyList<CounterDetails>
     {

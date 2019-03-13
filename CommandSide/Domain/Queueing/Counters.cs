@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using static CommandSide.Domain.Queueing.CanOpenCounterResult;
 using static Common.Nothing;

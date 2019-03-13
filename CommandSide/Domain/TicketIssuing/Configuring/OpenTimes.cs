@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Common;
 
-namespace CommandSide.Domain
+namespace CommandSide.Domain.TicketIssuing.Configuring
 {
     public sealed class OpenTimes : ValueObject<OpenTimes>, IReadOnlyList<OpenTime>
     {

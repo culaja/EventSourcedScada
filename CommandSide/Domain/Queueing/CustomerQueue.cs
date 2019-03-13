@@ -1,8 +1,10 @@
 using System;
+using CommandSide.Domain.Queueing.Configuring;
+using CommandSide.Domain.TicketIssuing.Configuring;
 using Common;
 using Shared.CustomerQueue;
 using static CommandSide.Domain.Queueing.CanOpenCounterResult;
-using static CommandSide.Domain.OpenTimes;
+using static CommandSide.Domain.TicketIssuing.Configuring.OpenTimes;
 using static CommandSide.Domain.Queueing.Counters;
 using static Common.Result;
 

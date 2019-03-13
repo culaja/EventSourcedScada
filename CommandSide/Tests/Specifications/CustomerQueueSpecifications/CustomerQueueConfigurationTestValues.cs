@@ -1,5 +1,6 @@
 using CommandSide.Domain;
 using CommandSide.Domain.Queueing;
+using CommandSide.Domain.Queueing.Configuring;
 
 namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications
 {

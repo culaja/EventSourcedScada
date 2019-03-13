@@ -1,3 +1,4 @@
+using CommandSide.Domain.TicketIssuing.Configuring;
 using Shared.TicketIssuer;
 
 namespace CommandSide.Domain.TicketIssuing
