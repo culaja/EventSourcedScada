@@ -19,7 +19,7 @@
       <ProjectReference Include="..\QuerySide\QueryCommon\QueryCommon.csproj" />
       <ProjectReference Include="..\QuerySide\QuerySidePorts\QuerySidePorts.csproj" />
       <ProjectReference Include="..\QuerySide\QuerySideServices\QuerySideServices.csproj" />
-      <ProjectReference Include="..\QuerySide\Views\CustomerQueueViews\CustomerQueueViews.csproj" />
+      <ProjectReference Include="..\QuerySide\Views\Views.csproj" />
     </ItemGroup>
 
 </Project>

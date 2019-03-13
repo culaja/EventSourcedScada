@@ -3,8 +3,8 @@ using CommandSide.Domain.Queueing.Commands;
 using CommandSide.Domain.TicketIssuing.Commands;
 using Common.Messaging;
 using Microsoft.AspNetCore.Mvc;
-using QuerySide.Views.CustomerQueueViews;
-using QuerySide.Views.CustomerQueueViews.Configuring;
+using QuerySide.Views;
+using QuerySide.Views.Configuring;
 using WebApp.Controllers.CommandsDto;
 using static CommandSide.Domain.Queueing.CounterId;
 
@@ -15,11 +15,11 @@ namespace WebApp.Controllers
     public class CustomerQueueController : ControllerBase
     {
         private readonly ICommandBus _commandBus;
-        private readonly CustomerQueueViewHolder _viewHolder;
+        private readonly ViewsHolder _viewHolder;
 
         public CustomerQueueController(
             ICommandBus commandBus,
-            CustomerQueueViewHolder viewHolder)
+            ViewsHolder viewHolder)
         {
             _commandBus = commandBus;
             _viewHolder = viewHolder;

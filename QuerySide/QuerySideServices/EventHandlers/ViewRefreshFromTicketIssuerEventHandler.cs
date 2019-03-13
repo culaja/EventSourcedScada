@@ -1,18 +1,18 @@
 using Common;
 using Common.Messaging;
 using QuerySide.QuerySidePorts;
-using QuerySide.Views.CustomerQueueViews;
+using QuerySide.Views;
 using Shared.TicketIssuer;
 
 namespace QuerySide.Services.EventHandlers
 {
     public sealed class ViewRefreshFromTicketIssuerEventHandler : EventHandler<TicketIssuerEvent>
     {
-        private readonly CustomerQueueViewHolder _viewHolder;
+        private readonly ViewsHolder _viewHolder;
         private readonly IClientNotifier _clientNotifier;
 
         public ViewRefreshFromTicketIssuerEventHandler(
-            CustomerQueueViewHolder viewHolder,
+            ViewsHolder viewHolder,
             IClientNotifier clientNotifier)
         {
             _viewHolder = viewHolder;

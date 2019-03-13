@@ -1,5 +1,5 @@
 using Autofac;
-using QuerySide.Views.CustomerQueueViews;
+using QuerySide.Views;
 
 namespace AutofacApplicationWrapUp.QuerySide
 {
@@ -7,7 +7,7 @@ namespace AutofacApplicationWrapUp.QuerySide
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CustomerQueueViewHolder>().SingleInstance();
+            builder.RegisterType<ViewsHolder>().SingleInstance();
         }
     }
 }

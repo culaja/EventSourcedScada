@@ -15,7 +15,7 @@
     <ItemGroup>
       <ProjectReference Include="..\..\Common\Common.csproj" />
       <ProjectReference Include="..\QueryCommon\QueryCommon.csproj" />
-      <ProjectReference Include="..\Views\CustomerQueueViews\CustomerQueueViews.csproj" />
+      <ProjectReference Include="..\Views\Views.csproj" />
     </ItemGroup>
 
 </Project>

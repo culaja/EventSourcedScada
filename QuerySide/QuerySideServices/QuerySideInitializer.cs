@@ -2,7 +2,7 @@ using System.Linq;
 using Common.Messaging;
 using Ports.EventStore;
 using QuerySide.QuerySidePorts;
-using QuerySide.Views.CustomerQueueViews;
+using QuerySide.Views;
 using Shared.CustomerQueue;
 using Shared.TicketIssuer;
 using static System.Console;
@@ -15,11 +15,11 @@ namespace QuerySide.Services
         private readonly IEventStore _eventStore;
         private readonly IDomainEventBus _domainEventBus;
         private readonly IClientNotifier _clientNotifier;
-        private readonly CustomerQueueViewHolder _viewHolder;
+        private readonly ViewsHolder _viewHolder;
 
         public QuerySideInitializer(
             IEventStore eventStore,
-            CustomerQueueViewHolder viewHolder, 
+            ViewsHolder viewHolder, 
             IDomainEventBus domainEventBus,
             IClientNotifier clientNotifier)
         {

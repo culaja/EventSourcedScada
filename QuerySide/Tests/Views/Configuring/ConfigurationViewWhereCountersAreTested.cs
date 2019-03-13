@@ -1,5 +1,5 @@
 using FluentAssertions;
-using QuerySide.Views.CustomerQueueViews.Configuring;
+using QuerySide.Views.Configuring;
 using Shared.CustomerQueue;
 using Xunit;
 using static Tests.Views.CustomerQueueViewsTestValues;

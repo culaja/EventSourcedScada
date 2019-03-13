@@ -1,17 +1,17 @@
 using Common;
 using Common.Messaging;
 using QuerySide.QuerySidePorts;
-using QuerySide.Views.CustomerQueueViews;
+using QuerySide.Views;
 
 namespace QuerySide.Services.ClientEventHandlers
 {
     public sealed class NewClientConnectedHandler : MessageHandler<NewClientConnected>
     {
-        private readonly CustomerQueueViewHolder _viewHolder;
+        private readonly ViewsHolder _viewHolder;
         private readonly IClientNotifier _clientNotifier;
 
         public NewClientConnectedHandler(
-            CustomerQueueViewHolder viewHolder,
+            ViewsHolder viewHolder,
             IClientNotifier clientNotifier)
         {
             _viewHolder = viewHolder;
