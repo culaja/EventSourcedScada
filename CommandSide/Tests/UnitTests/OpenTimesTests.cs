@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using CommandSide.Domain;
-using CommandSide.Domain.TicketIssuing.Configuring;
+using CommandSide.Domain.TicketIssuing;
 using FluentAssertions;
 using Xunit;
-using static CommandSide.Domain.TicketIssuing.Configuring.OpenTimes;
+using static CommandSide.Domain.TicketIssuing.OpenTimes;
 using static CommandSide.Tests.UnitTests.DomainTestValues;
 
 namespace CommandSide.Tests.UnitTests

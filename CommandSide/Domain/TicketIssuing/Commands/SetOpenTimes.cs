@@ -1,4 +1,3 @@
-using CommandSide.Domain.TicketIssuing.Configuring;
 using Common.Messaging;
 
 namespace CommandSide.Domain.TicketIssuing.Commands

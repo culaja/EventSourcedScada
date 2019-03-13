@@ -1,5 +1,5 @@
 using CommandSide.Domain;
-using CommandSide.Domain.TicketIssuing.Configuring;
+using CommandSide.Domain.TicketIssuing;
 using Xunit;
 using static System.DayOfWeek;
 using static CommandSide.Tests.UnitTests.DomainTestValues;
