@@ -29,12 +29,8 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications
         public static readonly IReadOnlyList<CounterNameChanged> AllCountersNamesChanged = new[] {Counter1NameChanged, Counter2NameChanged, Counter3NameChanged};
         
         public static readonly CounterOpened Counter1Opened = new CounterOpened(SingleCustomerQueueId, Counter1Id);
-        public static readonly CounterOpened Counter2Opened = new CounterOpened(SingleCustomerQueueId, Counter2Id);
-        public static readonly CounterOpened Counter3Opened = new CounterOpened(SingleCustomerQueueId, Counter3Id);
         
         public static readonly CounterClosed Counter1Closed = new CounterClosed(SingleCustomerQueueId, Counter1Id);
-        public static readonly CounterClosed Counter2Closed = new CounterClosed(SingleCustomerQueueId, Counter2Id);
-        public static readonly CounterClosed Counter3Closed = new CounterClosed(SingleCustomerQueueId, Counter3Id);
         
         public static readonly CustomerEnqueued Customer1Enqueued = new CustomerEnqueued(SingleCustomerQueueId, Customer1TicketId);
         public static readonly CustomerEnqueued Customer2Enqueued = new CustomerEnqueued(SingleCustomerQueueId, Customer2TicketId);
@@ -43,6 +39,7 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications
         public static CustomerAssignedToCounter Customer2AssignedToCounter(CounterId counterId) => new CustomerAssignedToCounter(SingleCustomerQueueId, Customer2TicketId, counterId);
         
         public static CustomerServedByCounter Customer1ServedByCounter(CounterId counterId) => new CustomerServedByCounter(SingleCustomerQueueId, Customer1TicketId, counterId);
-        public static CustomerServedByCounter Customer2ServedByCounter(CounterId counterId) => new CustomerServedByCounter(SingleCustomerQueueId, Customer2TicketId, counterId);
+        
+        public static CustomerRecalledByCounter Customer1RecalledByCounter(CounterId counterId) => new CustomerRecalledByCounter(SingleCustomerQueueId, Customer1TicketId, counterId);
     }
 }

@@ -4,6 +4,7 @@ using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using Shared.CustomerQueue;
 using static CommandSide.Domain.Queueing.CanOpenCounterResult;
+using static CommandSide.Domain.Queueing.CanRecallCustomerResult;
 using static CommandSide.Domain.Queueing.CanServeNextCustomerResult;
 using static CommandSide.Domain.Queueing.Counters;
 using static CommandSide.Domain.Queueing.Customer;
@@ -146,5 +147,23 @@ namespace CommandSide.Domain.Queueing
             _counters.UnassignCustomerFromCounter(e.CounterId.ToCounterId());
             return this;
         }
+
+        public Result<CustomerQueue> ReCallCustomerFor(CounterId counterId)
+        {
+            switch (_counters.CanRecallCustomer(counterId))
+            {
+                case var s when s == CanRecallCustomerResult.CounterDoesntExist :
+                    return Fail<CustomerQueue>($"Counter with ID '{nameof(counterId)}' doesn't exist.");
+                case var s when s == CounterCantRecallCustomer:
+                    return Fail<CustomerQueue>(s.FailureReason);
+                case var s when s == CounterCanRecallCustomer:
+                    ApplyChange(new CustomerRecalledByCounter(Id, s.AssignedCustomer.Id, counterId));
+                    return Ok(this);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private CustomerQueue Apply(CustomerRecalledByCounter _) => this;
     }
 }

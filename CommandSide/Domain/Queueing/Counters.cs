@@ -3,6 +3,7 @@ using System.Linq;
 using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using static CommandSide.Domain.Queueing.CanOpenCounterResult;
+using static CommandSide.Domain.Queueing.CanRecallCustomerResult;
 using static CommandSide.Domain.Queueing.CanServeNextCustomerResult;
 using static Common.Nothing;
 
@@ -52,9 +53,8 @@ namespace CommandSide.Domain.Queueing
             .Unwrap(NotAtAll);
 
         public CanServeNextCustomerResult CanServeNextCustomer(CounterId counterId) => MaybeCounterWith(counterId)
-            .Map(c => 
-                c.CanServeCustomer().OnBoth(
-                    CounterCanBeServedWithNextCustomerAndItIsCurrentlyServingCustomer,
+            .Map(c => c.CanServeCustomer().OnBoth(
+                CounterCanBeServedWithNextCustomerAndItIsCurrentlyServingCustomer,
                 CounterCantBeServedBecauseOfError))
             .Unwrap(CanServeNextCustomerResult.CounterDoesntExist);
 
@@ -67,5 +67,11 @@ namespace CommandSide.Domain.Queueing
             .ToNothing();
 
         private Maybe<Counter> MaybeCounterWith(CounterId counterId) => _collection.MaybeFirst(c => c.AreYou(counterId));
+
+        public CanRecallCustomerResult CanRecallCustomer(CounterId counterId) => MaybeCounterWith(counterId)
+            .Map(c => c.CanRecallCustomer().OnBoth(
+                CounterCanRecallCustomerFrom,
+                CounterCantBeRecalledBecauseOfError))
+            .Unwrap(CanRecallCustomerResult.CounterDoesntExist);
     }
 }

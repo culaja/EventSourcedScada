@@ -57,5 +57,9 @@ namespace CommandSide.Domain.Queueing
             _maybeCurrentlyServingCustomer = Maybe<Customer>.None;
             return NotAtAll;
         }
+
+        public Result<Customer> CanRecallCustomer() => _maybeCurrentlyServingCustomer
+            .Map(Ok)
+            .Unwrap(Fail<Customer>($"Not able to recall customer at Counter with ID '{Id}' and name '{_name}' because no customer is assigned."));
     }
 }
