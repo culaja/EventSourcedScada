@@ -26,6 +26,8 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications
         public static readonly CounterDetails Counter3DetailsWithChangedName = new CounterDetails(Counter3Id, Counter3ChangedName);
 
         public static readonly TicketId Customer1TicketId = NewTicketId();
+        public static readonly TicketId Customer2TicketId = NewTicketId();
+        public static readonly TicketId Customer3TicketId = NewTicketId();
         
         public static readonly CounterConfiguration ThreeCounterConfiguration = new CounterConfiguration(new []
         {

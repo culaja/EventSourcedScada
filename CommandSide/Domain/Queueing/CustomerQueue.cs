@@ -1,10 +1,9 @@
 using System;
+using System.Collections.Generic;
 using CommandSide.Domain.Queueing.Configuring;
-using CommandSide.Domain.TicketIssuing;
 using Common;
 using Shared.CustomerQueue;
 using static CommandSide.Domain.Queueing.CanOpenCounterResult;
-using static CommandSide.Domain.TicketIssuing.OpenTimes;
 using static CommandSide.Domain.Queueing.Counters;
 using static Common.Result;
 
@@ -13,9 +12,7 @@ namespace CommandSide.Domain.Queueing
     public sealed class CustomerQueue : AggregateRoot
     {
         private Counters _counters = NoCounters;
-        private OpenTimes _currentOpenTimes = NoOpenTimes;
-        
-        private Maybe<TicketId> _customerQueue = new Maybe<TicketId>();
+        private readonly Queue<TicketId> _customerQueue = new Queue<TicketId>();
         
         public CustomerQueue(Guid id) : base(id)
         {
@@ -115,7 +112,7 @@ namespace CommandSide.Domain.Queueing
 
         private CustomerQueue Apply(CustomerEnqueued e)
         {
-            _customerQueue = e.TicketId.ToTicketId();
+            _customerQueue.Enqueue(e.TicketId.ToTicketId());
             return this;
         }
 
@@ -128,7 +125,7 @@ namespace CommandSide.Domain.Queueing
                 case var s when s == CanServeNextCustomerResult.CounterCantBeServed:
                     return Fail<CustomerQueue>(s.ErrorMessage);
                 case var s when s == CanServeNextCustomerResult.CounterCanServeCustomer:
-                    _customerQueue.Map(ticketId => ApplyChange(new CustomerAssignedToCounter(Id, ticketId, counterId)));
+                    _customerQueue.MaybeFirst().Map(ticketId => ApplyChange(new CustomerAssignedToCounter(Id, ticketId, counterId)));
                     return Ok(this);
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -137,7 +134,7 @@ namespace CommandSide.Domain.Queueing
 
         private CustomerQueue Apply(CustomerAssignedToCounter _)
         {
-            _customerQueue = Maybe<TicketId>.None;
+            _customerQueue.Dequeue();
             return this;
         }
     }

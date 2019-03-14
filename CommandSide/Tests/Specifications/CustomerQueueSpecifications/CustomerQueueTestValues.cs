@@ -37,7 +37,9 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications
         public static readonly CounterClosed Counter3Closed = new CounterClosed(SingleCustomerQueueId, Counter3Id);
         
         public static readonly CustomerEnqueued Customer1Enqueued = new CustomerEnqueued(SingleCustomerQueueId, Customer1TicketId);
+        public static readonly CustomerEnqueued Customer2Enqueued = new CustomerEnqueued(SingleCustomerQueueId, Customer2TicketId);
         
         public static CustomerAssignedToCounter Customer1AssignedToCounter(CounterId counterId) => new CustomerAssignedToCounter(SingleCustomerQueueId, Customer1TicketId, counterId);
+        public static CustomerAssignedToCounter Customer2AssignedToCounter(CounterId counterId) => new CustomerAssignedToCounter(SingleCustomerQueueId, Customer2TicketId, counterId);
     }
 }
