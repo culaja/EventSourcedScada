@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using Shared.CustomerQueue;
+using static CommandSide.Domain.Queueing.CanCloseCounterResult;
 using static CommandSide.Domain.Queueing.CanOpenCounterResult;
 using static CommandSide.Domain.Queueing.CanRecallCustomerResult;
 using static CommandSide.Domain.Queueing.CanServeNextCustomerResult;
@@ -67,13 +68,13 @@ namespace CommandSide.Domain.Queueing
         {
             switch (_counters.CanOpenCounter(counterId))
             {
+                case var s when s == CounterCantBeOpened:
+                    return Fail<CustomerQueue>(s.FailureReason);
                 case var s when s == CounterCanBeOpened :
                     ApplyChange(new CounterOpened(Id, counterId));
                     return Ok(this);
                 case var s when s == CounterIsAlreadyOpened:
                     return Ok(this);
-                case var s when s == CanOpenCounterResult.CounterDoesntExist:
-                    return Fail<CustomerQueue>($"Counter with ID {counterId} doesn't exist.");
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -89,13 +90,13 @@ namespace CommandSide.Domain.Queueing
         {
             switch (_counters.CanCloseCounter(counterId))
             {
-                case var s when s == CanCloseCounterResult.CounterCanBeClosed :
+                case var s when s == CounterCantBeClosed:
+                    return Fail<CustomerQueue>(s.FailureReason);
+                case var s when s == CounterCanBeClosed :
                     ApplyChange(new CounterClosed(Id, counterId));
                     return Ok(this);
-                case var s when s == CanCloseCounterResult.CounterIsAlreadyClosed:
+                case var s when s == CounterIsAlreadyClosed:
                     return Ok(this);
-                case var s when s == CanCloseCounterResult.CounterDoesntExist:
-                    return Fail<CustomerQueue>($"Counter with ID {counterId} doesn't exist.");
                 default:
                     throw new ArgumentOutOfRangeException();
             }
@@ -123,8 +124,6 @@ namespace CommandSide.Domain.Queueing
         {
             switch (_counters.CanServeNextCustomer(counterId))
             {
-                case var s when s == CanServeNextCustomerResult.CounterDoesntExist :
-                    return Fail<CustomerQueue>($"Counter with ID '{nameof(counterId)}' doesn't exist.");
                 case var s when s == CounterCantServeCustomer:
                     return Fail<CustomerQueue>(s.FailureReason);
                 case var s when s == CounterCanServeCustomer:
@@ -152,8 +151,6 @@ namespace CommandSide.Domain.Queueing
         {
             switch (_counters.CanRecallCustomer(counterId))
             {
-                case var s when s == CanRecallCustomerResult.CounterDoesntExist :
-                    return Fail<CustomerQueue>($"Counter with ID '{nameof(counterId)}' doesn't exist.");
                 case var s when s == CounterCantRecallCustomer:
                     return Fail<CustomerQueue>(s.FailureReason);
                 case var s when s == CounterCanRecallCustomer:

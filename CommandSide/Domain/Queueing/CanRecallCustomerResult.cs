@@ -6,12 +6,11 @@ namespace CommandSide.Domain.Queueing
 {
     public sealed class CanRecallCustomerResult : ValueObject<CanRecallCustomerResult>
     {
-        public static readonly CanRecallCustomerResult CounterDoesntExist = new CanRecallCustomerResult(nameof(CounterDoesntExist));
         public static readonly CanRecallCustomerResult CounterCantRecallCustomer = new CanRecallCustomerResult(nameof(CounterCantRecallCustomer));
         public static readonly CanRecallCustomerResult CounterCanRecallCustomer = new CanRecallCustomerResult(nameof(CounterCanRecallCustomer));
         
-        public static CanRecallCustomerResult CounterCantBeRecalledBecauseOfError(string errorMessage) 
-            => new CanRecallCustomerResult(nameof(CounterCantRecallCustomer), errorMessage);
+        public static CanRecallCustomerResult CounterCantBeRecalledBecauseOfError(string failureReason) 
+            => new CanRecallCustomerResult(nameof(CounterCantRecallCustomer), failureReason);
         
         public static CanRecallCustomerResult CounterCanRecallCustomerFrom(Customer customer) => new CanRecallCustomerResult(nameof(CounterCanRecallCustomer), customer);
         

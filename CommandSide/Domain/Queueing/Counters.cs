@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using CommandSide.Domain.Queueing.Configuring;
 using Common;
+using static CommandSide.Domain.Queueing.CanCloseCounterResult;
 using static CommandSide.Domain.Queueing.CanOpenCounterResult;
 using static CommandSide.Domain.Queueing.CanRecallCustomerResult;
 using static CommandSide.Domain.Queueing.CanServeNextCustomerResult;
@@ -34,15 +35,15 @@ namespace CommandSide.Domain.Queueing
         
         public CanOpenCounterResult CanOpenCounter(CounterId counterId) => MaybeCounterWith(counterId)
             .Map(c => c.CanOpen() ? CounterCanBeOpened : CounterIsAlreadyOpened)
-            .Unwrap(CanOpenCounterResult.CounterDoesntExist);
+            .Unwrap(CounterCantBeOpenedBecauseOfError($"Counter with ID '{counterId}' doesn't exist."));
 
         public Nothing OpenCounterWith(CounterId counterId) => MaybeCounterWith(counterId)
             .Map(c => c.Open())
             .ToNothing();
         
         public CanCloseCounterResult CanCloseCounter(CounterId counterId) => MaybeCounterWith(counterId)
-            .Map(c => c.CanClose() ? CanCloseCounterResult.CounterCanBeClosed : CanCloseCounterResult.CounterIsAlreadyClosed)
-            .Unwrap(CanCloseCounterResult.CounterDoesntExist);
+            .Map(c => c.CanClose() ? CounterCanBeClosed : CounterIsAlreadyClosed)
+            .Unwrap(CounterCantBeClosedBecauseOfError($"Counter with ID '{counterId}' doesn't exist."));
 
         public Nothing CloseCounterWith(CounterId counterId) => MaybeCounterWith(counterId)
             .Map(c => c.Close())
@@ -56,7 +57,7 @@ namespace CommandSide.Domain.Queueing
             .Map(c => c.CanServeCustomer().OnBoth(
                 CounterCanBeServedWithNextCustomerAndItIsCurrentlyServingCustomer,
                 CounterCantBeServedBecauseOfError))
-            .Unwrap(CanServeNextCustomerResult.CounterDoesntExist);
+            .Unwrap(CounterCantBeServedBecauseOfError($"Counter with ID '{counterId}' doesn't exist."));
 
         public Nothing AssignCustomerToCounter(CounterId counterId, Customer customer) => MaybeCounterWith(counterId)
             .Map(c => c.Assign(customer))
@@ -72,6 +73,6 @@ namespace CommandSide.Domain.Queueing
             .Map(c => c.CanRecallCustomer().OnBoth(
                 CounterCanRecallCustomerFrom,
                 CounterCantBeRecalledBecauseOfError))
-            .Unwrap(CanRecallCustomerResult.CounterDoesntExist);
+            .Unwrap(CounterCantBeRecalledBecauseOfError($"Counter with ID '{nameof(counterId)}' doesn't exist."));
     }
 }
