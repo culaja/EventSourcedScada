@@ -6,11 +6,11 @@ namespace CommandSide.Domain.Queueing
     public sealed class CanServeNextCustomerResult : ValueObject<CanServeNextCustomerResult>
     {
         public static readonly CanServeNextCustomerResult CounterDoesntExist = new CanServeNextCustomerResult(nameof(CounterDoesntExist));
-        public static readonly CanServeNextCustomerResult CounterCantBeServed = new CanServeNextCustomerResult(nameof(CounterCantBeServed));
+        public static readonly CanServeNextCustomerResult CounterCantServeCustomer = new CanServeNextCustomerResult(nameof(CounterCantServeCustomer));
         public static readonly CanServeNextCustomerResult CounterCanServeCustomer = new CanServeNextCustomerResult(nameof(CounterCanServeCustomer));
         
         public static CanServeNextCustomerResult CounterCantBeServedBecauseOfError(string errorMessage) 
-            => new CanServeNextCustomerResult(nameof(CounterCantBeServed), errorMessage);
+            => new CanServeNextCustomerResult(nameof(CounterCantServeCustomer), errorMessage);
         
         public static CanServeNextCustomerResult CounterCanBeServedWithNextCustomerAndItIsCurrentlyServingCustomer(Maybe<Customer> maybeCurrentlyServingCustomer) 
             => new CanServeNextCustomerResult(nameof(CounterCanServeCustomer), maybeCurrentlyServingCustomer);

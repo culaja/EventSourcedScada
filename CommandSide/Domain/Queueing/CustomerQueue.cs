@@ -124,7 +124,7 @@ namespace CommandSide.Domain.Queueing
             {
                 case var s when s == CanServeNextCustomerResult.CounterDoesntExist :
                     return Fail<CustomerQueue>($"Counter with ID '{nameof(counterId)}' doesn't exist.");
-                case var s when s == CounterCantBeServed:
+                case var s when s == CounterCantServeCustomer:
                     return Fail<CustomerQueue>(s.FailureReason);
                 case var s when s == CounterCanServeCustomer:
                     s.MaybeCurrentlyServingCustomer.Map(customer => ApplyChange(new CustomerServedByCounter(Id, customer.Id, counterId)));
