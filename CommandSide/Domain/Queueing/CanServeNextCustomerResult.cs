@@ -12,19 +12,19 @@ namespace CommandSide.Domain.Queueing
         public static CanServeNextCustomerResult CounterCantBeServedBecauseOfError(string errorMessage) 
             => new CanServeNextCustomerResult(nameof(CounterCantBeServed), errorMessage);
         
-        public static CanServeNextCustomerResult CounterCanBeServedWithNextCustomerAndItIsCurrentlyServingCustomer(Maybe<TicketId> maybeCurrentlyServingCustomer) 
+        public static CanServeNextCustomerResult CounterCanBeServedWithNextCustomerAndItIsCurrentlyServingCustomer(Maybe<Customer> maybeCurrentlyServingCustomer) 
             => new CanServeNextCustomerResult(nameof(CounterCanServeCustomer), maybeCurrentlyServingCustomer);
         
         private readonly string _state;
         public string ErrorMessage { get; }
-        public Maybe<TicketId> MaybeCurrentlyServingCustomer { get; }
+        public Maybe<Customer> MaybeCurrentlyServingCustomer { get; }
         
         private CanServeNextCustomerResult(string state, string errorMessage = "")
-            :this(state, Maybe<TicketId>.None, errorMessage)
+            :this(state, Maybe<Customer>.None, errorMessage)
         {
         }
 
-        private CanServeNextCustomerResult(string state, Maybe<TicketId> maybeCurrentlyServingCustomer, string errorMessage = "")
+        private CanServeNextCustomerResult(string state, Maybe<Customer> maybeCurrentlyServingCustomer, string errorMessage = "")
         {
             ErrorMessage = errorMessage;
             _state = state;

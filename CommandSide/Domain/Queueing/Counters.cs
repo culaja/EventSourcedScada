@@ -67,12 +67,12 @@ namespace CommandSide.Domain.Queueing
                 CounterCantBeServedBecauseOfError))
             .Unwrap(CanServeNextCustomerResult.CounterDoesntExist);
 
-        public Nothing AssignCustomerToCounter(CounterId counterId, TicketId ticketId) => MaybeCounterWith(counterId)
-            .Map(c => c.AssignCustomer(ticketId))
+        public Nothing AssignCustomerToCounter(CounterId counterId, Customer customer) => MaybeCounterWith(counterId)
+            .Map(c => c.Assign(customer))
             .ToNothing();
 
-        public Nothing UnassignCustomerFromCounter(CounterId counterId, TicketId ticketId) => MaybeCounterWith(counterId)
-            .Map(c => c.UnassignCustomer(ticketId))
+        public Nothing UnassignCustomerFromCounter(CounterId counterId) => MaybeCounterWith(counterId)
+            .Map(c => c.UnassignCustomer())
             .ToNothing();
 
         private Maybe<Counter> MaybeCounterWith(CounterId counterId) => _collection.MaybeFirst(c => c.AreYou(counterId));

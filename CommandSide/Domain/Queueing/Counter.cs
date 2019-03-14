@@ -9,7 +9,7 @@ namespace CommandSide.Domain.Queueing
     {
         private CounterName _name;
         private bool _isOpened = false;
-        private Maybe<TicketId> _maybeCurrentlyServingCustomer = Maybe<TicketId>.None;
+        private Maybe<Customer> _maybeCurrentlyServingCustomer = Maybe<Customer>.None;
 
         public Counter(CounterId id, CounterName name) : base(id)
         {
@@ -36,9 +36,9 @@ namespace CommandSide.Domain.Queueing
         
         public bool CanClose() => !CanOpen();
 
-        public Result<Maybe<TicketId>> CanServeCustomer() => _isOpened.OnBoth(
+        public Result<Maybe<Customer>> CanServeCustomer() => _isOpened.OnBoth(
             () => Ok(_maybeCurrentlyServingCustomer),
-            () => Fail<Maybe<TicketId>>($"Counter with ID '{Id}' and name '{_name}' is not opened."));
+            () => Fail<Maybe<Customer>>($"Counter with ID '{Id}' and name '{_name}' is not opened."));
 
         public Nothing ChangeName(CounterName newCounterName)
         {
@@ -46,15 +46,15 @@ namespace CommandSide.Domain.Queueing
             return NotAtAll;
         }
 
-        public Nothing AssignCustomer(TicketId ticketId)
+        public Nothing Assign(Customer customer)
         {
-            _maybeCurrentlyServingCustomer = ticketId;
+            _maybeCurrentlyServingCustomer = customer;
             return NotAtAll;
         }
 
-        public Nothing UnassignCustomer(TicketId ticketId)
+        public Nothing UnassignCustomer()
         {
-            _maybeCurrentlyServingCustomer = Maybe<TicketId>.None;
+            _maybeCurrentlyServingCustomer = Maybe<Customer>.None;
             return NotAtAll;
         }
     }
