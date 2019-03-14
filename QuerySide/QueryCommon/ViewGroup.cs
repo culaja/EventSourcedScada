@@ -11,10 +11,21 @@ namespace QuerySide.QueryCommon
         where TK : IView, new()
     {
         private readonly Dictionary<T, TK> _viewById = new Dictionary<T, TK>();
+        
+        public TK ViewBy(T id)
+        {
+            if (!_viewById.TryGetValue(id, out var view))
+            {
+                view = new TK();
+                _viewById.Add(id, view);
+            }
+
+            return view;
+        }
 
         public async Task<TK> WaitNewVersionOfViewWithId(T id)
         {
-            var view = GetViewBy(id);
+            var view = ViewBy(id);
             await view.WaitNewVersionAsync();
             return view;
         }
@@ -33,19 +44,8 @@ namespace QuerySide.QueryCommon
 
         protected Nothing PassEventToViewWithId(T id, IDomainEvent e)
         {
-            GetViewBy(id).Apply(e);
+            ViewBy(id).Apply(e);
             return NotAtAll;
-        }
-
-        private TK GetViewBy(T id)
-        {
-            if (!_viewById.TryGetValue(id, out var view))
-            {
-                view = new TK();
-                _viewById.Add(id, view);
-            }
-
-            return view;
         }
     }
 }
