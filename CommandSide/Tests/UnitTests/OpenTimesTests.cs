@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using CommandSide.Domain;
 using CommandSide.Domain.TicketIssuing;
 using FluentAssertions;
 using Xunit;

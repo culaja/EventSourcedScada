@@ -5,16 +5,16 @@ using Common.Messaging;
 
 namespace CommandSide.DomainServices.Queueing.CommandHandlers
 {
-    public sealed class EnqueueCustomerHandler : CommandHandler<EnqueueCustomer>
+    public sealed class NextCustomerHandler : CommandHandler<NextCustomer>
     {
         private readonly ICustomerQueueRepository _repository;
 
-        public EnqueueCustomerHandler(ICustomerQueueRepository repository)
+        public NextCustomerHandler(ICustomerQueueRepository repository)
         {
             _repository = repository;
         }
 
-        public override Result Handle(EnqueueCustomer c) => _repository
-            .BorrowSingle(cq => cq.EnqueueCustomerWith(c.TicketId));
+        public override Result Handle(NextCustomer c) => _repository
+            .BorrowSingle(cq => cq.NextCustomer(c.CounterId));
     }
 }

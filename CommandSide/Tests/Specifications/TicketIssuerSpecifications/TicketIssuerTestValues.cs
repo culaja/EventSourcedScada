@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using CommandSide.Domain;
 using CommandSide.Domain.TicketIssuing;
 using Common.Time;
 using Shared.TicketIssuer;

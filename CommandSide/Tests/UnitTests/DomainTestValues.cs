@@ -1,5 +1,4 @@
 using System;
-using CommandSide.Domain;
 using CommandSide.Domain.TicketIssuing;
 using Common.Time;
 using static System.DayOfWeek;

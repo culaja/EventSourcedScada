@@ -59,6 +59,13 @@ namespace CommandSide.Domain.Queueing
             .Map(c => c.ChangeName(newCounterName))
             .Unwrap(NotAtAll);
 
+        public CanServeNextCustomerResult CanServeNextCustomer(CounterId counterId) => MaybeCounterWith(counterId)
+            .Map(c => 
+                c.CanServeCustomer().OnBoth(
+                    () => CanServeNextCustomerResult.CounterCanServeCustomer,
+                CanServeNextCustomerResult.CounterCantBeServedBecauseOfError))
+            .Unwrap(CanServeNextCustomerResult.CounterDoesntExist);
+
         private Maybe<Counter> MaybeCounterWith(CounterId counterId) => _collection.MaybeFirst(c => c.AreYou(counterId));
     }
 }

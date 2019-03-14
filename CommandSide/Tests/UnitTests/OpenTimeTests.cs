@@ -1,4 +1,3 @@
-using CommandSide.Domain;
 using CommandSide.Domain.TicketIssuing;
 using Xunit;
 using static System.DayOfWeek;

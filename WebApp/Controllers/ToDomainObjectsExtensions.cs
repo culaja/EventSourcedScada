@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using CommandSide.Domain;
 using CommandSide.Domain.Queueing.Configuring;
 using CommandSide.Domain.TicketIssuing;
 using Common;

@@ -1,6 +1,7 @@
 using CommandSide.Domain;
 using CommandSide.Domain.Queueing;
 using CommandSide.Domain.Queueing.Configuring;
+using static CommandSide.Domain.TicketId;
 
 namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications
 {
@@ -23,6 +24,8 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications
         public static readonly CounterName Counter3ChangedName = new CounterName("Counter3ChangedName");
         public static readonly CounterDetails Counter3Details = new CounterDetails(Counter3Id, Counter3Name);
         public static readonly CounterDetails Counter3DetailsWithChangedName = new CounterDetails(Counter3Id, Counter3ChangedName);
+
+        public static readonly TicketId Customer1TicketId = NewTicketId();
         
         public static readonly CounterConfiguration ThreeCounterConfiguration = new CounterConfiguration(new []
         {

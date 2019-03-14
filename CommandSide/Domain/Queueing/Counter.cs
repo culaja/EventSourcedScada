@@ -34,6 +34,10 @@ namespace CommandSide.Domain.Queueing
         
         public bool CanClose() => !CanOpen();
 
+        public Result CanServeCustomer() => _isOpened.OnBoth(
+            Result.Ok,
+            () => Result.Fail($"Counter with ID '{Id}' and name '{_name}' is not opened."));
+
         public Nothing ChangeName(CounterName newCounterName)
         {
             _name = newCounterName;

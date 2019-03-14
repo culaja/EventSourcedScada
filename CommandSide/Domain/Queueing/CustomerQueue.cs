@@ -15,6 +15,8 @@ namespace CommandSide.Domain.Queueing
         private Counters _counters = NoCounters;
         private OpenTimes _currentOpenTimes = NoOpenTimes;
         
+        private Maybe<TicketId> _customerQueue = new Maybe<TicketId>();
+        
         public CustomerQueue(Guid id) : base(id)
         {
         }
@@ -105,12 +107,34 @@ namespace CommandSide.Domain.Queueing
             return this;
         }
 
-        public Result<CustomerQueue> EnqueueCustomer()
+        public Result<CustomerQueue> EnqueueCustomerWith(TicketId ticketId)
         {
-            ApplyChange(new CustomerEnqueued(Id));
+            ApplyChange(new CustomerEnqueued(Id, ticketId));
             return Ok(this);
         }
 
-        private CustomerQueue Apply(CustomerEnqueued _) => this;
+        private CustomerQueue Apply(CustomerEnqueued e)
+        {
+            _customerQueue = e.TicketId.ToTicketId();
+            return this;
+        }
+
+        public Result<CustomerQueue> NextCustomer(CounterId counterId)
+        {
+            switch (_counters.CanServeNextCustomer(counterId))
+            {
+                case var s when s == CanServeNextCustomerResult.CounterDoesntExist :
+                    return Fail<CustomerQueue>($"Counter with ID '{nameof(counterId)}' doesn't exist.");
+                case var s when s == CanServeNextCustomerResult.CounterCantBeServed:
+                    return Fail<CustomerQueue>(s.ErrorMessage);
+                case var s when s == CanServeNextCustomerResult.CounterCanServeCustomer:
+                    _customerQueue.Map(ticketId => ApplyChange(new CustomerAssignedToCounter(Id, ticketId, counterId)));
+                    return Ok(this);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private CustomerQueue Apply(CustomerAssignedToCounter _) => this;
     }
 }
