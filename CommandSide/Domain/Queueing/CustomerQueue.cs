@@ -4,6 +4,7 @@ using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using Shared.CustomerQueue;
 using static CommandSide.Domain.Queueing.CanOpenCounterResult;
+using static CommandSide.Domain.Queueing.CanServeNextCustomerResult;
 using static CommandSide.Domain.Queueing.Counters;
 using static Common.Result;
 
@@ -69,7 +70,7 @@ namespace CommandSide.Domain.Queueing
                     return Ok(this);
                 case var s when s == CounterIsAlreadyOpened:
                     return Ok(this);
-                case var s when s == CounterDoesntExist:
+                case var s when s == CanOpenCounterResult.CounterDoesntExist:
                     return Fail<CustomerQueue>($"Counter with ID {counterId} doesn't exist.");
                 default:
                     throw new ArgumentOutOfRangeException();
@@ -122,9 +123,10 @@ namespace CommandSide.Domain.Queueing
             {
                 case var s when s == CanServeNextCustomerResult.CounterDoesntExist :
                     return Fail<CustomerQueue>($"Counter with ID '{nameof(counterId)}' doesn't exist.");
-                case var s when s == CanServeNextCustomerResult.CounterCantBeServed:
+                case var s when s == CounterCantBeServed:
                     return Fail<CustomerQueue>(s.ErrorMessage);
-                case var s when s == CanServeNextCustomerResult.CounterCanServeCustomer:
+                case var s when s == CounterCanServeCustomer:
+                    s.MaybeCurrentlyServingCustomer.Map(ticketId => ApplyChange(new CustomerServedByCounter(Id, ticketId, counterId)));
                     _customerQueue.MaybeFirst().Map(ticketId => ApplyChange(new CustomerAssignedToCounter(Id, ticketId, counterId)));
                     return Ok(this);
                 default:
@@ -132,9 +134,15 @@ namespace CommandSide.Domain.Queueing
             }
         }
 
-        private CustomerQueue Apply(CustomerAssignedToCounter _)
+        private CustomerQueue Apply(CustomerAssignedToCounter e)
         {
-            _customerQueue.Dequeue();
+            _counters.AssignCustomerToCounter(e.CounterId.ToCounterId(), _customerQueue.Dequeue());
+            return this;
+        }
+
+        private CustomerQueue Apply(CustomerServedByCounter e)
+        {
+            _counters.UnassignCustomerFromCounter(e.CounterId.ToCounterId(), e.TicketId.ToTicketId());
             return this;
         }
     }

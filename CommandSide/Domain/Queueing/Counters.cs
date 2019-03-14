@@ -4,6 +4,7 @@ using System.Linq;
 using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using static CommandSide.Domain.Queueing.CanOpenCounterResult;
+using static CommandSide.Domain.Queueing.CanServeNextCustomerResult;
 using static Common.Nothing;
 
 namespace CommandSide.Domain.Queueing
@@ -41,7 +42,7 @@ namespace CommandSide.Domain.Queueing
         
         public CanOpenCounterResult CanOpenCounter(CounterId counterId) => MaybeCounterWith(counterId)
             .Map(c => c.CanOpen() ? CounterCanBeOpened : CounterIsAlreadyOpened)
-            .Unwrap(CounterDoesntExist);
+            .Unwrap(CanOpenCounterResult.CounterDoesntExist);
 
         public Nothing OpenCounterWith(CounterId counterId) => MaybeCounterWith(counterId)
             .Map(c => c.Open())
@@ -62,9 +63,17 @@ namespace CommandSide.Domain.Queueing
         public CanServeNextCustomerResult CanServeNextCustomer(CounterId counterId) => MaybeCounterWith(counterId)
             .Map(c => 
                 c.CanServeCustomer().OnBoth(
-                    () => CanServeNextCustomerResult.CounterCanServeCustomer,
-                CanServeNextCustomerResult.CounterCantBeServedBecauseOfError))
+                    CounterCanBeServedWithNextCustomerAndItIsCurrentlyServingCustomer,
+                CounterCantBeServedBecauseOfError))
             .Unwrap(CanServeNextCustomerResult.CounterDoesntExist);
+
+        public Nothing AssignCustomerToCounter(CounterId counterId, TicketId ticketId) => MaybeCounterWith(counterId)
+            .Map(c => c.AssignCustomer(ticketId))
+            .ToNothing();
+
+        public Nothing UnassignCustomerFromCounter(CounterId counterId, TicketId ticketId) => MaybeCounterWith(counterId)
+            .Map(c => c.UnassignCustomer(ticketId))
+            .ToNothing();
 
         private Maybe<Counter> MaybeCounterWith(CounterId counterId) => _collection.MaybeFirst(c => c.AreYou(counterId));
     }

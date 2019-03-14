@@ -41,5 +41,8 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications
         
         public static CustomerAssignedToCounter Customer1AssignedToCounter(CounterId counterId) => new CustomerAssignedToCounter(SingleCustomerQueueId, Customer1TicketId, counterId);
         public static CustomerAssignedToCounter Customer2AssignedToCounter(CounterId counterId) => new CustomerAssignedToCounter(SingleCustomerQueueId, Customer2TicketId, counterId);
+        
+        public static CustomerServedByCounter Customer1ServedByCounter(CounterId counterId) => new CustomerServedByCounter(SingleCustomerQueueId, Customer1TicketId, counterId);
+        public static CustomerServedByCounter Customer2ServedByCounter(CounterId counterId) => new CustomerServedByCounter(SingleCustomerQueueId, Customer2TicketId, counterId);
     }
 }

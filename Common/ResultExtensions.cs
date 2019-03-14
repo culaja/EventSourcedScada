@@ -223,6 +223,19 @@ namespace Common
 
             return onErrorProvider(result.Error);
         }
+        
+        public static K OnBoth<T, K>(
+            this Result<T> result,
+            Func<T, K> onSuccessProvider,
+            Func<string, K> onErrorProvider)
+        {
+            if (result.IsSuccess)
+            {
+                return onSuccessProvider(result.Value);
+            }
+
+            return onErrorProvider(result.Error);
+        }
 
         public static Result<TValue, TError> OnFailure<TValue, TError>(this Result<TValue, TError> result,
             Action action) where TError : class
