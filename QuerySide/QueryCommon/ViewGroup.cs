@@ -7,7 +7,6 @@ using static Common.Nothing;
 namespace QuerySide.QueryCommon
 {
     public abstract class ViewGroup<T, TK>
-        where T : Id
         where TK : IView, new()
     {
         private readonly Dictionary<T, TK> _viewById = new Dictionary<T, TK>();
@@ -39,6 +38,12 @@ namespace QuerySide.QueryCommon
                 applyMethodInfo.Invoke(this, new object[] {e});
             }
             
+            return NotAtAll;
+        }
+
+        protected Nothing PassEventToAllViews(IDomainEvent e)
+        {
+            foreach (var view in _viewById.Values) view.Apply(e);
             return NotAtAll;
         }
 

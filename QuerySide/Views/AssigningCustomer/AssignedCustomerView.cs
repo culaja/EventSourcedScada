@@ -6,11 +6,7 @@ using Shared.TicketIssuer;
 
 namespace QuerySide.Views.AssigningCustomer
 {
-    public sealed class AssignedCustomerView : SynchronizedView,
-        IHandle<TicketIssued>,
-        IHandle<CustomerEnqueued>,
-        IHandle<CustomerAssignedToCounter>,
-        IHandle<CustomerServedByCounter>
+    public sealed class AssignedCustomerView : SynchronizedView, IAssignedCustomerViewHandlers
     {
         private readonly Dictionary<Guid, int> _ticketIdToNumber = new Dictionary<Guid, int>();
         private int _numberOfTicketsInQueue = 0;
@@ -33,6 +29,7 @@ namespace QuerySide.Views.AssigningCustomer
         public void Handle(CustomerServedByCounter e)
         {
             _assignedTicketNumber = 0;
+            _ticketIdToNumber.Remove(e.TicketId);
         }
     }
 }
