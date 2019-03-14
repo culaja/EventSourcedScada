@@ -16,7 +16,7 @@ namespace CommandSide.Domain.Queueing
             => new CanServeNextCustomerResult(nameof(CounterCanServeCustomer), maybeCurrentlyServingCustomer);
         
         private readonly string _state;
-        public string ErrorMessage { get; }
+        public string FailureReason { get; }
         public Maybe<Customer> MaybeCurrentlyServingCustomer { get; }
         
         private CanServeNextCustomerResult(string state, string errorMessage = "")
@@ -24,9 +24,9 @@ namespace CommandSide.Domain.Queueing
         {
         }
 
-        private CanServeNextCustomerResult(string state, Maybe<Customer> maybeCurrentlyServingCustomer, string errorMessage = "")
+        private CanServeNextCustomerResult(string state, Maybe<Customer> maybeCurrentlyServingCustomer, string failureReason = "")
         {
-            ErrorMessage = errorMessage;
+            FailureReason = failureReason;
             _state = state;
             MaybeCurrentlyServingCustomer = maybeCurrentlyServingCustomer;
         }
