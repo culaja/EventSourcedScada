@@ -135,6 +135,10 @@ namespace CommandSide.Domain.Queueing
             }
         }
 
-        private CustomerQueue Apply(CustomerAssignedToCounter _) => this;
+        private CustomerQueue Apply(CustomerAssignedToCounter _)
+        {
+            _customerQueue = Maybe<TicketId>.None;
+            return this;
+        }
     }
 }
