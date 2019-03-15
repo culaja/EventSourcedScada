@@ -1,9 +1,15 @@
 using System;
 using System.Collections.Generic;
+using CommandSide.CommandSidePorts;
+using CommandSide.CommandSidePorts.System;
+using CommandSide.Domain;
 using CommandSide.Domain.TicketIssuing;
+using CommandSide.Domain.TicketIssuing.Commands;
+using CommandSide.Tests.Specifications.TicketIssuerSpecifications.Stubs;
 using Common.Time;
 using Shared.TicketIssuer;
 using static System.DayOfWeek;
+using static CommandSide.Domain.TicketId;
 using static Common.Time.TimeOfDay;
 
 namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications
@@ -40,6 +46,11 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications
             Monday14To16,
             Tuesday9To12
         });
+
+        public static TicketId Ticket1Id = NewTicketId();
+        public static TicketNumber TicketNumber1 = TicketNumber.TicketNumberFrom(1);
+        public static TicketId Ticket2Id = NewTicketId();
+        public static TicketNumber TicketNumber2 = TicketNumber.TicketNumberFrom(2);
         
         public static readonly Guid SingleTicketIssuerId = Guid.NewGuid();
         
@@ -55,5 +66,13 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications
         public static readonly OpenTimeRemoved Monday14To16Removed = new OpenTimeRemoved(SingleTicketIssuerId, Monday14To16.Day, Monday14To16.BeginTimeOfDay, Monday14To16.EndTimeOfDay);
         public static readonly OpenTimeRemoved Tuesday9To12Removed = new OpenTimeRemoved(SingleTicketIssuerId, Tuesday9To12.Day, Tuesday9To12.BeginTimeOfDay, Tuesday9To12.EndTimeOfDay);
         public static readonly IReadOnlyList<OpenTimeRemoved> AllOpenTimesRemoved = new[] {Monday9To12Removed, Monday14To16Removed, Tuesday9To12Removed};
+        
+        public static readonly TicketIssued Ticket1Issued = new TicketIssued(SingleTicketIssuerId, Ticket1Id, TicketNumber1);
+        public static readonly TicketIssued Ticket2Issued = new TicketIssued(SingleTicketIssuerId, Ticket2Id, TicketNumber2);
+        
+        public static readonly IUtcTimeProvider AlwaysMonday10UtcTimeProviderStub = new UtcTimeProviderStub(new DateTime(2019, 3, 11, 10, 0, 0));
+        
+        public static readonly ITicketIdGenerator Ticket1IdGenerator = new TicketIdGeneratorStub(Ticket1Id);
+        public static readonly ITicketIdGenerator Ticket2IdGenerator = new TicketIdGeneratorStub(Ticket2Id);
     }
 }

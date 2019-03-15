@@ -1,6 +1,8 @@
 using System;
+using CommandSide.Domain.TicketIssuing.Commands;
 using Common;
 using Shared.TicketIssuer;
+using static CommandSide.Domain.TicketIssuing.Commands.TicketNumber;
 using static CommandSide.Domain.TicketIssuing.OpenTimes;
 using static Common.Result;
 
@@ -9,6 +11,7 @@ namespace CommandSide.Domain.TicketIssuing
     public sealed class TicketIssuer : AggregateRoot
     {
         private OpenTimes _currentOpenTimes = NoOpenTimes;
+        private TicketNumber _expectedTicketNumberToBeIssued = FirstTicketNumber;
 
         public TicketIssuer(Guid id) : base(id)
         {
@@ -43,6 +46,26 @@ namespace CommandSide.Domain.TicketIssuing
         private TicketIssuer Apply(OpenTimeRemoved e)
         {
             _currentOpenTimes = _currentOpenTimes.Remove(e.ToOpenTime());
+            return this;
+        }
+
+        public Result<TicketIssuer> IssueATicketWith(
+            TicketNumber ticketNumber,
+            Func<DateTime> currentTimeProvider,
+            Func<TicketId> ticketIdProvider)
+        {
+            if (ticketNumber == _expectedTicketNumberToBeIssued)
+            {
+                ApplyChange(new TicketIssued(Id, ticketIdProvider(), ticketNumber));
+                return Ok(this);
+            }
+            
+            return Fail<TicketIssuer>($"Can't issue a ticket with number {ticketNumber} since expected number is 'xxx'.");
+        }
+
+        private TicketIssuer Apply(TicketIssued e)
+        {
+            _expectedTicketNumberToBeIssued = _expectedTicketNumberToBeIssued.Next;
             return this;
         }
     }

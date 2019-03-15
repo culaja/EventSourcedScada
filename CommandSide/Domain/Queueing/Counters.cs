@@ -55,9 +55,9 @@ namespace CommandSide.Domain.Queueing
 
         public CanServeNextCustomerResult CanServeNextCustomer(CounterId counterId) => MaybeCounterWith(counterId)
             .Map(c => c.CanServeCustomer().OnBoth(
-                CounterCanBeServedWithNextCustomerAndItIsCurrentlyServingCustomer,
-                CounterCantBeServedBecauseOfError))
-            .Unwrap(CounterCantBeServedBecauseOfError($"Counter with ID '{counterId}' doesn't exist."));
+                CounterCanServeNextCustomerAndItIsCurrentlyServingCustomer,
+                CounterCantServeCustomerBecauseOfError))
+            .Unwrap(CounterCantServeCustomerBecauseOfError($"Counter with ID '{counterId}' doesn't exist."));
 
         public Nothing AssignCustomerToCounter(CounterId counterId, Customer customer) => MaybeCounterWith(counterId)
             .Map(c => c.Assign(customer))

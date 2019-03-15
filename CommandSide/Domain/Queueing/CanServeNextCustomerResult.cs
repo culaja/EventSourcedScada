@@ -8,10 +8,10 @@ namespace CommandSide.Domain.Queueing
         public static readonly CanServeNextCustomerResult CounterCantServeCustomer = new CanServeNextCustomerResult(nameof(CounterCantServeCustomer));
         public static readonly CanServeNextCustomerResult CounterCanServeCustomer = new CanServeNextCustomerResult(nameof(CounterCanServeCustomer));
         
-        public static CanServeNextCustomerResult CounterCantBeServedBecauseOfError(string failureReason) 
+        public static CanServeNextCustomerResult CounterCantServeCustomerBecauseOfError(string failureReason) 
             => new CanServeNextCustomerResult(nameof(CounterCantServeCustomer), failureReason);
         
-        public static CanServeNextCustomerResult CounterCanBeServedWithNextCustomerAndItIsCurrentlyServingCustomer(Maybe<Customer> maybeCurrentlyServingCustomer) 
+        public static CanServeNextCustomerResult CounterCanServeNextCustomerAndItIsCurrentlyServingCustomer(Maybe<Customer> maybeCurrentlyServingCustomer) 
             => new CanServeNextCustomerResult(nameof(CounterCanServeCustomer), maybeCurrentlyServingCustomer);
         
         private readonly string _state;
