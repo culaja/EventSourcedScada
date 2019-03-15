@@ -23,7 +23,7 @@ $(document).ready(function() {
         $.ajax({
             type: "GET",
             contentType: "application/json",
-            url: url + "/CustomerQueue/GetConfiguration",
+            url: url + "/VMax/GetConfiguration",
             success: populateConfigurationTable,
             error: function(error) {
                 showErrorBoxWith(error.responseJSON);
@@ -127,7 +127,7 @@ $(document).ready(function() {
         $.ajax({
             type: "POST",
             contentType: "application/json",
-            url: url + "/CustomerQueue/SetConfiguration",
+            url: url + "/VMax/SetConfiguration",
             data: JSON.stringify(postData),
             error: function(error) {
                 showErrorBoxWith(error.responseJSON);
@@ -143,7 +143,7 @@ $(document).ready(function() {
             type: "POST",
             contentType: "application/json",
             data: null,
-            url: url + "/CustomerQueue/OpenCounter?counterId=" + counterId,
+            url: url + "/VMax/OpenCounter?counterId=" + counterId,
             error: function(error) {
                 showErrorBoxWith(error.responseJSON);
             }
@@ -157,7 +157,7 @@ $(document).ready(function() {
         $.ajax({
             type: "POST",
             contentType: "application/json",
-            url: url + "/CustomerQueue/CloseCounter?counterId=" + counterId,
+            url: url + "/VMax/CloseCounter?counterId=" + counterId,
             error: function(error) {
                 showErrorBoxWith(error.responseJSON);
             }

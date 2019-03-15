@@ -25,7 +25,7 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications.IssueATick
 
         public override CommandHandler<IssueATicket> When() => new IssueATicketHandler(
             TicketIssuerRepository,
-            AlwaysMonday10UtcTimeProviderStub,
+            AlwaysMonday10LocalTimeProviderStub,
             Ticket2IdGenerator);
 
         [Fact]

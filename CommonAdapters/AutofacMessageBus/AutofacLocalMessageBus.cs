@@ -31,7 +31,13 @@ namespace CommonAdapters.AutofacMessageBus
 
 		public IMessage Dispatch(IMessage message) => DispatchInternal(message).MessageToHandle;
 
-		public Task<Result> ExecuteAsync(IMessage message) => DispatchInternal(message).WaitToBeHandledAsync();
+		public Task<Result> ExecuteAsync(ICommand c) => DispatchInternal(c).WaitToBeHandledAsync();
+		
+		public Nothing ScheduleOneWayCommand(ICommand c)
+		{
+			DispatchInternal(c);
+			return Nothing.NotAtAll;
+		}
 
 		private MessageContext DispatchInternal(IMessage message)
 		{

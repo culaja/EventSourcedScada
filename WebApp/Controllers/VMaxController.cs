@@ -14,12 +14,12 @@ namespace WebApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerQueueController : ControllerBase
+    public sealed class VMaxController : ControllerBase
     {
         private readonly ICommandBus _commandBus;
         private readonly ViewsHolder _viewHolder;
 
-        public CustomerQueueController(
+        public VMaxController(
             ICommandBus commandBus,
             ViewsHolder viewHolder)
         {
@@ -57,7 +57,7 @@ namespace WebApp.Controllers
         public Task<IActionResult> NextCustomer(int counterId)
         {
             var newViewVersionTask = _viewHolder.ViewBy<AssignedCustomerView>(counterId.ToCounterNumber()).WaitNewVersionAsync();
-             return _commandBus.ExecuteAsync(new CloseCounter(NewCounterIdFrom(counterId)))
+             return _commandBus.ExecuteAsync(new NextCustomer(NewCounterIdFrom(counterId)))
                  .OnSuccess(() => newViewVersionTask)
                  .ToActionResultAsync();
         }

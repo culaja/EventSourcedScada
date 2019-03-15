@@ -4,6 +4,8 @@ namespace Common.Messaging
 {
     public interface ICommandBus
     {
-        Task<Result> ExecuteAsync(IMessage message);
+        Task<Result> ExecuteAsync(ICommand c);
+
+        Nothing ScheduleOneWayCommand(ICommand c);
     }
 }

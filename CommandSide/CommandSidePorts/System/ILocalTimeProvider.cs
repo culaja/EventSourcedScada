@@ -2,7 +2,7 @@ using System;
 
 namespace CommandSide.CommandSidePorts.System
 {
-    public interface IUtcTimeProvider
+    public interface ILocalTimeProvider
     {
         DateTime CurrentTime { get; }
     }

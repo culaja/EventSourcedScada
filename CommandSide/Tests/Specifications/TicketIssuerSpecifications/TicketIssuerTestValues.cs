@@ -70,7 +70,7 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications
         public static readonly TicketIssued Ticket1Issued = new TicketIssued(SingleTicketIssuerId, Ticket1Id, TicketNumber1);
         public static readonly TicketIssued Ticket2Issued = new TicketIssued(SingleTicketIssuerId, Ticket2Id, TicketNumber2);
         
-        public static readonly IUtcTimeProvider AlwaysMonday10UtcTimeProviderStub = new UtcTimeProviderStub(new DateTime(2019, 3, 11, 10, 0, 0));
+        public static readonly ILocalTimeProvider AlwaysMonday10LocalTimeProviderStub = new LocalTimeProviderStub(new DateTime(2019, 3, 11, 10, 0, 0));
         
         public static readonly ITicketIdGenerator Ticket1IdGenerator = new TicketIdGeneratorStub(Ticket1Id);
         public static readonly ITicketIdGenerator Ticket2IdGenerator = new TicketIdGeneratorStub(Ticket2Id);

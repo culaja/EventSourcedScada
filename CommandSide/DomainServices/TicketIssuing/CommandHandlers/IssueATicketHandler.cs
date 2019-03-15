@@ -10,16 +10,16 @@ namespace CommandSide.DomainServices.TicketIssuing.CommandHandlers
     public sealed class IssueATicketHandler : CommandHandler<IssueATicket>
     {
         private readonly ITicketIssuerRepository _repository;
-        private readonly IUtcTimeProvider _utcTimeProvider;
+        private readonly ILocalTimeProvider _localTimeProvider;
         private readonly ITicketIdGenerator _ticketIdGenerator;
 
         public IssueATicketHandler(
             ITicketIssuerRepository repository,
-            IUtcTimeProvider utcTimeProvider,
+            ILocalTimeProvider localTimeProvider,
             ITicketIdGenerator ticketIdGenerator)
         {
             _repository = repository;
-            _utcTimeProvider = utcTimeProvider;
+            _localTimeProvider = localTimeProvider;
             _ticketIdGenerator = ticketIdGenerator;
         }
 
@@ -27,6 +27,6 @@ namespace CommandSide.DomainServices.TicketIssuing.CommandHandlers
             .BorrowSingle(ti => ti.IssueATicketWith(
                 _ticketIdGenerator.GenerateUniqueTicketId(),
                 c.TicketNumber,
-                () => _utcTimeProvider.CurrentTime));
+                () => _localTimeProvider.CurrentTime));
     }
 }

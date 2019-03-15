@@ -3,11 +3,11 @@ using CommandSide.CommandSidePorts.System;
 
 namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications.Stubs
 {
-    public sealed class UtcTimeProviderStub : IUtcTimeProvider
+    public sealed class LocalTimeProviderStub : ILocalTimeProvider
     {
-        public UtcTimeProviderStub(DateTime currentTime)
+        public LocalTimeProviderStub(DateTime currentTime)
         {
-            CurrentTime = currentTime.ToUniversalTime();
+            CurrentTime = currentTime.ToLocalTime();
         }
 
         public DateTime CurrentTime { get; }
