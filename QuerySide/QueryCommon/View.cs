@@ -37,10 +37,11 @@ namespace QuerySide.QueryCommon
 
         public override string ToString() => SerializeToJson();
 
-        public Task WaitNewVersionAsync()
+        public async Task<IView> WaitNewVersionAsync()
         {
             _versionIncrementedEvent.Reset();
-            return _versionIncrementedEvent.WaitAsync();
+            await _versionIncrementedEvent.WaitAsync();
+            return this;
         }
     }
 }

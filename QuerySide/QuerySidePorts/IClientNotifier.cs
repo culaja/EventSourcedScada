@@ -1,4 +1,5 @@
 using System;
+using Common;
 using QuerySide.QueryCommon;
 
 namespace QuerySide.QuerySidePorts
@@ -7,6 +8,6 @@ namespace QuerySide.QuerySidePorts
     {
         void StartClientNotifier(Action newClientCallback);
         
-        IView NotifyAll(IView view);
+        Nothing NotifyAll(IView view);
     }
 }

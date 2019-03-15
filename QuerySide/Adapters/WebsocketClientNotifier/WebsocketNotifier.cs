@@ -1,4 +1,5 @@
 using System;
+using Common;
 using QuerySide.QueryCommon;
 using QuerySide.QuerySidePorts;
 using WebSocketSharp;
@@ -28,7 +29,7 @@ namespace QuerySide.Adapters.WebsocketClientNotifier
 
         private void OnConnectionClosed(WebSocket socket) => _socketHub.Remove(socket);
 
-        public IView NotifyAll(IView v) => _socketHub.NotifyAll(v);
+        public Nothing NotifyAll(IView v) => _socketHub.NotifyAll(v);
 
         public void Dispose()
         {

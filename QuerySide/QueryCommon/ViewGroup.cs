@@ -6,23 +6,23 @@ using static Common.Nothing;
 
 namespace QuerySide.QueryCommon
 {
-    public abstract class ViewGroup<T, TK>
-        where TK : IView, new()
+    public abstract class ViewGroup<T> : IViewGroup
+        where T : IView, new()
     {
-        private readonly Dictionary<T, TK> _viewById = new Dictionary<T, TK>();
+        private readonly Dictionary<Id, IView> _viewById = new Dictionary<Id, IView>();
         
-        public TK ViewBy(T id)
+        public IView ViewBy(Id id)
         {
             if (!_viewById.TryGetValue(id, out var view))
             {
-                view = new TK();
+                view = new T();
                 _viewById.Add(id, view);
             }
 
             return view;
         }
 
-        public async Task<TK> WaitNewVersionOfViewWithId(T id)
+        public async Task<IView> WaitNewVersionOfViewWithId(Id id)
         {
             var view = ViewBy(id);
             await view.WaitNewVersionAsync();
@@ -40,14 +40,14 @@ namespace QuerySide.QueryCommon
             
             return NotAtAll;
         }
-
+        
         protected Nothing PassEventToAllViews(IDomainEvent e)
         {
             foreach (var view in _viewById.Values) view.Apply(e);
             return NotAtAll;
         }
 
-        protected Nothing PassEventToViewWithId(T id, IDomainEvent e)
+        protected Nothing PassEventToViewWithId(Id id, IDomainEvent e)
         {
             ViewBy(id).Apply(e);
             return NotAtAll;

@@ -2,7 +2,7 @@ using QuerySide.QueryCommon;
 
 namespace Tests.ViewInfrastructure.TestValues
 {
-    public sealed class ChapterViewGroup : ViewGroup<ChapterName, ChapterView>,
+    public sealed class ChapterViewGroup : ViewGroup<ChapterView>,
         IHandle<TextLineAdded>
     {
         public static ChapterViewGroup NewChapterViewGroup => new ChapterViewGroup();

@@ -1,6 +1,8 @@
 using System.Collections.Generic;
+using Common;
 using QuerySide.QueryCommon;
 using WebSocketSharp;
+using static Common.Nothing;
 
 namespace QuerySide.Adapters.WebsocketClientNotifier
 {
@@ -24,14 +26,14 @@ namespace QuerySide.Adapters.WebsocketClientNotifier
             }
         }
         
-        public IView NotifyAll(IView v)
+        public Nothing NotifyAll(IView v)
         {
             lock (_sockets)
             {
                 foreach (var s in _sockets) SendToSocket(s, v);
             }
 
-            return v;
+            return NotAtAll;
         }
         
         private static void SendToSocket(WebSocket s, IView v) => 

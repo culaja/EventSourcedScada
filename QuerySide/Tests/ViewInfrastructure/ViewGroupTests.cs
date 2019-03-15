@@ -18,7 +18,7 @@ namespace Tests.ViewInfrastructure
             
             _chapterViewGroup.Apply(SomeTextAddedToFirstChapter);
 
-            (await task).LastTextLine.Should().Be(SomeText);
+            ((ChapterView) (await task)).LastTextLine.Should().Be(SomeText);
         }
         
         [Fact]
@@ -30,7 +30,7 @@ namespace Tests.ViewInfrastructure
             _chapterViewGroup.Apply(MoreTextAddedToFirstChapter);
             _chapterViewGroup.Apply(SomeTextAddedToSecondChapter);
 
-            (await task).LastTextLine.Should().Be(SomeText);
+            ((ChapterView) (await task)).LastTextLine.Should().Be(SomeText);
         }
     }
 }

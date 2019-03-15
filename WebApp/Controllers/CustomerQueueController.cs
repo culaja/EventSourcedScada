@@ -1,9 +1,11 @@
 ﻿using System.Threading.Tasks;
 using CommandSide.Domain.Queueing.Commands;
 using CommandSide.Domain.TicketIssuing.Commands;
+using Common;
 using Common.Messaging;
 using Microsoft.AspNetCore.Mvc;
 using QuerySide.Views;
+using QuerySide.Views.AssigningCustomer;
 using QuerySide.Views.Configuring;
 using WebApp.Controllers.CommandsDto;
 using static CommandSide.Domain.Queueing.CounterId;
@@ -49,5 +51,15 @@ namespace WebApp.Controllers
         public Task<IActionResult> CloseCounter(int counterId) => _commandBus
             .ExecuteAsync(new CloseCounter(NewCounterIdFrom(counterId)))
             .ToActionResultAsync();
+        
+        [HttpPost]
+        [Route(nameof(NextCustomer))]
+        public Task<IActionResult> NextCustomer(int counterId)
+        {
+            var newViewVersionTask = _viewHolder.ViewBy<AssignedCustomerView>(counterId.ToCounterNumber()).WaitNewVersionAsync();
+             return _commandBus.ExecuteAsync(new CloseCounter(NewCounterIdFrom(counterId)))
+                 .OnSuccess(() => newViewVersionTask)
+                 .ToActionResultAsync();
+        }
     }
 }

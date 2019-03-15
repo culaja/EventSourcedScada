@@ -11,6 +11,6 @@ namespace QuerySide.QueryCommon
         
         string SerializeToJson();
 
-        Task WaitNewVersionAsync();
+        Task<IView> WaitNewVersionAsync();
     }
 }
