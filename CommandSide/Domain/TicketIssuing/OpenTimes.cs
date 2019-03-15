@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,5 +60,7 @@ namespace CommandSide.Domain.TicketIssuing
             newList.Remove(openTime);
             return new OpenTimes(newList);
         }
+
+        public bool IsInRange(DateTime dateTime) => _items.Any(openTime => openTime.IsInRange(dateTime));
     }
 }

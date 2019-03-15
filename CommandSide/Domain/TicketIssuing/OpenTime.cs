@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Common;
 using Common.Time;
+using static Common.Time.TimeOfDay;
 
 namespace CommandSide.Domain.TicketIssuing
 {
@@ -39,6 +40,10 @@ namespace CommandSide.Domain.TicketIssuing
             if (EndTimeOfDay.IsTimeEqualOrBeforeAnother(ot.BeginTimeOfDay)) return false;
             return true;
         }
+
+        public bool IsInRange(DateTime dateTime) => IsTheSameDay(dateTime.DayOfWeek) && IsInHourRange(TimeOfDayFrom(dateTime));
+        private bool IsTheSameDay(DayOfWeek day) => Day == day;
+        private bool IsInHourRange(TimeOfDay timeOfDay) => BeginTimeOfDay <= timeOfDay && EndTimeOfDay >= timeOfDay;
 
         protected override IEnumerable<object> GetEqualityComponents()
         {

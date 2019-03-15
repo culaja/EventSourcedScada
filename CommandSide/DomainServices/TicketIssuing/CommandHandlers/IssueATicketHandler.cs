@@ -25,8 +25,8 @@ namespace CommandSide.DomainServices.TicketIssuing.CommandHandlers
 
         public override Result Handle(IssueATicket c) => _repository
             .BorrowSingle(ti => ti.IssueATicketWith(
+                _ticketIdGenerator.GenerateUniqueTicketId(),
                 c.TicketNumber,
-                () => _utcTimeProvider.CurrentTime,
-                () => _ticketIdGenerator.GenerateUniqueTicketId()));
+                () => _utcTimeProvider.CurrentTime));
     }
 }

@@ -24,6 +24,8 @@ namespace Common.Time
         }
         
         public static TimeOfDay TimeOfDayFromHour(int hour) => new TimeOfDay(FromHours(hour));
+        
+        public static TimeOfDay TimeOfDayFrom(DateTime dateTime) => new TimeOfDay(dateTime.TimeOfDay);
 
         public bool IsTimeBeforeAnother(TimeOfDay otherTime) => Timespan.CompareTo(otherTime.Timespan) < 0;
         
@@ -41,5 +43,8 @@ namespace Common.Time
         public override string ToString() => Timespan.ToString();
 
         public static implicit operator TimeSpan(TimeOfDay timeOfDay) => timeOfDay.Timespan;
+
+        public static bool operator <=(TimeOfDay a, TimeOfDay b) => a.Timespan <= b.Timespan;
+        public static bool operator >=(TimeOfDay a, TimeOfDay b) => a.Timespan >= b.Timespan;
     }
 }

@@ -50,18 +50,17 @@ namespace CommandSide.Domain.TicketIssuing
         }
 
         public Result<TicketIssuer> IssueATicketWith(
+            TicketId ticketId,
             TicketNumber ticketNumber,
-            Func<DateTime> currentTimeProvider,
-            Func<TicketId> ticketIdProvider)
-        {
-            if (ticketNumber == _expectedTicketNumberToBeIssued)
-            {
-                ApplyChange(new TicketIssued(Id, ticketIdProvider(), ticketNumber));
-                return Ok(this);
-            }
-            
-            return Fail<TicketIssuer>($"Can't issue a ticket with number {ticketNumber} since expected number is 'xxx'.");
-        }
+            Func<DateTime> currentTimeProvider) => Ok()
+                .Ensure(() => IsTimeInOpenTimesRange(currentTimeProvider()), $"Can't issue a ticket outside of configured open times.")
+                .Ensure(() => IsExpectedTicketNumber(ticketNumber), $"Can't issue a ticket with number {ticketNumber} since expected number is '{_expectedTicketNumberToBeIssued}'.")
+                .OnSuccess(() => ApplyChange(new TicketIssued(Id, ticketId, ticketNumber)))
+                .ToTypedResult(this);
+
+        private bool IsTimeInOpenTimesRange(DateTime currentTime) => _currentOpenTimes.IsInRange(currentTime);
+        
+        private bool IsExpectedTicketNumber(TicketNumber ticketNumber) => ticketNumber.Equals(_expectedTicketNumberToBeIssued);
 
         private TicketIssuer Apply(TicketIssued e)
         {
