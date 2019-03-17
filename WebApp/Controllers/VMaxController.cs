@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using CommandSide.Domain.Queueing.Commands;
+﻿using CommandSide.Domain.Queueing.Commands;
 using CommandSide.Domain.TicketIssuing.Commands;
 using Common;
 using Common.Messaging;
@@ -33,33 +32,30 @@ namespace WebApp.Controllers
 
         [HttpPost]
         [Route(nameof(SetConfiguration))]
-        public async Task<IActionResult> SetConfiguration([FromBody] SetConfigurationDto setConfigurationDto)
+        public IActionResult SetConfiguration([FromBody] SetConfigurationDto setConfigurationDto)
         {
-            var r1 = await _commandBus.ExecuteAsync(new SetCounterConfiguration(setConfigurationDto.Counters.ToCounterConfiguration())).ToActionResultAsync();
-            var r2 = await _commandBus.ExecuteAsync(new SetOpenTimes(setConfigurationDto.OpenTimes.ToOpenTimes())).ToActionResultAsync();
+            var r1 = _commandBus.Execute(new SetCounterConfiguration(setConfigurationDto.Counters.ToCounterConfiguration())).ToActionResult();
+            var r2 = _commandBus.Execute(new SetOpenTimes(setConfigurationDto.OpenTimes.ToOpenTimes())).ToActionResult();
             return r1.CombineWith(r2);
         }
 
         [HttpPost]
         [Route(nameof(OpenCounter))]
-        public Task<IActionResult> OpenCounter(int counterId) => _commandBus
-            .ExecuteAsync(new OpenCounter(NewCounterIdFrom(counterId)))
-            .ToActionResultAsync();
+        public IActionResult OpenCounter(int counterId) => _commandBus
+            .Execute(new OpenCounter(NewCounterIdFrom(counterId)))
+            .ToActionResult();
         
         [HttpPost]
         [Route(nameof(CloseCounter))]
-        public Task<IActionResult> CloseCounter(int counterId) => _commandBus
-            .ExecuteAsync(new CloseCounter(NewCounterIdFrom(counterId)))
-            .ToActionResultAsync();
+        public IActionResult CloseCounter(int counterId) => _commandBus
+            .Execute(new CloseCounter(NewCounterIdFrom(counterId)))
+            .ToActionResult();
         
         [HttpPost]
         [Route(nameof(NextCustomer))]
-        public Task<IActionResult> NextCustomer(int counterId)
-        {
-            var newViewVersionTask = _viewHolder.ViewBy<AssignedCustomerView>(counterId.ToCounterNumber()).WaitNewVersionAsync();
-             return _commandBus.ExecuteAsync(new NextCustomer(NewCounterIdFrom(counterId)))
-                 .OnSuccess(() => newViewVersionTask)
-                 .ToActionResultAsync();
-        }
+        public IActionResult NextCustomer(int counterId) =>
+            _commandBus.Execute(new NextCustomer(NewCounterIdFrom(counterId)))
+                .OnSuccess(() => _viewHolder.GroupView<AssignedCustomerGroupView>().SerializeToJson(counterId.ToCounterId()))
+                .ToActionResult();
     }
 }

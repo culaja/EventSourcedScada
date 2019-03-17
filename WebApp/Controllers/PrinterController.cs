@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using CommandSide.Domain.TicketIssuing.Commands;
 using Common.Messaging;
 using Microsoft.AspNetCore.Mvc;
@@ -19,8 +18,8 @@ namespace WebApp.Controllers
         
         [HttpPost]
         [Route(nameof(IssueATicket))]
-        public Task<IActionResult> IssueATicket(int ticketNumber) => _commandBus
-            .ExecuteAsync(new IssueATicket(TicketNumberFrom(ticketNumber)))
-            .ToActionResultAsync();
+        public IActionResult IssueATicket(int ticketNumber) => _commandBus
+            .Execute(new IssueATicket(TicketNumberFrom(ticketNumber)))
+            .ToActionResult();
     }
 }

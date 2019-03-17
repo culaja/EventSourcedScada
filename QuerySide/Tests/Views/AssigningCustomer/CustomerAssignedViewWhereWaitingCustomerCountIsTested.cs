@@ -9,7 +9,7 @@ namespace Tests.Views.AssigningCustomer
 {
     public sealed class CustomerAssignedViewWhereWaitingCustomerCountIsTested
     {
-        private readonly AssignedCustomerView _assignedCustomerView = new AssignedCustomerView()
+        private readonly AssignedCustomerGroupView _assignedCustomerView = new AssignedCustomerGroupView()
                 .Apply(new TicketIssued(TicketIssuerId, Ticket1Id, Ticket1Number))
                 .Apply(new TicketIssued(TicketIssuerId, Ticket2Id, Ticket2Number))
                 .Apply(new TicketIssued(TicketIssuerId, Ticket3Id, Ticket3Number))
@@ -19,9 +19,10 @@ namespace Tests.Views.AssigningCustomer
                 .Apply(new CustomerEnqueued(CustomerQueueId, Ticket3Id))
                 .Apply(new CustomerAssignedToCounter(CustomerQueueId, Ticket1Id, Counter1Id))
                 .Apply(new CustomerEnqueued(CustomerQueueId, Ticket4Id))
-            as AssignedCustomerView;
+            as AssignedCustomerGroupView;
 
         [Fact]
-        public void waiting_customer_count_is_3() => _assignedCustomerView.WaitingCustomerCount.Should().Be(3);
+        public void waiting_customer_count_is_3() => 
+            _assignedCustomerView.GenerateViewFor(Counter1Id.ToCounterId()).WaitingCustomerCount.Should().Be(3);
     }
 }

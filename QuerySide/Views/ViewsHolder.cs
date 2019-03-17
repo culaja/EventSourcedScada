@@ -15,13 +15,13 @@ namespace QuerySide.Views
             .AddOne(typeof(ConfigurationView), new ConfigurationView())
             .ToImmutable();
         
-        private readonly ImmutableDictionary<Type, IViewGroup> _viewGroups = ImmutableDictionary.CreateBuilder<Type, IViewGroup>()
-            .AddOne(typeof(AssignedCustomerView), new AssignedCustomerViewGroup())
+        private readonly ImmutableDictionary<Type, IGroupView> _viewGroups = ImmutableDictionary.CreateBuilder<Type, IGroupView>()
+            .AddOne(typeof(AssignedCustomerGroupView), new AssignedCustomerGroupView())
             .ToImmutable();
 
         public IView View<T>() where T : IView => _views[typeof(T)];
         
-        public IView ViewBy<T>(Id id) where T : IView => _viewGroups[typeof(T)].ViewBy(id);
+        public IGroupView GroupView<T>() where T : IGroupView => _viewGroups[typeof(T)];
 
         public Nothing Apply(IDomainEvent e)
         {

@@ -1,14 +1,14 @@
-﻿using Common.Messaging;
+using Common;
+using Common.Messaging;
 using Newtonsoft.Json;
-using static Newtonsoft.Json.JsonConvert;
 
 namespace QuerySide.QueryCommon
 {
-    public abstract class View : IView
+    public abstract class GroupView<T> : IGroupView
     {
         private readonly AsyncManualResetEvent _versionIncrementedEvent = new AsyncManualResetEvent();
         
-        public virtual IView Apply(IDomainEvent e)
+        public virtual IGroupView Apply(IDomainEvent e)
         {
             var applyMethodInfo = GetType().GetMethod("Handle", new[] { e.GetType() });
 
@@ -20,8 +20,8 @@ namespace QuerySide.QueryCommon
             return this;
         }
 
-        public virtual string SerializeToJson() => SerializeObject(this, Formatting.Indented);
+        public virtual string SerializeToJson(Id id) => JsonConvert.SerializeObject(GenerateViewFor(id), Formatting.Indented);
 
-        public override string ToString() => SerializeToJson();
+        public abstract T GenerateViewFor(Id id);
     }
 }
