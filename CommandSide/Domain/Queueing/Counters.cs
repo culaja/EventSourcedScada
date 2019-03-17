@@ -73,6 +73,6 @@ namespace CommandSide.Domain.Queueing
             .Map(c => c.CanRecallCustomer().OnBoth(
                 CounterCanRecallCustomerFrom,
                 CounterCantBeRecalledBecauseOfError))
-            .Unwrap(CounterCantBeRecalledBecauseOfError($"Counter with ID '{nameof(counterId)}' doesn't exist."));
+            .Unwrap(CounterCantBeRecalledBecauseOfError($"Counter with ID '{counterId}' doesn't exist."));
     }
 }

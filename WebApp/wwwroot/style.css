@@ -55,6 +55,7 @@ h3 {
 }
 
 .configurationCounterDetails .form-row, .configurationOpenTimes .form-row .counterManagement,
-#collapseOpenCloseCounter .form-row {
+#collapseOpenCloseCounter .form-row,
+#collapseCustomerManagement .form-row {
     margin-bottom: 10px;
 }
