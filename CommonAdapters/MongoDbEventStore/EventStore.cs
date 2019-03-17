@@ -28,15 +28,21 @@ namespace CommonAdapters.MongoDbEventStore
             return e;
         }
 
+        public IEnumerable<IDomainEvent> LoadAll() => _mongoCollection.AsQueryable().AsEnumerable()
+            .Select(PrepareDomainEvent);
+
         public IEnumerable<IDomainEvent> LoadAllFor<T>() where T : IAggregateEventSubscription, new()
         {
             var aggregateEventSubscription = new T();
             return _mongoCollection.AsQueryable()
                 .Where(e => e.AggregateTopicName == aggregateEventSubscription.AggregateTopicName)
                 .ToEnumerable()
-                .Select(ConvertPersistedEventToDomainEventWithoutErrorCheck)
-                .Select(UpdateEventNumberForEventAggregate);
-        } 
+                .Select(PrepareDomainEvent);
+        }
+
+        private IDomainEvent PrepareDomainEvent(PersistedEvent pe) =>
+            UpdateEventNumberForEventAggregate(
+                ConvertPersistedEventToDomainEventWithoutErrorCheck(pe));
         
         private static IDomainEvent ConvertPersistedEventToDomainEventWithoutErrorCheck(PersistedEvent pe) =>
             ((DomainEvent)pe.Payload.Deserialize().Value)

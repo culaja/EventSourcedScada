@@ -43,8 +43,7 @@ namespace QuerySide.Services
         private void IntegrityLoadEventsFromEventStore()
         {
             WriteLine($"Reconstructing views from event store ...\t\t\t{Now}");
-            var totalEventsApplied = _eventStore.LoadAllFor<TicketIssuerSubscription>().Select(e => _viewHolder.Apply(e)).Count();
-            totalEventsApplied += _eventStore.LoadAllFor<CustomerQueueSubscription>().Select(e => _viewHolder.Apply(e)).Count();
+            var totalEventsApplied = _eventStore.LoadAll().Select(e => _viewHolder.Apply(e)).Count();
             WriteLine($"All views reconstructed. (Total events applied: {totalEventsApplied})\t\t{Now}");
         }
     }
