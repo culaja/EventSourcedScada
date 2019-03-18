@@ -68,5 +68,11 @@ namespace WebApp.Controllers
             _commandBus.Execute(new ReCallCustomer(NewCounterIdFrom(counterId)))
                 .OnSuccess(() => _viewHolder.GroupView<AssignedCustomerGroupView>().SerializeToJson(counterId.ToCounterId()))
                 .ToActionResult();
+        
+        [HttpPost]
+        [Route(nameof(ResetOpenTickets))]
+        public IActionResult ResetOpenTickets() => _commandBus
+            .Execute(new RemoveWaitingCustomers())
+            .ToActionResult();
     }
 }

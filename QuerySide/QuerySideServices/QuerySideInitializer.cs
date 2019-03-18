@@ -3,8 +3,6 @@ using Common.Messaging;
 using Ports.EventStore;
 using QuerySide.QuerySidePorts;
 using QuerySide.Views;
-using Shared.CustomerQueue;
-using Shared.TicketIssuer;
 using static System.Console;
 using static System.DateTime;
 

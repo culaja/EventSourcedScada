@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using CommandSide.Domain.Queueing.Configuring;
 using Common;
 using Shared.CustomerQueue;
@@ -162,5 +163,17 @@ namespace CommandSide.Domain.Queueing
         }
 
         private CustomerQueue Apply(CustomerRecalledByCounter _) => this;
+
+        public Result<CustomerQueue> RemoveWaitingCustomers()
+        {
+            _queue.MaybeFirst().Map(_ => ApplyChange(new WaitingCustomersRemoved(Id, _queue.Select(c => (Guid) (TicketId) c).ToList())));
+            return Ok(this);
+        }
+
+        private CustomerQueue Apply(WaitingCustomersRemoved _)
+        {
+            _queue.Clear();
+            return this;
+        }
     }
 }
