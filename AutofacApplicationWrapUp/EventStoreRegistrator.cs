@@ -8,7 +8,7 @@ namespace AutofacApplicationWrapUp
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterInstance(new DatabaseContext("mongodb://localhost:27017/", "CustomerQueue")).SingleInstance();
+            builder.RegisterInstance(new DatabaseContext("mongodb://localhost:27017/", "CFM")).SingleInstance();
             builder.RegisterType<EventStore>().As<IEventStore>().SingleInstance();
         }
     }
