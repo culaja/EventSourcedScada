@@ -25,6 +25,10 @@ namespace WebApp.Controllers
             _commandBus = commandBus;
             _viewHolder = viewHolder;
         }
+        
+        [HttpGet]
+        [Route(nameof(GetServerVersion))]
+        public IActionResult GetServerVersion() => Ok(ServerInfo.Version);
 
         [HttpGet]
         [Route(nameof(GetConfiguration))]
