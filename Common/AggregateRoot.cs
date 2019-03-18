@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using Common.Messaging;
 using static System.DateTime;
+using static Common.Nothing;
 
 namespace Common
 {
@@ -24,16 +25,16 @@ namespace Common
             _domainEvents.Clear();
         }
         
-        public AggregateRoot ApplyFrom(IDomainEvent e)
+        public Nothing ApplyFrom(IDomainEvent e)
         {
             ApplyChange(e, false);
-            return this;
+            return NotAtAll;
         }
         
-        protected AggregateRoot ApplyChange(IDomainEvent e)
+        protected Nothing ApplyChange(IDomainEvent e)
         {
             ApplyChange(e, true);
-            return this;
+            return NotAtAll;
         }
         
         private void ApplyChange(IDomainEvent e, bool isNew)

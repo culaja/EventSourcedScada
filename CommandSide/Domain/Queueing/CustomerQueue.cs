@@ -166,7 +166,7 @@ namespace CommandSide.Domain.Queueing
 
         public Result<CustomerQueue> RemoveWaitingCustomers()
         {
-            _queue.MaybeFirst().Map(_ => ApplyChange(new WaitingCustomersRemoved(Id, _queue.Select(c => (Guid) (TicketId) c).ToList())));
+            _queue.CanEmptyQueue(() => ApplyChange(new WaitingCustomersRemoved(Id, _queue.AllTicketIds())));
             return Ok(this);
         }
 
