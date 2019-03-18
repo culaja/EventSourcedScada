@@ -14,6 +14,20 @@ $(document).ready(function() {
         $("#waitingCustomerCount").text(assignedCustomer.WaitingCustomerCount);
         $("#expectedWaitingTimeInSeconds").text(assignedCustomer.ExpectedWaitingTimeInSeconds);
     }
+    
+    $('#resetOpenTicketsButton').on('click', function(event) {
+            event.preventDefault();
+            
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                data: null,
+                url: url + "/VMax/ResetOpenTickets",
+                error: function(error) {
+                    showErrorBoxWith(error.responseJSON);
+                }
+            });
+        });
 
     $('#nextCustomerCounterNumberButton').on('click', function(event) {
         event.preventDefault();

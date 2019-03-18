@@ -11,7 +11,8 @@ namespace QuerySide.Views.AssigningCustomer
         IHandle<TicketIssued>,
         IHandle<CustomerEnqueued>,
         IHandle<CustomerAssignedToCounter>,
-        IHandle<CustomerServedByCounter>
+        IHandle<CustomerServedByCounter>,
+        IHandle<WaitingCustomersRemoved>
     {
         private int _ticketsInQueue = 0;
         private readonly Dictionary<Guid, int> _ticketIdToNumber = new Dictionary<Guid, int>();
@@ -36,6 +37,12 @@ namespace QuerySide.Views.AssigningCustomer
         {
             _counterToTicketNumber[e.CounterId.ToCounterId()] = 0;
             _ticketIdToNumber.Remove(e.TicketId);
+        }
+
+        public void Handle(WaitingCustomersRemoved e)
+        {
+            _ticketsInQueue -= e.TicketIds.Count;
+            e.TicketIds.Map(t => _ticketIdToNumber.Remove(t));
         }
     }
 }
