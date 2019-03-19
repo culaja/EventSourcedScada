@@ -84,6 +84,7 @@ namespace WebApp.Controllers
         [Route(nameof(OutOfLineCustomer))]
         public IActionResult OutOfLineCustomer(int counterId) => _commandBus
             .Execute(new IssueAnOutOfLineTicket(NewCounterIdFrom(counterId)))
+            .OnSuccess(() => _viewHolder.GroupView<AssignedCustomerGroupView>().SerializeToJson(counterId.ToCounterId()))
             .ToActionResult();
     }
 }

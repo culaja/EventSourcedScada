@@ -31,7 +31,7 @@ $(document).ready(function() {
 
     $('#nextCustomerCounterNumberButton').on('click', function(event) {
         event.preventDefault();
-        var counterId = $("#nextCustomerCounterNumber").val();
+        var counterId = $("#counterNumber").val();
 
         $.ajax({
             type: "POST",
@@ -49,7 +49,7 @@ $(document).ready(function() {
 
     $('#recallCustomerCounterNumberButton').on('click', function(event) {
         event.preventDefault();
-        var counterId = $("#recallCustomerCounterNumber").val();
+        var counterId = $("#counterNumber").val();
 
         $.ajax({
             type: "POST",
@@ -63,6 +63,23 @@ $(document).ready(function() {
             }
         });
     });
+    
+    $('#outOfOrderCustomerButton').on('click', function(event) {
+            event.preventDefault();
+            var counterId = $("#counterNumber").val();
+    
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: url + "/VMax/OutOfLineCustomer?counterId=" + counterId,
+                success: function(data) {
+                    refreshAssignedCustomerWith(JSON.parse(data));
+                },
+                error: function(error) {
+                    showErrorBoxWith(error.responseJSON);
+                }
+            });
+        });
     
     $('input[type="number"]').keydown(function (e) {
           e.preventDefault();
