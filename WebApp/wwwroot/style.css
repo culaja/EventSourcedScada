@@ -59,3 +59,7 @@ h3 {
 #collapseCustomerManagement .form-row {
     margin-bottom: 10px;
 }
+
+#collapseSystemManagement .row, #collapseSystemManagement #systemInfo {
+    padding-top: 10px;
+}
