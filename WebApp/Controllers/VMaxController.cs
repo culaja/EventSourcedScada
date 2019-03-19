@@ -8,7 +8,7 @@ using QuerySide.Views.AssigningCustomer;
 using QuerySide.Views.Configuring;
 using QuerySide.Views.System;
 using WebApp.Controllers.CommandsDto;
-using static CommandSide.Domain.Queueing.CounterId;
+using static CommandSide.Domain.CounterId;
 
 namespace WebApp.Controllers
 {

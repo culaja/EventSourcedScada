@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac;
 using AutofacApplicationWrapUp;
+using CommandSide.Domain;
 using CommandSide.Domain.Queueing;
 using CommandSide.Domain.Queueing.Commands;
 using CommandSide.Domain.Queueing.Configuring;

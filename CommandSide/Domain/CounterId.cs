@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Common;
 
-namespace CommandSide.Domain.Queueing
+namespace CommandSide.Domain
 {
     public sealed class CounterId : Id
     {
@@ -12,15 +12,6 @@ namespace CommandSide.Domain.Queueing
             _id = id;
         }
 
-        public static CounterId CounterIdFrom(int? maybeId)
-        {
-            if (maybeId.HasValue)
-            {
-                return new CounterId(maybeId.Value);
-            }
-            throw new CounterIdCantBeEmptyException();
-        }
-        
         public static CounterId NewCounterIdFrom(int id) => new CounterId(id);
         
         protected override IEnumerable<object> GetEqualityComponents()

@@ -13,6 +13,7 @@ namespace CommandSide.Domain.TicketIssuing.Commands
         }
         
         public static readonly TicketNumber FirstTicketNumber = new TicketNumber(1);
+        public static readonly TicketNumber FirstOutOfLineTicketNumber = new TicketNumber(10000);
 
         public static TicketNumber TicketNumberFrom(int number) => new TicketNumber(number);
         

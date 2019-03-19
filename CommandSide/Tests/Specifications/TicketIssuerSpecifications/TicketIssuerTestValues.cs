@@ -9,7 +9,9 @@ using CommandSide.Tests.Specifications.TicketIssuerSpecifications.Stubs;
 using Common.Time;
 using Shared.TicketIssuer;
 using static System.DayOfWeek;
+using static CommandSide.Domain.CounterId;
 using static CommandSide.Domain.TicketId;
+using static CommandSide.Domain.TicketIssuing.Commands.TicketNumber;
 using static Common.Time.TimeOfDay;
 
 namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications
@@ -47,10 +49,12 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications
             Tuesday9To12
         });
 
-        public static TicketId Ticket1Id = NewTicketId();
-        public static TicketNumber TicketNumber1 = TicketNumber.TicketNumberFrom(1);
-        public static TicketId Ticket2Id = NewTicketId();
-        public static TicketNumber TicketNumber2 = TicketNumber.TicketNumberFrom(2);
+        public static readonly TicketId Ticket1Id = NewTicketId();
+        public static readonly TicketNumber TicketNumber1 = TicketNumberFrom(1);
+        public static readonly TicketId Ticket2Id = NewTicketId();
+        public static readonly TicketNumber TicketNumber2 = TicketNumberFrom(2);
+        
+        public static readonly CounterId Counter1Id = NewCounterIdFrom(1);
         
         public static readonly Guid SingleTicketIssuerId = Guid.NewGuid();
         
@@ -69,10 +73,20 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications
         
         public static readonly TicketIssued Ticket1Issued = new TicketIssued(SingleTicketIssuerId, Ticket1Id, TicketNumber1);
         public static readonly TicketIssued Ticket2Issued = new TicketIssued(SingleTicketIssuerId, Ticket2Id, TicketNumber2);
+
+        public static readonly TicketId Ticket10kId = NewTicketId();
+        public static readonly TicketNumber Ticket10kNumber = TicketNumberFrom(10000);
+        public static readonly TicketId Ticket10kOneId = NewTicketId();
+        public static readonly TicketNumber Ticket10kOneNumber = TicketNumberFrom(10001);
+        
+        public static readonly OutOfLineTicketIssued OutOfLineTicket10kIssuedForCounter1 = new OutOfLineTicketIssued(SingleTicketIssuerId, Ticket10kId, Ticket10kNumber, Counter1Id);
+        public static readonly OutOfLineTicketIssued OutOfLineTicket10kOne1IssuedForCounter1 = new OutOfLineTicketIssued(SingleTicketIssuerId, Ticket10kOneId, Ticket10kOneNumber, Counter1Id);
         
         public static readonly ILocalTimeProvider AlwaysMonday10LocalTimeProviderStub = new LocalTimeProviderStub(new DateTime(2019, 3, 11, 10, 0, 0));
         
         public static readonly ITicketIdGenerator Ticket1IdGenerator = new TicketIdGeneratorStub(Ticket1Id);
         public static readonly ITicketIdGenerator Ticket2IdGenerator = new TicketIdGeneratorStub(Ticket2Id);
+        public static readonly ITicketIdGenerator Ticket10kIdGenerator = new TicketIdGeneratorStub(Ticket10kId);
+        public static readonly ITicketIdGenerator Ticket10kOneIdGenerator = new TicketIdGeneratorStub(Ticket10kOneId);
     }
 }

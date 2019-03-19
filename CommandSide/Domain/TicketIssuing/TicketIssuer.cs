@@ -11,7 +11,8 @@ namespace CommandSide.Domain.TicketIssuing
     public sealed class TicketIssuer : AggregateRoot
     {
         private OpenTimes _currentOpenTimes = NoOpenTimes;
-        private TicketNumber _expectedTicketNumberToBeIssued = FirstTicketNumber;
+        private TicketNumber _ticketNumberToBeIssued = FirstTicketNumber;
+        private TicketNumber _outOfLineTicketNumberToBeIssued = FirstOutOfLineTicketNumber;
 
         public TicketIssuer(Guid id) : base(id)
         {
@@ -54,17 +55,31 @@ namespace CommandSide.Domain.TicketIssuing
             TicketNumber ticketNumber,
             Func<DateTime> currentTimeProvider) => Ok()
                 .Ensure(() => IsTimeInOpenTimesRange(currentTimeProvider()), $"Can't issue a ticket outside of configured open times.")
-                .Ensure(() => IsExpectedTicketNumber(ticketNumber), $"Can't issue a ticket with number {ticketNumber} since expected number is '{_expectedTicketNumberToBeIssued}'.")
+                .Ensure(() => IsExpectedTicketNumber(ticketNumber), $"Can't issue a ticket with number {ticketNumber} since expected number is '{_ticketNumberToBeIssued}'.")
                 .OnSuccess(() => ApplyChange(new TicketIssued(Id, ticketId, ticketNumber)))
                 .ToTypedResult(this);
 
         private bool IsTimeInOpenTimesRange(DateTime currentTime) => _currentOpenTimes.IsInRange(currentTime);
         
-        private bool IsExpectedTicketNumber(TicketNumber ticketNumber) => ticketNumber.Equals(_expectedTicketNumberToBeIssued);
+        private bool IsExpectedTicketNumber(TicketNumber ticketNumber) => ticketNumber.Equals(_ticketNumberToBeIssued);
 
         private TicketIssuer Apply(TicketIssued e)
         {
-            _expectedTicketNumberToBeIssued = _expectedTicketNumberToBeIssued.Next;
+            _ticketNumberToBeIssued = _ticketNumberToBeIssued.Next;
+            return this;
+        }
+
+        public Result<TicketIssuer> IssueAnOutOfLineTicket(
+            CounterId counterId,
+            TicketId ticketId)
+        {
+            ApplyChange(new OutOfLineTicketIssued(Id, ticketId, _outOfLineTicketNumberToBeIssued, counterId));
+            return Ok(this);
+        }
+
+        private TicketIssuer Apply(OutOfLineTicketIssued _)
+        {
+            _outOfLineTicketNumberToBeIssued = _outOfLineTicketNumberToBeIssued.Next;
             return this;
         }
     }
