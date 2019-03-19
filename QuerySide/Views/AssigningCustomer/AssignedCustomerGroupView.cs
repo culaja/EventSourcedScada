@@ -9,7 +9,9 @@ namespace QuerySide.Views.AssigningCustomer
 {
     public sealed class AssignedCustomerGroupView : GroupView<AssignedCustomer>,
         IHandle<TicketIssued>,
+        IHandle<OutOfLineTicketIssued>,
         IHandle<CustomerEnqueued>,
+        IHandle<OutOfLineCustomerAssignedToCounter>,
         IHandle<CustomerAssignedToCounter>,
         IHandle<CustomerServedByCounter>,
         IHandle<WaitingCustomersRemoved>
@@ -23,6 +25,8 @@ namespace QuerySide.Views.AssigningCustomer
             _ticketsInQueue,
             0);
 
+        public void Handle(OutOfLineTicketIssued e) => _ticketIdToNumber.Add(e.TicketId, e.TicketNumber);
+
         public void Handle(TicketIssued e) => _ticketIdToNumber.Add(e.TicketId, e.TicketNumber);
 
         public void Handle(CustomerEnqueued e) => _ticketsInQueue++;
@@ -30,6 +34,11 @@ namespace QuerySide.Views.AssigningCustomer
         public void Handle(CustomerAssignedToCounter e)
         {
             _ticketsInQueue--;
+            _counterToTicketNumber[e.CounterId.ToCounterId()] = _ticketIdToNumber[e.TicketId];
+        }
+
+        public void Handle(OutOfLineCustomerAssignedToCounter e)
+        {
             _counterToTicketNumber[e.CounterId.ToCounterId()] = _ticketIdToNumber[e.TicketId];
         }
 

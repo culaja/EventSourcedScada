@@ -79,5 +79,11 @@ namespace WebApp.Controllers
         public IActionResult ResetOpenTickets() => _commandBus
             .Execute(new RemoveWaitingCustomers())
             .ToActionResult();
+
+        [HttpPost]
+        [Route(nameof(OutOfLineCustomer))]
+        public IActionResult OutOfLineCustomer(int counterId) => _commandBus
+            .Execute(new IssueAnOutOfLineTicket(NewCounterIdFrom(counterId)))
+            .ToActionResult();
     }
 }

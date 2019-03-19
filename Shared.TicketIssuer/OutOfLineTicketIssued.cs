@@ -7,17 +7,17 @@ namespace Shared.TicketIssuer
     {
         public Guid TicketId { get; }
         public int TicketNumber { get; }
-        public int CounterNumber { get; }
+        public int CounterId { get; }
 
         public OutOfLineTicketIssued(
             Guid aggregateRootId,
             Guid ticketId,
             int ticketNumber,
-            int counterNumber) : base(aggregateRootId)
+            int counterId) : base(aggregateRootId)
         {
             TicketId = ticketId;
             TicketNumber = ticketNumber;
-            CounterNumber = counterNumber;
+            CounterId = counterId;
         }
         
         protected override IEnumerable<object> GetEqualityComponents()
@@ -25,7 +25,7 @@ namespace Shared.TicketIssuer
             foreach (var item in base.GetEqualityComponents()) yield return item;
             yield return TicketId;
             yield return TicketNumber;
-            yield return CounterNumber;
+            yield return CounterId;
         }
     }
 }
