@@ -117,13 +117,13 @@ namespace CommandSide.Domain.Queueing
 
         private CustomerQueue Apply(CustomerEnqueued e)
         {
-            _queue.Enqueue(NewCustomerToEnqueueFrom(e.TicketId.ToTicketId()));
+            _queue.Enqueue(NewCustomerFrom(e.TicketId.ToTicketId()));
             return this;
         }
 
         public Result<CustomerQueue> NextCustomer(CounterId counterId)
         {
-            switch (_counters.CanServeNextCustomer(counterId))
+            switch (_counters.CanServeACustomer(counterId))
             {
                 case var s when s == CounterCantServeCustomer:
                     return Fail<CustomerQueue>(s.FailureReason);
@@ -173,6 +173,27 @@ namespace CommandSide.Domain.Queueing
         private CustomerQueue Apply(WaitingCustomersRemoved _)
         {
             _queue.Clear();
+            return this;
+        }
+
+        public Result<CustomerQueue> ServeOutOfLineCustomer(CounterId counterId, TicketId ticketId)
+        {
+            switch (_counters.CanServeACustomer(counterId))
+            {
+                case var s when s == CounterCantServeCustomer:
+                    return Fail<CustomerQueue>(s.FailureReason);
+                case var s when s == CounterCanServeCustomer:
+                    s.MaybeCurrentlyServingCustomer.Map(customer => ApplyChange(new CustomerServedByCounter(Id, customer.Id, counterId)));
+                    ApplyChange(new OutOfLineCustomerAssignedToCounter(Id, ticketId, counterId));
+                    return Ok(this);
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+        }
+
+        private CustomerQueue Apply(OutOfLineCustomerAssignedToCounter e)
+        {
+            _counters.AssignCustomerToCounter(e.CounterId.ToCounterId(), NewCustomerFrom(e.TicketId.ToTicketId()));
             return this;
         }
     }

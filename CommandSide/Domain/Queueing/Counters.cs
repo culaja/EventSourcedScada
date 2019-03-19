@@ -53,7 +53,7 @@ namespace CommandSide.Domain.Queueing
             .Map(c => c.ChangeName(newCounterName))
             .Unwrap(NotAtAll);
 
-        public CanServeNextCustomerResult CanServeNextCustomer(CounterId counterId) => MaybeCounterWith(counterId)
+        public CanServeNextCustomerResult CanServeACustomer(CounterId counterId) => MaybeCounterWith(counterId)
             .Map(c => c.CanServeCustomer().OnBoth(
                 CounterCanServeNextCustomerAndItIsCurrentlyServingCustomer,
                 CounterCantServeCustomerBecauseOfError))

@@ -8,7 +8,7 @@ namespace CommandSide.Domain.Queueing
         {
         }
         
-        public static Customer NewCustomerToEnqueueFrom(TicketId ticketId) => new Customer(ticketId);
+        public static Customer NewCustomerFrom(TicketId ticketId) => new Customer(ticketId);
 
         public static implicit operator TicketId(Customer c) => c.Id;
     }

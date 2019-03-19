@@ -46,5 +46,8 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications
         public static CustomerRecalledByCounter Customer1RecalledByCounter(CounterId counterId) => new CustomerRecalledByCounter(SingleCustomerQueueId, Customer1TicketId, counterId);
         
         public static WaitingCustomersRemoved WaitingCustomersRemoved(params TicketId[] ticketIds) => new WaitingCustomersRemoved(SingleCustomerQueueId, ticketIds.Select(t => (Guid)t).ToList());
+        
+        public static OutOfLineCustomerAssignedToCounter OutOfLineCustomer1AssignedToCounter(CounterId counterId) => new OutOfLineCustomerAssignedToCounter(SingleCustomerQueueId, Customer1TicketId, counterId);
+        public static OutOfLineCustomerAssignedToCounter OutOfLineCustomer2AssignedToCounter(CounterId counterId) => new OutOfLineCustomerAssignedToCounter(SingleCustomerQueueId, Customer2TicketId, counterId);
     }
 }
