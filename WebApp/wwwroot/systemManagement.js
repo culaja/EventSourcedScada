@@ -33,17 +33,6 @@ $(document).ready(function() {
         });
     });
 
-    $("#resetOpenTickets").on("click", function() {
-        $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            url: url + "/VMax/ResetOpenTickets",
-            error: function(error) {
-                showErrorBoxWith(error.responseJSON);
-            }
-        });
-    });
-
     var populateSystemInfo = function(data) {
         if (!data) return;
 
