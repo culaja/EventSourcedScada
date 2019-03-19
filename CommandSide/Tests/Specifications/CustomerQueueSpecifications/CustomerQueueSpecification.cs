@@ -4,6 +4,7 @@ using CommandSide.CommandSidePorts.Repositories;
 using CommandSide.Domain.Queueing;
 using Common.Messaging;
 using Shared.CustomerQueue;
+using Shared.CustomerQueue.Events;
 
 namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications
 {

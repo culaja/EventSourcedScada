@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Shared.CustomerQueue
+namespace Shared.CustomerQueue.Events
 {
     public sealed class WaitingCustomersRemoved : CustomerQueueEvent
     {

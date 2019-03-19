@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using Common.Time;
 
-namespace Shared.TicketIssuer
+namespace Shared.TicketIssuer.Events
 {
     public sealed class OpenTimeAdded : TicketIssuerEvent
     {

@@ -4,6 +4,7 @@ using CommandSide.Domain.TicketIssuing;
 using Common;
 using Common.Messaging;
 using Shared.TicketIssuer;
+using Shared.TicketIssuer.Events;
 using static System.Guid;
 using static CommandSide.Domain.TicketIssuing.TicketIssuer;
 

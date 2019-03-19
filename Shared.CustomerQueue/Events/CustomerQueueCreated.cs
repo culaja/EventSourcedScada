@@ -1,7 +1,7 @@
 ﻿using System;
 using Common.Messaging;
 
-namespace Shared.CustomerQueue
+namespace Shared.CustomerQueue.Events
 {
     public sealed class CustomerQueueCreated : CustomerQueueEvent, IAggregateRootCreated
     {

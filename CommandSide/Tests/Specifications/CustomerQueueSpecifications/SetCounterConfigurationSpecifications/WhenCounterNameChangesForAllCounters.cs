@@ -4,6 +4,7 @@ using CommandSide.DomainServices.Queueing.CommandHandlers;
 using Common.Messaging;
 using FluentAssertions;
 using Shared.CustomerQueue;
+using Shared.CustomerQueue.Events;
 using Xunit;
 using static CommandSide.Tests.Specifications.CustomerQueueSpecifications.CustomerQueueConfigurationTestValues;
 using static CommandSide.Tests.Specifications.CustomerQueueSpecifications.CustomerQueueTestValues;

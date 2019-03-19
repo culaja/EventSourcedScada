@@ -4,6 +4,7 @@ using System.Linq;
 using CommandSide.Domain;
 using CommandSide.Domain.Queueing;
 using Shared.CustomerQueue;
+using Shared.CustomerQueue.Events;
 using static CommandSide.Tests.Specifications.CustomerQueueSpecifications.CustomerQueueConfigurationTestValues;
 
 namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications

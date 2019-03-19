@@ -4,6 +4,7 @@ using CommandSide.CommandSidePorts.Repositories;
 using CommandSide.Domain.TicketIssuing;
 using Common.Messaging;
 using Shared.TicketIssuer;
+using Shared.TicketIssuer.Events;
 
 namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications
 {

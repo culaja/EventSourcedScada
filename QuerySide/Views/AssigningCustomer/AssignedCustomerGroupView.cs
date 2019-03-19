@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using Common;
 using QuerySide.QueryCommon;
 using Shared.CustomerQueue;
+using Shared.CustomerQueue.Events;
 using Shared.TicketIssuer;
+using Shared.TicketIssuer.Events;
 
 namespace QuerySide.Views.AssigningCustomer
 {

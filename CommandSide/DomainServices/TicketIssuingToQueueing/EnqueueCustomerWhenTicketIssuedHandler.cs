@@ -3,6 +3,7 @@ using CommandSide.Domain.Queueing.Commands;
 using Common;
 using Common.Messaging;
 using Shared.TicketIssuer;
+using Shared.TicketIssuer.Events;
 
 namespace CommandSide.DomainServices.TicketIssuingToQueueing
 {

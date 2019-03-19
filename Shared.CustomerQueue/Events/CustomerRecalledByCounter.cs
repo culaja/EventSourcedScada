@@ -1,6 +1,6 @@
 using System;
 
-namespace Shared.CustomerQueue
+namespace Shared.CustomerQueue.Events
 {
     public sealed class CustomerRecalledByCounter : CustomerQueueEvent
     {

@@ -1,4 +1,5 @@
 using Shared.TicketIssuer;
+using Shared.TicketIssuer.Events;
 
 namespace CommandSide.Domain.TicketIssuing
 {

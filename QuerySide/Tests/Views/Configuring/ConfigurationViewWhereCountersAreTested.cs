@@ -1,6 +1,7 @@
 using FluentAssertions;
 using QuerySide.Views.Configuring;
 using Shared.CustomerQueue;
+using Shared.CustomerQueue.Events;
 using Xunit;
 using static Tests.Views.CustomerQueueViewsTestValues;
 

@@ -4,6 +4,7 @@ using CommandSide.DomainServices.TicketIssuing.CommandHandlers;
 using Common.Messaging;
 using FluentAssertions;
 using Shared.CustomerQueue;
+using Shared.CustomerQueue.Events;
 using Xunit;
 using static CommandSide.Tests.AssertionsHelpers;
 using static CommandSide.Tests.Specifications.CustomerQueueSpecifications.CustomerQueueConfigurationTestValues;

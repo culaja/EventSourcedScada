@@ -1,7 +1,9 @@
 using FluentAssertions;
 using QuerySide.Views.AssigningCustomer;
 using Shared.CustomerQueue;
+using Shared.CustomerQueue.Events;
 using Shared.TicketIssuer;
+using Shared.TicketIssuer.Events;
 using Xunit;
 using static Tests.Views.CustomerQueueViewsTestValues;
 

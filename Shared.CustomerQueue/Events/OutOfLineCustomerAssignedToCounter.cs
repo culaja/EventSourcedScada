@@ -1,27 +1,27 @@
 using System;
 using System.Collections.Generic;
 
-namespace Shared.TicketIssuer
+namespace Shared.CustomerQueue.Events
 {
-    public sealed class TicketIssued : TicketIssuerEvent
+    public sealed class OutOfLineCustomerAssignedToCounter : CustomerQueueEvent
     {
         public Guid TicketId { get; }
-        public int TicketNumber { get; }
+        public int CounterId { get; }
 
-        public TicketIssued(
+        public OutOfLineCustomerAssignedToCounter(
             Guid aggregateRootId,
             Guid ticketId,
-            int ticketNumber) : base(aggregateRootId)
+            int counterId) : base(aggregateRootId)
         {
             TicketId = ticketId;
-            TicketNumber = ticketNumber;
+            CounterId = counterId;
         }
         
         protected override IEnumerable<object> GetEqualityComponents()
         {
             foreach (var item in base.GetEqualityComponents()) yield return item;
             yield return TicketId;
-            yield return TicketNumber;
+            yield return CounterId;
         }
     }
 }

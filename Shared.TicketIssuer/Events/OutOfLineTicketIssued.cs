@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Shared.TicketIssuer
+namespace Shared.TicketIssuer.Events
 {
     public sealed class OutOfLineTicketIssued : TicketIssuerEvent
     {
