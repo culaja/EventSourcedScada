@@ -6,8 +6,6 @@ namespace QuerySide.QueryCommon
 {
     public abstract class View : IView
     {
-        private readonly AsyncManualResetEvent _versionIncrementedEvent = new AsyncManualResetEvent();
-        
         public virtual IView Apply(IDomainEvent e)
         {
             var applyMethodInfo = GetType().GetMethod("Handle", new[] { e.GetType() });

@@ -6,8 +6,6 @@ namespace QuerySide.QueryCommon
 {
     public abstract class GroupView<T> : IGroupView
     {
-        private readonly AsyncManualResetEvent _versionIncrementedEvent = new AsyncManualResetEvent();
-        
         public virtual IGroupView Apply(IDomainEvent e)
         {
             var applyMethodInfo = GetType().GetMethod("Handle", new[] { e.GetType() });
