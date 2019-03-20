@@ -5,6 +5,7 @@ using Common.Messaging;
 using QuerySide.QueryCommon;
 using QuerySide.Views.AssigningCustomer;
 using QuerySide.Views.Configuring;
+using QuerySide.Views.QueueHistory;
 using QuerySide.Views.QueueStatus;
 using QuerySide.Views.System;
 using static Common.Nothing;
@@ -17,6 +18,7 @@ namespace QuerySide.Views
             .AddOne(typeof(ConfigurationView), new ConfigurationView())
             .AddOne(typeof(SystemStatusView), new SystemStatusView())
             .AddOne(typeof(QueueStatusView), new QueueStatusView())
+            .AddOne(typeof(QueueHistoryView), new QueueHistoryView())
             .ToImmutable();
         
         private readonly ImmutableDictionary<Type, IGroupView> _viewGroups = ImmutableDictionary.CreateBuilder<Type, IGroupView>()

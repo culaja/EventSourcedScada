@@ -1,5 +1,6 @@
 using System;
 using Common.Time;
+using static System.DateTime;
 
 namespace QuerySide.Tests.Views
 {
@@ -29,18 +30,23 @@ namespace QuerySide.Tests.Views
         public static readonly Guid Ticket2Id = Guid.NewGuid();
         public static readonly Guid Ticket3Id = Guid.NewGuid();
         public static readonly Guid Ticket4Id = Guid.NewGuid();
-        public static readonly Guid Ticket5Id = Guid.NewGuid();
-        public static readonly Guid Ticket6Id = Guid.NewGuid();
         public static readonly Guid OutOfLineTicket10kId = Guid.NewGuid();
         
         public static readonly int Ticket1Number = 1;
         public static readonly int Ticket2Number = 2;
         public static readonly int Ticket3Number = 3;
         public static readonly int Ticket4Number = 4;
-        public static readonly int Ticket5Number = 5;
-        public static readonly int Ticket6Number = 6;
         public static readonly int OutOfLineTicket10kNumber = 10000;
         
+        public static readonly DateTime Ticket1IssuedTimestamp = UtcNow;
+        public static readonly DateTime Ticket2IssuedTimestamp = UtcNow;
+        public static readonly DateTime Ticket3IssuedTimestamp = UtcNow;
+        public static readonly DateTime Ticket4IssuedTimestamp = UtcNow;
+        public static readonly DateTime OutOfLineTicket10kIdIssuedTimestamp = UtcNow;
         
+        public static readonly DateTime Ticket1AssignedTimestamp = UtcNow;
+        public static readonly DateTime OutOfLineTicket10kIdAssignedTimestamp = UtcNow;
+        
+        public static readonly DateTime Ticket1ServedTimestamp = UtcNow;
     }
 }

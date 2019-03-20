@@ -44,6 +44,18 @@ $(document).ready(function() {
                 }
             });
         });
+        
+    $("#getQueueHistory").on("click", function() {
+                $.ajax({
+                    type: "GET",
+                    contentType: "application/json",
+                    url: url + "/VMax/GetQueueHistory",
+                    success: populateStatusData,
+                    error: function(error) {
+                        showErrorBoxWith(error.responseJSON);
+                    }
+                });
+            });
 
     var populateStatusData = function(data) {
         if (!data) return;

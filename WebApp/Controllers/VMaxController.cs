@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using QuerySide.Views;
 using QuerySide.Views.AssigningCustomer;
 using QuerySide.Views.Configuring;
+using QuerySide.Views.QueueHistory;
 using QuerySide.Views.QueueStatus;
 using QuerySide.Views.System;
 using WebApp.Controllers.CommandsDto;
@@ -39,6 +40,10 @@ namespace WebApp.Controllers
         [HttpGet]
         [Route(nameof(GetQueueStatus))]
         public IActionResult GetQueueStatus() => Ok(_viewHolder.View<QueueStatusView>());
+        
+        [HttpGet]
+        [Route(nameof(GetQueueHistory))]
+        public IActionResult GetQueueHistory() => Ok(_viewHolder.View<QueueHistoryView>());
 
         [HttpGet]
         [Route(nameof(GetConfiguration))]
