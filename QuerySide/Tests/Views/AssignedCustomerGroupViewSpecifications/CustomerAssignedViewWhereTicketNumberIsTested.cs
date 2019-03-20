@@ -6,7 +6,7 @@ using Shared.CustomerQueue.Events;
 using Shared.TicketIssuer.Events;
 using Xunit;
 
-namespace QuerySide.Tests.Views.AssigningCustomer
+namespace QuerySide.Tests.Views.AssignedCustomerGroupViewSpecifications
 {
     public sealed class WhenTicketNumberIsTested : GroupViewSpecification<AssignedCustomerGroupView>
     {

@@ -5,7 +5,7 @@ using QuerySide.Views.Configuring;
 using Shared.CustomerQueue.Events;
 using Xunit;
 
-namespace QuerySide.Tests.Views.Configuring
+namespace QuerySide.Tests.Views.ConfigurationViewSpecifications
 {
     public sealed class WhenCountersAreTested : ViewSpecification<ConfigurationView>
     {
