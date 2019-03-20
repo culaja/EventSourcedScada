@@ -1,12 +1,17 @@
 using System;
 using Common;
+using QuerySide.QueryCommon;
+using Shared.CustomerQueue.Events;
 using static System.DateTime;
 using static Common.Nothing;
 using static QuerySide.Views.QueueStatus.CounterStatus.StatusInternal;
 
 namespace QuerySide.Views.QueueStatus
 {
-    public sealed class CounterStatus
+    public sealed class CounterStatus :
+        IHandle<CounterOpened>,
+        IHandle<CounterClosed>,
+        IHandle<CounterNameChanged>
     {
         public StatusInternal Status { get; private set; }
         public int LastTicketNumber { get; private set;}
@@ -44,24 +49,21 @@ namespace QuerySide.Views.QueueStatus
             return NotAtAll;
         }
 
-        public Nothing SetCounterOpened()
+        public void Handle(CounterOpened _)
         {
             Status = Open;
-            return NotAtAll;
         }
 
-        public Nothing SetCounterClosed()
+        public void Handle(CounterClosed _)
         {
             Status = Closed;
-            return NotAtAll;
         }
 
-        public Nothing SetNewAlias(string newCounterName)
+        public void Handle(CounterNameChanged e)
         {
-            AliasName = newCounterName;
-            return NotAtAll;
+            AliasName = e.NewCounterName;
         }
-
+        
         public enum StatusInternal
         {
             Open,

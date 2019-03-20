@@ -10,6 +10,7 @@ namespace QuerySide.Views.QueueStatus
 {
     public sealed class QueueStatusView : SynchronizedView,
         IHandle<CounterAdded>,
+        IHandle<CounterRemoved>,
         IHandle<CounterOpened>,
         IHandle<CounterClosed>,
         IHandle<CounterNameChanged>,
@@ -31,9 +32,10 @@ namespace QuerySide.Views.QueueStatus
         public DateTime CurrentTime => DateTime.Now;
         
         public void Handle(CounterAdded e) => _counterStatuses.Add(NewCounterWith(e.CounterId, e.CounterName));
-        public void Handle(CounterOpened e) => CounterStatusWith(e.CounterId).SetCounterOpened();
-        public void Handle(CounterClosed e) => CounterStatusWith(e.CounterId).SetCounterClosed();
-        public void Handle(CounterNameChanged e) => CounterStatusWith(e.CounterId).SetNewAlias(e.NewCounterName);
+        public void Handle(CounterRemoved e) => _counterStatuses.RemoveAll(cs => cs.CounterNumber == e.CounterId);
+        public void Handle(CounterOpened e) => CounterStatusWith(e.CounterId).Handle(e);
+        public void Handle(CounterClosed e) => CounterStatusWith(e.CounterId).Handle(e);
+        public void Handle(CounterNameChanged e) => CounterStatusWith(e.CounterId).Handle(e);
 
         public void Handle(TicketIssued e) => _ticketIdToNumber.Add(e.TicketId, e.TicketNumber);
 
