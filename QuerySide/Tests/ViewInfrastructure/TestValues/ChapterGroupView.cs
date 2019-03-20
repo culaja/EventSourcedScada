@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using Common;
 using QuerySide.QueryCommon;
 
-namespace Tests.ViewInfrastructure.TestValues
+namespace QuerySide.Tests.ViewInfrastructure.TestValues
 {
     public sealed class ChapterGroupView : GroupView<Chapter>,
         IHandle<TextLineAdded>

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Common;
 
-namespace Tests.ViewInfrastructure.TestValues
+namespace QuerySide.Tests.ViewInfrastructure.TestValues
 {
     public sealed class ChapterName : Id
     {

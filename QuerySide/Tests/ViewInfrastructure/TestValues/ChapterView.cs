@@ -1,6 +1,6 @@
 using QuerySide.QueryCommon;
 
-namespace Tests.ViewInfrastructure.TestValues
+namespace QuerySide.Tests.ViewInfrastructure.TestValues
 {
     public sealed class ChapterView : View,
         IHandle<TextLineAdded>

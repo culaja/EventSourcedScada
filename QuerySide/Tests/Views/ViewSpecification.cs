@@ -3,7 +3,7 @@ using Common;
 using Common.Messaging;
 using QuerySide.QueryCommon;
 
-namespace Tests.Views
+namespace QuerySide.Tests.Views
 {
     public abstract class ViewSpecification<T> where T : IView, new()
     {

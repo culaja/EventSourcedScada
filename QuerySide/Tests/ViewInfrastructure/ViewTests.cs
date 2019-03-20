@@ -1,28 +1,26 @@
 using FluentAssertions;
-using Tests.ViewInfrastructure.TestValues;
+using QuerySide.Tests.ViewInfrastructure.TestValues;
 using Xunit;
-using static Tests.ViewInfrastructure.TestValues.ChapterTestValues;
-using static Tests.ViewInfrastructure.TestValues.ChapterView;
 
-namespace Tests.ViewInfrastructure
+namespace QuerySide.Tests.ViewInfrastructure
 {
     public sealed class ViewTests
     {
-        private readonly ChapterView _chapterView = NewChapterView;
+        private readonly ChapterView _chapterView = ChapterView.NewChapterView;
         
         [Fact]
         public void LastTextLine_is_updated_when_TextLineAdded_event_is_passed()
         {
-            _chapterView.Apply(SomeTextAddedToFirstChapter);
-            _chapterView.LastTextLine.Should().Be(SomeText);
+            _chapterView.Apply(ChapterTestValues.SomeTextAddedToFirstChapter);
+            _chapterView.LastTextLine.Should().Be(ChapterTestValues.SomeText);
         }
 
         [Fact]
         public void LastTextLine_is_updated_with_MoreText_after_second_event()
         {
-            _chapterView.Apply(SomeTextAddedToFirstChapter);
-            _chapterView.Apply(MoreTextAddedToFirstChapter);
-            _chapterView.LastTextLine.Should().Be(MoreText);
+            _chapterView.Apply(ChapterTestValues.SomeTextAddedToFirstChapter);
+            _chapterView.Apply(ChapterTestValues.MoreTextAddedToFirstChapter);
+            _chapterView.LastTextLine.Should().Be(ChapterTestValues.MoreText);
         }
     }
 }

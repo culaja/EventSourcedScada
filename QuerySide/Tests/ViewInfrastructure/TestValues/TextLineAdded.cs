@@ -1,7 +1,7 @@
 using System;
 using Common.Messaging;
 
-namespace Tests.ViewInfrastructure.TestValues
+namespace QuerySide.Tests.ViewInfrastructure.TestValues
 {
     public sealed class TextLineAdded : DomainEvent
     {

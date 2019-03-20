@@ -4,19 +4,18 @@ using FluentAssertions;
 using QuerySide.Views.Configuring;
 using Shared.CustomerQueue.Events;
 using Xunit;
-using static Tests.Views.CustomerQueueViewsTestValues;
 
-namespace Tests.Views.Configuring
+namespace QuerySide.Tests.Views.Configuring
 {
     public sealed class WhenCountersAreTested : ViewSpecification<ConfigurationView>
     {
         protected override IEnumerable<IDomainEvent> WhenApplied()
         {
-            yield return new CounterAdded(CustomerQueueId, 1, "Counter1");
-            yield return new CounterAdded(CustomerQueueId, 2, "Counter2");
-            yield return new CounterAdded(CustomerQueueId, 3, "Counter3");
-            yield return new CounterRemoved(CustomerQueueId, 2);
-            yield return new CounterNameChanged(CustomerQueueId, 3, "Counter3NewName");
+            yield return new CounterAdded(CustomerQueueViewsTestValues.CustomerQueueId, 1, "Counter1");
+            yield return new CounterAdded(CustomerQueueViewsTestValues.CustomerQueueId, 2, "Counter2");
+            yield return new CounterAdded(CustomerQueueViewsTestValues.CustomerQueueId, 3, "Counter3");
+            yield return new CounterRemoved(CustomerQueueViewsTestValues.CustomerQueueId, 2);
+            yield return new CounterNameChanged(CustomerQueueViewsTestValues.CustomerQueueId, 3, "Counter3NewName");
         }
         
         [Fact]

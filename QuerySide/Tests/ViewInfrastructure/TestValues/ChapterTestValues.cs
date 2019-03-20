@@ -1,4 +1,4 @@
-namespace Tests.ViewInfrastructure.TestValues
+namespace QuerySide.Tests.ViewInfrastructure.TestValues
 {
     public static class ChapterTestValues
     {
