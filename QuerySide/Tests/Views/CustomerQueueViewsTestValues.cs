@@ -23,6 +23,8 @@ namespace QuerySide.Tests.Views
         public static readonly string Counter2Name = "C2";
         public static readonly string Counter3Name = "C3";
 
+        public static readonly string Counter2ChangedName = "C2 XXX";
+
         public static readonly Guid Ticket1Id = Guid.NewGuid();
         public static readonly Guid Ticket2Id = Guid.NewGuid();
         public static readonly Guid Ticket3Id = Guid.NewGuid();

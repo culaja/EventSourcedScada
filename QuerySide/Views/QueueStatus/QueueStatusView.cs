@@ -12,6 +12,7 @@ namespace QuerySide.Views.QueueStatus
         IHandle<CounterAdded>,
         IHandle<CounterOpened>,
         IHandle<CounterClosed>,
+        IHandle<CounterNameChanged>,
 
         IHandle<TicketIssued>,
         IHandle<OutOfLineTicketIssued>,
@@ -32,8 +33,10 @@ namespace QuerySide.Views.QueueStatus
         public void Handle(CounterAdded e) => _counterStatuses.Add(NewCounterWith(e.CounterId, e.CounterName));
         public void Handle(CounterOpened e) => CounterStatusWith(e.CounterId).SetCounterOpened();
         public void Handle(CounterClosed e) => CounterStatusWith(e.CounterId).SetCounterClosed();
-        
+        public void Handle(CounterNameChanged e) => CounterStatusWith(e.CounterId).SetNewAlias(e.NewCounterName);
+
         public void Handle(TicketIssued e) => _ticketIdToNumber.Add(e.TicketId, e.TicketNumber);
+
         public void Handle(OutOfLineTicketIssued e) => _ticketIdToNumber.Add(e.TicketId, e.TicketNumber);
 
         public void Handle(CustomerEnqueued e) => 

@@ -11,7 +11,7 @@ namespace QuerySide.Views.QueueStatus
         public StatusInternal Status { get; private set; }
         public int LastTicketNumber { get; private set;}
         public DateTime LastTicketCallTimestamp { get; private set; }
-        public string AliasName { get; }
+        public string AliasName { get; private set; }
         public int CounterNumber { get; }
 
         public CounterStatus(
@@ -53,6 +53,12 @@ namespace QuerySide.Views.QueueStatus
         public Nothing SetCounterClosed()
         {
             Status = Closed;
+            return NotAtAll;
+        }
+
+        public Nothing SetNewAlias(string newCounterName)
+        {
+            AliasName = newCounterName;
             return NotAtAll;
         }
 
