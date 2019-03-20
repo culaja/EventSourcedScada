@@ -14,7 +14,7 @@ $(document).ready(function() {
             type: "GET",
             contentType: "application/json",
             url: url + "/VMax/GetServerVersion",
-            success: populateSystemInfo,
+            success: populateStatusData,
             error: function(error) {
                 showErrorBoxWith(error.responseJSON);
             }
@@ -26,18 +26,30 @@ $(document).ready(function() {
             type: "GET",
             contentType: "application/json",
             url: url + "/VMax/GetSystemStatus",
-            success: populateSystemInfo,
+            success: populateStatusData,
             error: function(error) {
                 showErrorBoxWith(error.responseJSON);
             }
         });
     });
+    
+    $("#getQueueStatus").on("click", function() {
+            $.ajax({
+                type: "GET",
+                contentType: "application/json",
+                url: url + "/VMax/GetQueueStatus",
+                success: populateStatusData,
+                error: function(error) {
+                    showErrorBoxWith(error.responseJSON);
+                }
+            });
+        });
 
-    var populateSystemInfo = function(data) {
+    var populateStatusData = function(data) {
         if (!data) return;
 
-        $("#systemInfo pre").remove();
-        $("#systemInfo").append("<pre>" + JSON.stringify(data, null, " ") + "</pre>");
+        $("#statusData pre").remove();
+        $("#statusData").append("<pre>" + JSON.stringify(data, null, " ") + "</pre>");
     }
         
 });
