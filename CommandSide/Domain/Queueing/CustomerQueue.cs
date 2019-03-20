@@ -1,9 +1,7 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using CommandSide.Domain.Queueing.Configuring;
 using Common;
-using Shared.CustomerQueue;
 using Shared.CustomerQueue.Events;
 using static CommandSide.Domain.Queueing.CanCloseCounterResult;
 using static CommandSide.Domain.Queueing.CanOpenCounterResult;

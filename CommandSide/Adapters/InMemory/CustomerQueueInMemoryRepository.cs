@@ -3,7 +3,6 @@ using CommandSide.CommandSidePorts.Repositories;
 using CommandSide.Domain.Queueing;
 using Common;
 using Common.Messaging;
-using Shared.CustomerQueue;
 using Shared.CustomerQueue.Events;
 using static System.Guid;
 using static CommandSide.Domain.Queueing.CustomerQueue;

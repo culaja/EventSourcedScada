@@ -1,7 +1,6 @@
 using System;
 using CommandSide.Domain.TicketIssuing.Commands;
 using Common;
-using Shared.TicketIssuer;
 using Shared.TicketIssuer.Events;
 using static CommandSide.Domain.TicketIssuing.Commands.TicketNumber;
 using static CommandSide.Domain.TicketIssuing.OpenTimes;

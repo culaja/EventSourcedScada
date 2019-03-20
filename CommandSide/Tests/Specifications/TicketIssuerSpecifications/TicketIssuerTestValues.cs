@@ -7,7 +7,6 @@ using CommandSide.Domain.TicketIssuing;
 using CommandSide.Domain.TicketIssuing.Commands;
 using CommandSide.Tests.Specifications.TicketIssuerSpecifications.Stubs;
 using Common.Time;
-using Shared.TicketIssuer;
 using Shared.TicketIssuer.Events;
 using static System.DayOfWeek;
 using static CommandSide.Domain.CounterId;

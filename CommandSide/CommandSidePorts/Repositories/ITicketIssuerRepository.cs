@@ -1,7 +1,6 @@
 using System;
 using CommandSide.Domain.TicketIssuing;
 using Common;
-using Shared.TicketIssuer;
 using Shared.TicketIssuer.Events;
 
 namespace CommandSide.CommandSidePorts.Repositories
