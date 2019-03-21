@@ -5,7 +5,7 @@ namespace QuerySide.Views.System
 {
     public sealed class SystemStatusView : SynchronizedView
     {
-        public IReadOnlyList<PrinterStatus> PrinterStatuses { get; } = new List<PrinterStatus>()
+        public IReadOnlyList<PrinterStatus> PrinterStatuses { get; } = new List<PrinterStatus>
         {
             new PrinterStatus("OK", "Online", "MockAddress1"),
             new PrinterStatus("PAPER_LOW", "Paper in printer is bellow 20%", "MockAddress2"),

@@ -8,7 +8,7 @@ namespace CommandSide.Domain.Queueing
     public sealed class Counter : Entity<CounterId>
     {
         private CounterName _name;
-        private bool _isOpened = false;
+        private bool _isOpened;
         private Maybe<Customer> _maybeCurrentlyServingCustomer = Maybe<Customer>.None;
 
         public Counter(CounterId id, CounterName name) : base(id)

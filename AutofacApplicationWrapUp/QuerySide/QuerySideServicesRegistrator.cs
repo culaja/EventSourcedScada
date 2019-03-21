@@ -1,6 +1,5 @@
 using Autofac;
 using QuerySide.Services;
-using Module = Autofac.Module;
 
 namespace AutofacApplicationWrapUp.QuerySide
 {

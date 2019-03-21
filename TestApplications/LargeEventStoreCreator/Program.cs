@@ -63,11 +63,11 @@ namespace LargeEventStoreCreator
                         {
                             Execute(commandBus, new NextCustomer(new CounterId(counter)));
                             Execute(commandBus, new ReCallCustomer(new CounterId(counter)));
-                            return Nothing.NotAtAll;
+                            return NotAtAll;
                         }));
         }
 
-        private static int _numberOfCommandsExecuted = 0;
+        private static int _numberOfCommandsExecuted;
 
         private static Nothing Execute(ICommandBus commandBus, ICommand command)
         {

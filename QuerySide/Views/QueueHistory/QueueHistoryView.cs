@@ -14,7 +14,7 @@ namespace QuerySide.Views.QueueHistory
         IHandle<OutOfLineCustomerAssignedToCounter>,
         IHandle<CustomerServedByCounter>
     {
-        private int _waitingCustomerCount = 0;
+        private int _waitingCustomerCount;
         private readonly Dictionary<Guid, Ticket> _ticketById = new Dictionary<Guid, Ticket>();
 
         public IReadOnlyList<Ticket> TicketHistory => _ticketById.Values.OrderBy(t => t.DrawTime).ToList();

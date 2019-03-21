@@ -16,7 +16,7 @@ namespace QuerySide.Views.AssigningCustomer
         IHandle<CustomerServedByCounter>,
         IHandle<WaitingCustomersRemoved>
     {
-        private int _ticketsInQueue = 0;
+        private int _ticketsInQueue;
         private readonly Dictionary<Guid, int> _ticketIdToNumber = new Dictionary<Guid, int>();
         private readonly Dictionary<Id, int> _counterToTicketNumber = new Dictionary<Id, int>();
         

@@ -8,6 +8,6 @@ namespace Common.Messaging
 
     public interface IMessageHandler
     {
-        Result Handle(IMessage @message);
+        Result Handle(IMessage message);
     }
 }

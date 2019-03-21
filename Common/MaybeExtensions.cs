@@ -68,10 +68,8 @@ namespace Common
             {
                 return Maybe<K>.From((K)baseMaybe.Value);
             }
-            else
-            {
-                return Maybe<K>.None;
-            }
+
+            return Maybe<K>.None;
         }
 
         public static Maybe<T> ToMaybe<T>(this T value) where T : class => Maybe<T>.From(value);
@@ -116,7 +114,7 @@ namespace Common
         {
             if (maybe.HasValue)
             {
-                return Result.Ok<T>(maybe.Value);
+                return Result.Ok(maybe.Value);
             }
 
             return Result.Fail<T>(errorSupplier());

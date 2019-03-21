@@ -1,7 +1,6 @@
 using Autofac;
 using AutofacApplicationWrapUp.CommandSide;
 using AutofacApplicationWrapUp.QuerySide;
-using Module = Autofac.Module;
 
 namespace AutofacApplicationWrapUp
 {

@@ -54,7 +54,7 @@ namespace CommandSide.Domain.TicketIssuing
             TicketId ticketId,
             TicketNumber ticketNumber,
             Func<DateTime> currentTimeProvider) => Ok()
-                .Ensure(() => IsTimeInOpenTimesRange(currentTimeProvider()), $"Can't issue a ticket outside of configured open times.")
+                .Ensure(() => IsTimeInOpenTimesRange(currentTimeProvider()), "Can't issue a ticket outside of configured open times.")
                 .Ensure(() => IsExpectedTicketNumber(ticketNumber), $"Can't issue a ticket with number {ticketNumber} since expected number is '{_ticketNumberToBeIssued}'.")
                 .OnSuccess(() => ApplyChange(new TicketIssued(Id, ticketId, ticketNumber)))
                 .ToTypedResult(this);
@@ -80,6 +80,19 @@ namespace CommandSide.Domain.TicketIssuing
         private TicketIssuer Apply(OutOfLineTicketIssued _)
         {
             _outOfLineTicketNumberToBeIssued = _outOfLineTicketNumberToBeIssued.Next;
+            return this;
+        }
+
+        public Result<TicketIssuer> Reset()
+        {
+            ApplyChange(new TicketIssuerHasReset(Id, _ticketNumberToBeIssued, _outOfLineTicketNumberToBeIssued));
+            return Ok(this);
+        }
+
+        private TicketIssuer Apply(TicketIssuerHasReset _)
+        {
+            _ticketNumberToBeIssued = FirstTicketNumber;
+            _outOfLineTicketNumberToBeIssued = FirstOutOfLineTicketNumber; 
             return this;
         }
     }

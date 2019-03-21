@@ -159,16 +159,14 @@ namespace Common
         {
             if (result.IsSuccess)
                 return Result.Ok();
-            else
-                return Result.Fail(result.Error.ToString());
+            return Result.Fail(result.Error.ToString());
         }
 
         public static implicit operator Result<TValue>(Result<TValue, TError> result)
         {
             if (result.IsSuccess)
                 return Result.Ok(result.Value);
-            else
-                return Result.Fail<TValue>(result.Error.ToString());
+            return Result.Fail<TValue>(result.Error.ToString());
         }
     }
 
@@ -221,8 +219,7 @@ namespace Common
         {
             if (result.IsSuccess)
                 return Result.Ok();
-            else
-                return Result.Fail(result.Error);
+            return Result.Fail(result.Error);
         }
 		
         public override string ToString() => IsSuccess.OnBoth(
@@ -343,7 +340,7 @@ namespace Common
         }
 		
         public override string ToString() => IsSuccess.OnBoth(
-            () => $"Success",
+            () => "Success",
             () => $"Failure: {Error}");
     }
 }

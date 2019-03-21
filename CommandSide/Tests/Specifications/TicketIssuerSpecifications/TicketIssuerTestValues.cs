@@ -82,6 +82,11 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications
         public static readonly OutOfLineTicketIssued OutOfLineTicket10kIssuedForCounter1 = new OutOfLineTicketIssued(SingleTicketIssuerId, Ticket10kId, Ticket10kNumber, Counter1Id);
         public static readonly OutOfLineTicketIssued OutOfLineTicket10kOne1IssuedForCounter1 = new OutOfLineTicketIssued(SingleTicketIssuerId, Ticket10kOneId, Ticket10kOneNumber, Counter1Id);
         
+        public static TicketIssuerHasReset TicketIssuerHasResetWithLastTicketNumbers(
+            int lastTicketNumber,
+            int lastOutOfLineTicketNumber) =>
+            new TicketIssuerHasReset(SingleTicketIssuerId, lastTicketNumber, lastOutOfLineTicketNumber);
+        
         public static readonly ILocalTimeProvider AlwaysMonday10LocalTimeProviderStub = new LocalTimeProviderStub(new DateTime(2019, 3, 11, 10, 0, 0));
         
         public static readonly ITicketIdGenerator Ticket1IdGenerator = new TicketIdGeneratorStub(Ticket1Id);

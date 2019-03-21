@@ -24,7 +24,7 @@ namespace AutofacApplicationWrapUp
                     CommandSideEventAssembly,
                     QuerySideEventAssembly
                 },
-                new List<Assembly>()
+                new List<Assembly>
                 {   
                     CommandSideMessageHandlerAssembly,
                     QuerySideMessageHandlerAssembly

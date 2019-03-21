@@ -1,6 +1,5 @@
 using Autofac;
 using CommandSide.DomainServices;
-using Module = Autofac.Module;
 
 namespace AutofacApplicationWrapUp.CommandSide
 {
