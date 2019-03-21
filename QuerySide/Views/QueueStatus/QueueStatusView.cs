@@ -26,7 +26,7 @@ namespace QuerySide.Views.QueueStatus
         private readonly Dictionary<Guid, WaitingCustomer> _waitingCustomersByTicketId = new Dictionary<Guid, WaitingCustomer>();
         private readonly List<CounterStatus> _counterStatuses = new List<CounterStatus>();
 
-        public IReadOnlyList<WaitingCustomer> WaitingCustomers => _waitingCustomersByTicketId.Values.ToList();
+        public IReadOnlyList<WaitingCustomer> WaitingCustomers => _waitingCustomersByTicketId.Values.OrderBy(wc => wc.TicketDrawTimestamp).ToList();
         public IReadOnlyList<CounterStatus> CounterStatuses => _counterStatuses;
         public int ExpectedWaitingTimeInSeconds { get; } = 0;
         public DateTime CurrentTime => DateTime.Now;

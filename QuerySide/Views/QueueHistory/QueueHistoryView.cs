@@ -17,7 +17,7 @@ namespace QuerySide.Views.QueueHistory
         private int _waitingCustomerCount = 0;
         private readonly Dictionary<Guid, Ticket> _ticketById = new Dictionary<Guid, Ticket>();
 
-        public IReadOnlyList<Ticket> TicketHistory => _ticketById.Values.ToList();
+        public IReadOnlyList<Ticket> TicketHistory => _ticketById.Values.OrderBy(t => t.DrawTime).ToList();
         
         public void Handle(TicketIssued e) => _ticketById.Add(e.TicketId, new Ticket(e.TicketId, e.TicketNumber, e.Timestamp, _waitingCustomerCount++));
         public void Handle(OutOfLineTicketIssued e) => _ticketById.Add(e.TicketId, new Ticket(e.TicketId, e.TicketNumber, e.Timestamp, _waitingCustomerCount));
