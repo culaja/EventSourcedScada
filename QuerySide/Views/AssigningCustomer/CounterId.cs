@@ -11,7 +11,7 @@ namespace QuerySide.Views.AssigningCustomer
         {
             _counterId = counterId;
         }
-        
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return _counterId;

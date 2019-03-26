@@ -18,7 +18,7 @@ namespace Common
 
         public static readonly string ErrorMessageIsProvidedForSuccess = "There should be no error message for success.";
     }
-    
+
     internal sealed class ResultCommonLogic : ResultCommonLogic<string>
     {
         [DebuggerStepThrough]
@@ -109,7 +109,7 @@ namespace Common
             }
         }
     }
-    
+
     public class Result<TValue, TError> : ISerializable
     {
         [DebuggerBrowsable(DebuggerBrowsableState.Never)]
@@ -221,7 +221,7 @@ namespace Common
                 return Result.Ok();
             return Result.Fail(result.Error);
         }
-		
+
         public override string ToString() => IsSuccess.OnBoth(
             () => $"Success: {_value}",
             () => $"Failure: {Error}");
@@ -335,10 +335,10 @@ namespace Common
         [DebuggerStepThrough]
         public static Result Combine<T>(string errorMessagesSeparator, params Result<T>[] results)
         {
-            Result[] untyped = results.Select(result => (Result)result).ToArray();
+            Result[] untyped = results.Select(result => (Result) result).ToArray();
             return Combine(errorMessagesSeparator, untyped);
         }
-		
+
         public override string ToString() => IsSuccess.OnBoth(
             () => "Success",
             () => $"Failure: {Error}");

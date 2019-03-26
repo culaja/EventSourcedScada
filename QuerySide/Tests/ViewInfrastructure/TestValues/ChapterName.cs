@@ -11,7 +11,7 @@ namespace QuerySide.Tests.ViewInfrastructure.TestValues
         {
             _name = name;
         }
-        
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return _name;

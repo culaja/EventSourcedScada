@@ -15,8 +15,8 @@ namespace CommandSide.DomainServices.TicketIssuingToQueueing
             _commandBus = commandBus;
         }
 
-        public override Result Handle(TicketIssued e) => 
+        public override Result Handle(TicketIssued e) =>
             _commandBus.ScheduleOneWayCommand(new EnqueueCustomer(e.TicketId.ToTicketId()))
-            .ToOkResult();
+                .ToOkResult();
     }
 }

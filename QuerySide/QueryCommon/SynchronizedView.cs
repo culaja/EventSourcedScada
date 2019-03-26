@@ -14,7 +14,7 @@ namespace QuerySide.QueryCommon
         {
             lock (_syncObject)
             {
-                return base.Apply(e);    
+                return base.Apply(e);
             }
         }
 
@@ -22,7 +22,7 @@ namespace QuerySide.QueryCommon
         {
             lock (_syncObject)
             {
-                return base.SerializeToJson();    
+                return base.SerializeToJson();
             }
         }
     }

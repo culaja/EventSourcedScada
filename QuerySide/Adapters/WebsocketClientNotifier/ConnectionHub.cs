@@ -25,7 +25,7 @@ namespace QuerySide.Adapters.WebsocketClientNotifier
                 _sockets.Remove(socket);
             }
         }
-        
+
         public Nothing NotifyAll(IView v)
         {
             lock (_sockets)
@@ -35,8 +35,8 @@ namespace QuerySide.Adapters.WebsocketClientNotifier
 
             return NotAtAll;
         }
-        
-        private static void SendToSocket(WebSocket s, IView v) => 
+
+        private static void SendToSocket(WebSocket s, IView v) =>
             s.Send(WebsocketMessage.WebsocketMessageFrom(v).Serialize());
     }
 }

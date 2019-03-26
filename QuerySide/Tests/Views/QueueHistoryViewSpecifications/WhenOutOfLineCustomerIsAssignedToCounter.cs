@@ -14,13 +14,13 @@ namespace QuerySide.Tests.Views.QueueHistoryViewSpecifications
         protected override IEnumerable<IDomainEvent> WhenApplied()
         {
             yield return new OutOfLineTicketIssued(
-                CustomerQueueViewsTestValues.TicketIssuerId, 
-                CustomerQueueViewsTestValues.OutOfLineTicket10kId, 
+                CustomerQueueViewsTestValues.TicketIssuerId,
+                CustomerQueueViewsTestValues.OutOfLineTicket10kId,
                 CustomerQueueViewsTestValues.OutOfLineTicket10kNumber,
                 CustomerQueueViewsTestValues.Counter1Id).SetTimestamp(CustomerQueueViewsTestValues.OutOfLineTicket10kIdIssuedTimestamp);
             yield return new OutOfLineCustomerAssignedToCounter(
-                CustomerQueueViewsTestValues.CustomerQueueId, 
-                CustomerQueueViewsTestValues.OutOfLineTicket10kId, 
+                CustomerQueueViewsTestValues.CustomerQueueId,
+                CustomerQueueViewsTestValues.OutOfLineTicket10kId,
                 CustomerQueueViewsTestValues.Counter1Id).SetTimestamp(CustomerQueueViewsTestValues.OutOfLineTicket10kIdAssignedTimestamp);
         }
 

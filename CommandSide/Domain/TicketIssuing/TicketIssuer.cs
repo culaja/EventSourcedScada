@@ -31,7 +31,7 @@ namespace CommandSide.Domain.TicketIssuing
         {
             openTimes.IsolateOpenTimesToRemove(_currentOpenTimes).Map(openTime =>
                 ApplyChange(new OpenTimeRemoved(Id, openTime.Day, openTime.BeginTimeOfDay, openTime.EndTimeOfDay)));
-            
+
             openTimes.IsolateOpenTimesToAdd(_currentOpenTimes).Map(openTime =>
                 ApplyChange(new OpenTimeAdded(Id, openTime.Day, openTime.BeginTimeOfDay, openTime.EndTimeOfDay)));
 
@@ -54,13 +54,13 @@ namespace CommandSide.Domain.TicketIssuing
             TicketId ticketId,
             TicketNumber ticketNumber,
             Func<DateTime> currentTimeProvider) => Ok()
-                .Ensure(() => IsTimeInOpenTimesRange(currentTimeProvider()), "Can't issue a ticket outside of configured open times.")
-                .Ensure(() => IsExpectedTicketNumber(ticketNumber), $"Can't issue a ticket with number {ticketNumber} since expected number is '{_ticketNumberToBeIssued}'.")
-                .OnSuccess(() => ApplyChange(new TicketIssued(Id, ticketId, ticketNumber)))
-                .ToTypedResult(this);
+            .Ensure(() => IsTimeInOpenTimesRange(currentTimeProvider()), "Can't issue a ticket outside of configured open times.")
+            .Ensure(() => IsExpectedTicketNumber(ticketNumber), $"Can't issue a ticket with number {ticketNumber} since expected number is '{_ticketNumberToBeIssued}'.")
+            .OnSuccess(() => ApplyChange(new TicketIssued(Id, ticketId, ticketNumber)))
+            .ToTypedResult(this);
 
         private bool IsTimeInOpenTimesRange(DateTime currentTime) => _currentOpenTimes.IsInRange(currentTime);
-        
+
         private bool IsExpectedTicketNumber(TicketNumber ticketNumber) => ticketNumber.Equals(_ticketNumberToBeIssued);
 
         private TicketIssuer Apply(TicketIssued e)
@@ -92,7 +92,7 @@ namespace CommandSide.Domain.TicketIssuing
         private TicketIssuer Apply(TicketIssuerHasReset _)
         {
             _ticketNumberToBeIssued = FirstTicketNumber;
-            _outOfLineTicketNumberToBeIssued = FirstOutOfLineTicketNumber; 
+            _outOfLineTicketNumberToBeIssued = FirstOutOfLineTicketNumber;
             return this;
         }
     }

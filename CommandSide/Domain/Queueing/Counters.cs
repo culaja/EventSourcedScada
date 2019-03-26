@@ -23,16 +23,16 @@ namespace CommandSide.Domain.Queueing
 
         public static readonly Counters NoCounters = new Counters(new List<Counter>());
 
-        public Counters AddCounterWith(CounterId id, CounterName name) => 
-            new Counters(new List<Counter>(_collection) { new Counter(id, name) });
+        public Counters AddCounterWith(CounterId id, CounterName name) =>
+            new Counters(new List<Counter>(_collection) {new Counter(id, name)});
 
         public Counters Remove(CounterId id) => new Counters(_collection.Where(c => c.Id != id).ToList());
-        
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return _collection;
         }
-        
+
         public CanOpenCounterResult CanOpenCounter(CounterId counterId) => MaybeCounterWith(counterId)
             .Map(c => c.CanOpen() ? CounterCanBeOpened : CounterIsAlreadyOpened)
             .Unwrap(CounterCantBeOpenedBecauseOfError($"Counter with ID '{counterId}' doesn't exist."));
@@ -40,7 +40,7 @@ namespace CommandSide.Domain.Queueing
         public Nothing OpenCounterWith(CounterId counterId) => MaybeCounterWith(counterId)
             .Map(c => c.Open())
             .ToNothing();
-        
+
         public CanCloseCounterResult CanCloseCounter(CounterId counterId) => MaybeCounterWith(counterId)
             .Map(c => c.CanClose() ? CounterCanBeClosed : CounterIsAlreadyClosed)
             .Unwrap(CounterCantBeClosedBecauseOfError($"Counter with ID '{counterId}' doesn't exist."));

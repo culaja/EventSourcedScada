@@ -6,7 +6,7 @@ namespace Common
     public class Nothing
     {
         public static readonly Nothing NotAtAll = new Nothing();
-        
+
         public override string ToString() => "Nothing";
     }
 }

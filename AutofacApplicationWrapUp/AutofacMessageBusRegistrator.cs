@@ -25,22 +25,22 @@ namespace AutofacApplicationWrapUp
                     QuerySideEventAssembly
                 },
                 new List<Assembly>
-                {   
+                {
                     CommandSideMessageHandlerAssembly,
                     QuerySideMessageHandlerAssembly
                 }));
         }
-        
+
         private static Assembly CustomerQueueSharedEventAssembly => typeof(CustomerQueueEvent).Assembly;
-        
+
         private static Assembly TicketIssuerSharedEventAssembly => typeof(TicketIssuerEvent).Assembly;
-        
+
         private static Assembly CommandSideEventAssembly => typeof(CustomerQueue).Assembly;
-        
+
         private static Assembly QuerySideEventAssembly => typeof(NewClientConnected).Assembly;
 
         private static Assembly CommandSideMessageHandlerAssembly => typeof(CustomerQueuePersistenceHandler).Assembly;
-        
+
         private static Assembly QuerySideMessageHandlerAssembly => typeof(ViewRefreshFromCustomerQueueEventHandler).Assembly;
     }
 }

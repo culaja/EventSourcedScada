@@ -16,8 +16,8 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.NextCusto
         {
         }
 
-        protected override NextCustomer CommandToExecute => new NextCustomer(Counter1Id); 
-        
+        protected override NextCustomer CommandToExecute => new NextCustomer(Counter1Id);
+
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;
@@ -31,7 +31,7 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.NextCusto
 
         [Fact]
         public void customer1_is_assigned() => ProducedEvents.Should().Contain(Customer1AssignedToCounter(Counter1Id));
-        
+
         [Fact]
         public void customer2_is__not_assigned() => ProducedEvents.Should().NotContain(Customer2AssignedToCounter(Counter1Id));
     }

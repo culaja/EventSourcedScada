@@ -8,7 +8,7 @@ namespace QuerySide.Tests.ViewInfrastructure.TestValues
         public SomeOtherEvent() : base(Guid.NewGuid(), "SomeOtherTopic")
         {
         }
-        
+
         public static SomeOtherEvent NewSomeOtherEvent => new SomeOtherEvent();
     }
 }

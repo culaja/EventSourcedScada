@@ -17,7 +17,7 @@ namespace QuerySide.Services.ClientEventHandlers
             _viewHolder = viewHolder;
             _clientNotifier = clientNotifier;
         }
-        
+
         public override Result Handle(NewClientConnected message) => _viewHolder
             .ForEachView(_clientNotifier.NotifyAll).ToOkResult();
     }

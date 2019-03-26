@@ -11,10 +11,10 @@ namespace Common
     {
         public Guid Id { get; }
         public ulong Version { get; private set; }
-        
+
         private readonly List<IDomainEvent> _domainEvents = new List<IDomainEvent>();
         public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents;
-        
+
         protected AggregateRoot(Guid id)
         {
             Id = id;
@@ -24,22 +24,22 @@ namespace Common
         {
             _domainEvents.Clear();
         }
-        
+
         public Nothing ApplyFrom(IDomainEvent e)
         {
             ApplyChange(e, false);
             return NotAtAll;
         }
-        
+
         protected Nothing ApplyChange(IDomainEvent e)
         {
             ApplyChange(e, true);
             return NotAtAll;
         }
-        
+
         private void ApplyChange(IDomainEvent e, bool isNew)
         {
-            var applyMethodInfo = GetType().GetMethod("Apply", BindingFlags.NonPublic | BindingFlags.Instance, null,  new[] { e.GetType() }, null);
+            var applyMethodInfo = GetType().GetMethod("Apply", BindingFlags.NonPublic | BindingFlags.Instance, null, new[] {e.GetType()}, null);
 
             if (applyMethodInfo == null)
             {
@@ -56,7 +56,7 @@ namespace Common
                 _domainEvents.Add(e);
             }
         }
-        
+
         private void IncrementedVersion() => ++Version;
     }
 }

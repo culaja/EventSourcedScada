@@ -7,12 +7,12 @@ namespace Common.Messaging.Serialization
     {
         public override void WriteJson(JsonWriter writer, Maybe<T> value, JsonSerializer serializer)
         {
-            writer.WriteValue(value.HasValue? value.Value : null);
+            writer.WriteValue(value.HasValue ? value.Value : null);
         }
 
         public override Maybe<T> ReadJson(JsonReader reader, Type objectType, Maybe<T> existingValue, bool hasExistingValue, JsonSerializer serializer)
         {
-            return Maybe<T>.From((T)reader.Value);
+            return Maybe<T>.From((T) reader.Value);
         }
     }
 }

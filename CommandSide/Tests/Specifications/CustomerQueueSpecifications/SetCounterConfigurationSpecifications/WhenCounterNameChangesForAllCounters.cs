@@ -16,26 +16,26 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.SetCounte
         public WhenCounterNameChangesForAllCounters() : base(SingleCustomerQueueId)
         {
         }
-    
+
         protected override SetCounterConfiguration CommandToExecute => new SetCounterConfiguration(ThreeCounterConfigurationWithAllChangedNames);
-    
+
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;
             foreach (var item in AllCountersAdded) yield return item;
         }
-    
+
         public override CommandHandler<SetCounterConfiguration> When() => new SetConfigurationHandler(CustomerQueueRepository);
-    
+
         [Fact]
         public void returns_success() => Result.IsSuccess.Should().BeTrue();
-    
+
         [Fact]
         public void AllCounters_changed_name() => ProducedEvents.Should().ContainInOrder(AllCountersNamesChanged);
-    
+
         [Fact]
         public void no_counter_is_added() => ProducedEvents.Should().NotContain(AssertionsHelpers.EventOf<CounterAdded>());
-    
+
         [Fact]
         public void no_counter_is_removed() => ProducedEvents.Should().NotContain(AssertionsHelpers.EventOf<CounterRemoved>());
     }

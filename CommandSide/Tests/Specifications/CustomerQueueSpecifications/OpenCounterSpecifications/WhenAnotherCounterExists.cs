@@ -18,8 +18,8 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.OpenCount
         {
         }
 
-        protected override OpenCounter CommandToExecute => new OpenCounter(Counter2Id); 
-        
+        protected override OpenCounter CommandToExecute => new OpenCounter(Counter2Id);
+
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;

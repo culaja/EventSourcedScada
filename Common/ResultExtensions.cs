@@ -223,7 +223,7 @@ namespace Common
 
             return onErrorProvider(result.Error);
         }
-        
+
         public static K OnBoth<T, K>(
             this Result<T> result,
             Func<T, K> onSuccessProvider,
@@ -300,7 +300,7 @@ namespace Common
         }
 
         public static Result<T> ToOkResult<T>(this T t) => Result.Ok(t);
-        
+
         public static Result<K> ToOkResult<T, K>(this T t, Func<T, K> transformFunc) => Result.Ok(transformFunc(t));
 
         public static Result<T> ToFailResult<T>(this T t, string error) => Result.Fail<T>(error);
@@ -308,7 +308,7 @@ namespace Common
         public static Result<T> ToTypedResult<T>(this Result result, T t) => result.IsSuccess.OnBoth(
             () => Result.Ok(t),
             () => Result.Fail<T>(result.Error));
-        
+
         public static Result<TK> ToTypedResult<T, TK>(this Result<T> result, TK tk) => result.IsSuccess.OnBoth(
             () => Result.Ok(tk),
             () => Result.Fail<TK>(result.Error));
@@ -319,7 +319,7 @@ namespace Common
             {
                 return result.Error;
             }
-            
+
             return Maybe<string>.None;
         }
     }

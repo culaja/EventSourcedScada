@@ -1,23 +1,24 @@
 $(document).ready(function() {
     const app = document.getElementById('root');
     var url = "http://localhost:5000/api";
-    
+
     var showErrorBoxWith = function(error) {
-            const rootErrorBox = document.getElementById('rootErrorBox');
-            const errorMessage = document.getElementById('errorMessage');
-            errorMessage.innerHTML  = error.error ? error.error : error;
-            rootErrorBox.style.display = 'block';
-        }
-        
+        const rootErrorBox = document.getElementById('rootErrorBox');
+        const errorMessage = document.getElementById('errorMessage');
+        errorMessage.innerHTML = error.error ? error.error : error;
+        rootErrorBox.style.display = 'block';
+    }
+
     var refreshAssignedCustomerWith = function(assignedCustomer) {
         $("#assignedTicketNumber").text(assignedCustomer.TicketNumber);
         $("#waitingCustomerCount").text(assignedCustomer.WaitingCustomerCount);
         $("#expectedWaitingTimeInSeconds").text(assignedCustomer.ExpectedWaitingTimeInSeconds);
     }
-    
-    $('#resetOpenTicketsButton').on('click', function(event) {
+
+    $('#resetOpenTicketsButton').on('click',
+        function(event) {
             event.preventDefault();
-            
+
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
@@ -29,45 +30,48 @@ $(document).ready(function() {
             });
         });
 
-    $('#nextCustomerCounterNumberButton').on('click', function(event) {
-        event.preventDefault();
-        var counterId = $("#counterNumber").val();
-
-        $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            data: null,
-            url: url + "/VMax/NextCustomer?counterId=" + counterId,
-            success: function(data) {
-                refreshAssignedCustomerWith(JSON.parse(data));
-            },
-            error: function(error) {
-                showErrorBoxWith(error.responseJSON);
-            }
-        });
-    });
-
-    $('#recallCustomerCounterNumberButton').on('click', function(event) {
-        event.preventDefault();
-        var counterId = $("#counterNumber").val();
-
-        $.ajax({
-            type: "POST",
-            contentType: "application/json",
-            url: url + "/VMax/RecallCustomer?counterId=" + counterId,
-            success: function(data) {
-                refreshAssignedCustomerWith(JSON.parse(data));
-            },
-            error: function(error) {
-                showErrorBoxWith(error.responseJSON);
-            }
-        });
-    });
-    
-    $('#outOfOrderCustomerButton').on('click', function(event) {
+    $('#nextCustomerCounterNumberButton').on('click',
+        function(event) {
             event.preventDefault();
             var counterId = $("#counterNumber").val();
-    
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                data: null,
+                url: url + "/VMax/NextCustomer?counterId=" + counterId,
+                success: function(data) {
+                    refreshAssignedCustomerWith(JSON.parse(data));
+                },
+                error: function(error) {
+                    showErrorBoxWith(error.responseJSON);
+                }
+            });
+        });
+
+    $('#recallCustomerCounterNumberButton').on('click',
+        function(event) {
+            event.preventDefault();
+            var counterId = $("#counterNumber").val();
+
+            $.ajax({
+                type: "POST",
+                contentType: "application/json",
+                url: url + "/VMax/RecallCustomer?counterId=" + counterId,
+                success: function(data) {
+                    refreshAssignedCustomerWith(JSON.parse(data));
+                },
+                error: function(error) {
+                    showErrorBoxWith(error.responseJSON);
+                }
+            });
+        });
+
+    $('#outOfOrderCustomerButton').on('click',
+        function(event) {
+            event.preventDefault();
+            var counterId = $("#counterNumber").val();
+
             $.ajax({
                 type: "POST",
                 contentType: "application/json",
@@ -80,8 +84,8 @@ $(document).ready(function() {
                 }
             });
         });
-    
-    $('input[type="number"]').keydown(function (e) {
-          e.preventDefault();
-        });
+
+    $('input[type="number"]').keydown(function(e) {
+        e.preventDefault();
+    });
 });

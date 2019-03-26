@@ -7,7 +7,7 @@ namespace QuerySide.QuerySidePorts
     public interface IClientNotifier
     {
         void StartClientNotifier(Action newClientCallback);
-        
+
         Nothing NotifyAll(IView view);
     }
 }

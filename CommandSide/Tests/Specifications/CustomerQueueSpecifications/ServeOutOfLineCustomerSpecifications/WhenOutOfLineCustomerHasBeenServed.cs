@@ -17,7 +17,7 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.ServeOutO
         }
 
         protected override ServeOutOfLineCustomer CommandToExecute => new ServeOutOfLineCustomer(Counter1Id, Customer2TicketId);
-        
+
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;
@@ -33,7 +33,7 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.ServeOutO
 
         [Fact]
         public void out_of_line_customer1_has_been_served_by_counter_1() => ProducedEvents.Should().Contain(Customer1ServedByCounter(Counter1Id));
-        
+
         [Fact]
         public void out_of_line_customer2_has_been_served_by_counter_1() => ProducedEvents.Should().Contain(OutOfLineCustomer2AssignedToCounter(Counter1Id));
     }

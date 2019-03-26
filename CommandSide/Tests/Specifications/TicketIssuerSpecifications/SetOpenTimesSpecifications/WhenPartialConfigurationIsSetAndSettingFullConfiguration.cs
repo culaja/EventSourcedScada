@@ -15,8 +15,8 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications.SetOpenTim
         {
         }
 
-        protected override SetOpenTimes CommandToExecute =>  new SetOpenTimes(AllOpenTimes);
-        
+        protected override SetOpenTimes CommandToExecute => new SetOpenTimes(AllOpenTimes);
+
         public override IEnumerable<TicketIssuerEvent> Given()
         {
             yield return SingleTicketIssuerCreated;
@@ -24,7 +24,7 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications.SetOpenTim
         }
 
         public override CommandHandler<SetOpenTimes> When() => new SetOpenTimesHandler(TicketIssuerRepository);
-        
+
         [Fact]
         public void returns_success() => Result.IsSuccess.Should().BeTrue();
 
@@ -33,7 +33,7 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications.SetOpenTim
 
         [Fact]
         public void Monday9to12_is_not_added() => ProducedEvents.Should().NotContain(Monday9To12Added);
-        
+
         [Fact]
         public void Monday14to16_is_not_added() => ProducedEvents.Should().NotContain(Monday14To16Added);
     }

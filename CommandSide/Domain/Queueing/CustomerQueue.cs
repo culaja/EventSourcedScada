@@ -17,11 +17,11 @@ namespace CommandSide.Domain.Queueing
     {
         private Counters _counters = NoCounters;
         private readonly Queue<Customer> _queue = new Queue<Customer>();
-        
+
         public CustomerQueue(Guid id) : base(id)
         {
         }
-        
+
         public static CustomerQueue NewCustomerQueueFrom(
             Guid id)
         {
@@ -36,13 +36,13 @@ namespace CommandSide.Domain.Queueing
         {
             counterConfiguration.IsolateCounterIdsToRemove(_counters.CounterConfiguration).Map(counterId =>
                 ApplyChange(new CounterRemoved(Id, counterId)));
-            
+
             counterConfiguration.IsolateCountersToAdd(_counters.CounterConfiguration).Map(counterDetails =>
                 ApplyChange(new CounterAdded(Id, counterDetails.Id, counterDetails.Name)));
 
-            counterConfiguration.IsolateCountersDetailsWhereNameDiffers(_counters.CounterConfiguration).Map( counterDetails =>
+            counterConfiguration.IsolateCountersDetailsWhereNameDiffers(_counters.CounterConfiguration).Map(counterDetails =>
                 ApplyChange(new CounterNameChanged(Id, counterDetails.Id, counterDetails.Name)));
-            
+
             return Ok(this);
         }
 
@@ -70,7 +70,7 @@ namespace CommandSide.Domain.Queueing
             {
                 case var s when s == CounterCantBeOpened:
                     return Fail<CustomerQueue>(s.FailureReason);
-                case var s when s == CounterCanBeOpened :
+                case var s when s == CounterCanBeOpened:
                     ApplyChange(new CounterOpened(Id, counterId));
                     return Ok(this);
                 case var s when s == CounterIsAlreadyOpened:
@@ -92,7 +92,7 @@ namespace CommandSide.Domain.Queueing
             {
                 case var s when s == CounterCantBeClosed:
                     return Fail<CustomerQueue>(s.FailureReason);
-                case var s when s == CounterCanBeClosed :
+                case var s when s == CounterCanBeClosed:
                     ApplyChange(new CounterClosed(Id, counterId));
                     return Ok(this);
                 case var s when s == CounterIsAlreadyClosed:
@@ -101,7 +101,7 @@ namespace CommandSide.Domain.Queueing
                     throw new ArgumentOutOfRangeException();
             }
         }
-        
+
         private CustomerQueue Apply(CounterClosed e)
         {
             _counters.CloseCounterWith(e.CounterId.ToCounterId());

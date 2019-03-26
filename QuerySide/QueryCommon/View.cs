@@ -8,13 +8,13 @@ namespace QuerySide.QueryCommon
     {
         public virtual IView Apply(IDomainEvent e)
         {
-            var applyMethodInfo = GetType().GetMethod("Handle", new[] { e.GetType() });
+            var applyMethodInfo = GetType().GetMethod("Handle", new[] {e.GetType()});
 
             if (applyMethodInfo != null)
             {
                 applyMethodInfo.Invoke(this, new object[] {e});
             }
-            
+
             return this;
         }
 

@@ -15,9 +15,9 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.SetCounte
         public WhenCountersNamesAlreadyChanged() : base(SingleCustomerQueueId)
         {
         }
-    
+
         protected override SetCounterConfiguration CommandToExecute => new SetCounterConfiguration(ThreeCounterConfigurationWithAllChangedNames);
-    
+
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;
@@ -26,18 +26,18 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.SetCounte
             yield return Counter2NameChanged;
             yield return Counter3NameChanged;
         }
-    
+
         public override CommandHandler<SetCounterConfiguration> When() => new SetConfigurationHandler(CustomerQueueRepository);
-        
+
         [Fact]
         public void returns_success() => Result.IsSuccess.Should().BeTrue();
-    
+
         [Fact]
         public void Counter1_name_has_not_changed() => ProducedEvents.Should().NotContain(Counter1NameChanged);
-        
+
         [Fact]
         public void Counter2_name_has_not_changed() => ProducedEvents.Should().NotContain(Counter2NameChanged);
-        
+
         [Fact]
         public void Counter3_name_has_not_changed() => ProducedEvents.Should().NotContain(Counter3NameChanged);
     }

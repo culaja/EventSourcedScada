@@ -7,7 +7,7 @@ namespace QuerySide.Tests.ViewInfrastructure
     public sealed class ViewTests
     {
         private readonly ChapterView _chapterView = ChapterView.NewChapterView;
-        
+
         [Fact]
         public void LastTextLine_is_updated_when_TextLineAdded_event_is_passed()
         {

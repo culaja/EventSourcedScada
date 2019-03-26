@@ -19,7 +19,7 @@ namespace QuerySide.Tests.Views.QueueStatusViewSpecifications.WhenTwoOpenedAndOn
             yield return new CounterOpened(CustomerQueueViewsTestValues.CustomerQueueId, CustomerQueueViewsTestValues.Counter2Id);
             yield return new CounterNameChanged(CustomerQueueViewsTestValues.CustomerQueueId, CustomerQueueViewsTestValues.Counter2Id, CustomerQueueViewsTestValues.Counter2ChangedName);
         }
-        
+
         [Fact]
         public void Counter_aliases_are_C1_C2_and_C3() => View.CounterStatuses.Select(cs => cs.AliasName)
             .Should().BeEquivalentTo(CustomerQueueViewsTestValues.Counter1Name, CustomerQueueViewsTestValues.Counter2ChangedName, CustomerQueueViewsTestValues.Counter3Name);

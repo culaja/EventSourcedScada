@@ -26,16 +26,16 @@ namespace WebApp
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-            
+
             services.AddMvc().AddControllersAsServices();
-            
+
             var containerBuilder = new ContainerBuilder();
             containerBuilder.RegisterModule(new MainRegistrator());
             containerBuilder.Populate(services);
             var container = containerBuilder.Build();
-            
+
             InitializeServiceLayer(container);
-            
+
             return new AutofacServiceProvider(container);
         }
 
@@ -50,7 +50,7 @@ namespace WebApp
             {
                 app.UseHsts();
             }
-            
+
             app.UseMiddleware<ExceptionToHttpResponseMiddleware>();
 
             app.UseStaticFiles();

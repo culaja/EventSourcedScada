@@ -18,6 +18,7 @@ namespace CommandSide.Domain.Queueing
             {
                 return new CounterName(maybeName.Value);
             }
+
             throw new CounterNameCantBeEmptyException();
         }
 
@@ -25,7 +26,7 @@ namespace CommandSide.Domain.Queueing
         {
             yield return _name;
         }
-        
+
         public override string ToString() => _name;
 
         public static implicit operator string(CounterName name) => name.ToString();

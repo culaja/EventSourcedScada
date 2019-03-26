@@ -19,7 +19,7 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.RecallCus
         }
 
         protected override ReCallCustomer CommandToExecute => new ReCallCustomer(Counter1Id);
-        
+
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;
@@ -30,7 +30,7 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.RecallCus
 
         [Fact]
         public void returns_failure() => Result.IsFailure.Should().BeTrue();
-        
+
         [Fact]
         public void no_customer_is_recalled() => ProducedEvents.Should().NotContain(EventOf<CustomerRecalledByCounter>());
     }

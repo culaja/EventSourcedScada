@@ -13,7 +13,7 @@ namespace CommandSide.Domain
         }
 
         public static CounterId NewCounterIdFrom(int id) => new CounterId(id);
-        
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return _id;

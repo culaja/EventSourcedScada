@@ -5,6 +5,6 @@ namespace Common.Messaging
     {
         public abstract Result Handle(T message);
 
-        public Result Handle(IMessage message) => Handle((T)message);
+        public Result Handle(IMessage message) => Handle((T) message);
     }
 }

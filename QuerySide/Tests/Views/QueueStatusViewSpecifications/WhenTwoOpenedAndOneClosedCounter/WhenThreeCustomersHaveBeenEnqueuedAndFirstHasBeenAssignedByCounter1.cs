@@ -19,7 +19,7 @@ namespace QuerySide.Tests.Views.QueueStatusViewSpecifications.WhenTwoOpenedAndOn
             yield return new CounterAdded(CustomerQueueId, Counter3Id, Counter3Name);
             yield return new CounterOpened(CustomerQueueId, Counter1Id);
             yield return new CounterOpened(CustomerQueueId, Counter2Id);
-            
+
             yield return new TicketIssued(TicketIssuerId, Ticket1Id, Ticket1Number);
             yield return new CustomerEnqueued(CustomerQueueId, Ticket1Id);
             yield return new TicketIssued(TicketIssuerId, Ticket2Id, Ticket2Number);
@@ -28,7 +28,7 @@ namespace QuerySide.Tests.Views.QueueStatusViewSpecifications.WhenTwoOpenedAndOn
             yield return new CustomerEnqueued(CustomerQueueId, Ticket3Id);
             yield return new CustomerAssignedToCounter(CustomerQueueId, Ticket1Id, Counter1Id);
         }
-        
+
         [Fact]
         public void WaitingCustomers_ticket_numbers_should_be_2_and_3() => View.WaitingCustomers.Select(wc => wc.TicketNumber)
             .Should().BeEquivalentTo(Ticket2Number, Ticket3Number);
@@ -40,7 +40,7 @@ namespace QuerySide.Tests.Views.QueueStatusViewSpecifications.WhenTwoOpenedAndOn
         [Fact]
         public void Counter2_is_serving_no_tickets() => View.CounterStatuses.First(cs => cs.CounterNumber == Counter2Id)
             .LastTicketNumber.Should().Be(0);
-        
+
         [Fact]
         public void Counter3_is_serving_no_tickets() => View.CounterStatuses.First(cs => cs.CounterNumber == Counter3Id)
             .LastTicketNumber.Should().Be(0);

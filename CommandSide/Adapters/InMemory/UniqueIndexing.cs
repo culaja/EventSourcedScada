@@ -15,7 +15,7 @@ namespace CommandSide.Adapters.InMemory
                 indexDictionary = new Dictionary<object, T>();
                 _allIndexes.Add(key.GetType(), indexDictionary);
             }
-            
+
             return indexDictionary.ContainsKey(key);
         }
 
@@ -26,7 +26,7 @@ namespace CommandSide.Adapters.InMemory
                 indexDictionary = new Dictionary<object, T>();
                 _allIndexes.Add(key.GetType(), indexDictionary);
             }
-            
+
             indexDictionary.Add(key, value);
         }
 
@@ -37,7 +37,7 @@ namespace CommandSide.Adapters.InMemory
             {
                 return value;
             }
-            
+
             return Maybe<T>.None;
         }
     }

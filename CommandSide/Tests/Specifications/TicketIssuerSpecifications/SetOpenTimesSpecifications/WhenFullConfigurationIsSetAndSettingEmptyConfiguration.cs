@@ -17,7 +17,7 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications.SetOpenTim
         }
 
         protected override SetOpenTimes CommandToExecute => new SetOpenTimes(NoOpenTimes);
-        
+
         public override IEnumerable<TicketIssuerEvent> Given()
         {
             yield return SingleTicketIssuerCreated;
@@ -28,7 +28,7 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications.SetOpenTim
 
         [Fact]
         public void returns_success() => Result.IsSuccess.Should().BeTrue();
-        
+
         [Fact]
         public void AllOpenTimes_are_removed() => ProducedEvents.Should().ContainInOrder(AllOpenTimesRemoved);
     }

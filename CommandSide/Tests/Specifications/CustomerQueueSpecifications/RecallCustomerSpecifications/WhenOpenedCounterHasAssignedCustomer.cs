@@ -17,7 +17,7 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.RecallCus
         }
 
         protected override ReCallCustomer CommandToExecute => new ReCallCustomer(Counter1Id);
-        
+
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;

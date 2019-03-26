@@ -20,7 +20,7 @@ namespace Shared.TicketIssuer.Events
             BeginTimestamp = beginTimestamp;
             EndTimestamp = endTimestamp;
         }
-        
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             foreach (var item in base.GetEqualityComponents()) yield return item;

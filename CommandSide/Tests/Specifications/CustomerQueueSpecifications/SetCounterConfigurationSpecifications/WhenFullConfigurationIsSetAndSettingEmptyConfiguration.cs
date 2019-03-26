@@ -17,7 +17,7 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.SetCounte
         }
 
         protected override SetCounterConfiguration CommandToExecute => new SetCounterConfiguration(EmptyCounterConfiguration);
-        
+
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;

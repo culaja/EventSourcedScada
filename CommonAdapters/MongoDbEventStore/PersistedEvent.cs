@@ -9,16 +9,16 @@ namespace CommonAdapters.MongoDbEventStore
     public sealed class PersistedEvent
     {
         public ObjectId Id { get; set; }
-        
+
         public string AggregateTopicName { get; set; }
-        
+
         public ulong AggregateRootVersion { get; set; }
 
         public ulong Number { get; set; }
-        
+
         [BsonDateTimeOptions(Representation = BsonType.Document)]
         public DateTime Timestamp { get; set; }
-        
+
         public string Payload { get; set; }
 
         public PersistedEvent(IDomainEvent domainEvent)

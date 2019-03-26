@@ -14,7 +14,7 @@ namespace QuerySide.Adapters.WebsocketClientNotifier
             _onConnectionOpened = onConnectionOpened;
             _onConnectionClosed = onConnectionClosed;
         }
-        
+
         protected override void OnOpen()
         {
             base.OnOpen();

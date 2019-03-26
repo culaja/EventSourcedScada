@@ -28,11 +28,12 @@ namespace CommandSide.Domain.TicketIssuing
                     }
                 }
             }
+
             return new OpenTimes(items);
         }
-        
+
         public static OpenTimes NoOpenTimes => new OpenTimes(new List<OpenTime>());
-        
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             foreach (var item in _items) yield return item;
@@ -48,12 +49,12 @@ namespace CommandSide.Domain.TicketIssuing
 
         public OpenTimes IsolateOpenTimesToAdd(OpenTimes currentOpenTimes) => new OpenTimes(
             _items.Where(cd => !currentOpenTimes.Contains(cd)).ToList());
-        
+
         public OpenTimes IsolateOpenTimesToRemove(OpenTimes currentOpenTimes) => new OpenTimes(
             currentOpenTimes.Except(_items).ToList());
 
         public OpenTimes Add(OpenTime openTime) => new OpenTimes(new List<OpenTime>(_items) {openTime});
-        
+
         public OpenTimes Remove(OpenTime openTime)
         {
             var newList = new List<OpenTime>(_items);

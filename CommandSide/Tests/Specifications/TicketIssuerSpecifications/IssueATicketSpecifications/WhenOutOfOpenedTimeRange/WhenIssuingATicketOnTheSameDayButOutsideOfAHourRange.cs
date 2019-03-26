@@ -36,5 +36,3 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications.IssueATick
         public void Ticket1_is_issued() => ProducedEvents.Should().NotContain(AssertionsHelpers.EventOf<TicketIssued>());
     }
 }
-
-    

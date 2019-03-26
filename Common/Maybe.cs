@@ -65,13 +65,13 @@ namespace Common
         {
             if (obj is T)
             {
-                obj = new Maybe<T>((T)obj);
+                obj = new Maybe<T>((T) obj);
             }
 
             if (!(obj is Maybe<T>))
                 return false;
 
-            var other = (Maybe<T>)obj;
+            var other = (Maybe<T>) obj;
             return Equals(other);
         }
 

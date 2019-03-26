@@ -6,9 +6,9 @@ using Common.Messaging;
 
 namespace CommandSide.Adapters.InMemory
 {
-    public abstract class InMemoryRepository<T, Tk> : IRepository<T, Tk> 
-        where T: AggregateRoot
-        where Tk: IAggregateRootCreated
+    public abstract class InMemoryRepository<T, Tk> : IRepository<T, Tk>
+        where T : AggregateRoot
+        where Tk : IAggregateRootCreated
     {
         private readonly Dictionary<Guid, T> _cache = new Dictionary<Guid, T>();
         private readonly UniqueIndexing<T> _uniqueIndexes = new UniqueIndexing<T>();
@@ -23,7 +23,7 @@ namespace CommandSide.Adapters.InMemory
         protected bool ContainsIndex(object key) => _uniqueIndexes.ContainsIndex(key);
 
         protected void AddNewIndex(object key, T value) => _uniqueIndexes.AddIndex(key, value);
-        
+
         protected Result<T> MaybeReadIndex(object key) => _uniqueIndexes.GetValueFor(key)
             .Unwrap(
                 Result.Ok,
@@ -52,7 +52,7 @@ namespace CommandSide.Adapters.InMemory
             {
                 return Result.Fail<T>($"AggregateRoot with id '{aggregateRoot.Id}' already exists in Aggregate '{typeof(T).Name}'.");
             }
-            
+
             _cache.Add(aggregateRoot.Id, aggregateRoot);
             AddedNew(aggregateRoot);
             return Result.Ok(PurgeAllEvents(aggregateRoot));

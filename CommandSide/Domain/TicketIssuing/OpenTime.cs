@@ -28,7 +28,7 @@ namespace CommandSide.Domain.TicketIssuing
             {
                 throw new BeginTimeNeedsToBeBeforeEndTimeException(beginTimeOfDay, endTimeOfDay);
             }
-            
+
             return new OpenTime(dayOfWeek, beginTimeOfDay, endTimeOfDay);
         }
 

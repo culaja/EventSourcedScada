@@ -4,7 +4,7 @@ using System.Collections.Generic;
 namespace Shared.CustomerQueue.Events
 {
     public sealed class CounterAdded : CustomerQueueEvent
-    {   
+    {
         public int CounterId { get; }
         public string CounterName { get; }
 

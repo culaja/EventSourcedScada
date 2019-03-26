@@ -19,7 +19,7 @@ namespace QuerySide.Views.AssigningCustomer
         private int _ticketsInQueue;
         private readonly Dictionary<Guid, int> _ticketIdToNumber = new Dictionary<Guid, int>();
         private readonly Dictionary<Id, int> _counterToTicketNumber = new Dictionary<Id, int>();
-        
+
         public override AssignedCustomer GenerateViewFor(Id id) => new AssignedCustomer(
             _counterToTicketNumber.MaybeGetValue(id).Unwrap(),
             _ticketsInQueue,

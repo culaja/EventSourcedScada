@@ -16,11 +16,11 @@ namespace WebApp.Controllers
     {
         public static CounterConfiguration ToCounterConfiguration(this IList<CounterDetailsDto> countersDetailsDto)
             => new CounterConfiguration(
-                countersDetailsDto.Map(counterDetail => 
+                countersDetailsDto.Map(counterDetail =>
                     CounterDetailsFrom(
                         NewCounterIdFrom(counterDetail.Number),
                         CounterNameFrom(counterDetail.Name))));
-        
+
         public static OpenTimes ToOpenTimes(this IList<OpenTimeDto> openTimeDtos)
             => OpenTimesFrom(openTimeDtos.Map(openTime => OpenTimeFrom(openTime.DayOfWeek, new TimeOfDay(openTime.From), new TimeOfDay(openTime.To))));
     }

@@ -28,18 +28,18 @@ namespace CommandSide.Tests.IntegrationTests.EventStore
         {
             _runner.Dispose();
         }
-        
+
         [Fact]
         public void _1()
         {
             _eventStore.Append(SingleTicketIssuerCreated.SetAnyVersionAndTimestamp());
             _eventStore.Append(Monday9To12Added.SetAnyVersionAndTimestamp());
             _eventStore.Append(Monday9To12Removed.SetAnyVersionAndTimestamp());
-            
-           
-            var allEvents =  _eventStore.LoadAllFor<TicketIssuerSubscription>().ToList();
 
-            ListsAreEquivalent(allEvents, 
+
+            var allEvents = _eventStore.LoadAllFor<TicketIssuerSubscription>().ToList();
+
+            ListsAreEquivalent(allEvents,
                 SingleTicketIssuerCreated,
                 Monday9To12Added,
                 Monday9To12Removed);

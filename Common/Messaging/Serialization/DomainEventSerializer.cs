@@ -17,7 +17,7 @@ namespace Common.Messaging.Serialization
         {
             try
             {
-                var domainEventDto = (IMessage)JsonConvert.DeserializeObject(
+                var domainEventDto = (IMessage) JsonConvert.DeserializeObject(
                     str,
                     Settings);
 

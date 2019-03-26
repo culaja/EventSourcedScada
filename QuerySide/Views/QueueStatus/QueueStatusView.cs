@@ -14,7 +14,6 @@ namespace QuerySide.Views.QueueStatus
         IHandle<CounterOpened>,
         IHandle<CounterClosed>,
         IHandle<CounterNameChanged>,
-
         IHandle<TicketIssued>,
         IHandle<OutOfLineTicketIssued>,
         IHandle<CustomerEnqueued>,
@@ -30,7 +29,7 @@ namespace QuerySide.Views.QueueStatus
         public IReadOnlyList<CounterStatus> CounterStatuses => _counterStatuses;
         public int ExpectedWaitingTimeInSeconds { get; } = 0;
         public DateTime CurrentTime => DateTime.Now;
-        
+
         public void Handle(CounterAdded e) => _counterStatuses.Add(NewCounterWith(e.CounterId, e.CounterName));
         public void Handle(CounterRemoved e) => _counterStatuses.RemoveAll(cs => cs.CounterNumber == e.CounterId);
         public void Handle(CounterOpened e) => CounterStatusWith(e.CounterId).Handle(e);
@@ -41,7 +40,7 @@ namespace QuerySide.Views.QueueStatus
 
         public void Handle(OutOfLineTicketIssued e) => _ticketIdToNumber.Add(e.TicketId, e.TicketNumber);
 
-        public void Handle(CustomerEnqueued e) => 
+        public void Handle(CustomerEnqueued e) =>
             _waitingCustomersByTicketId.Add(e.TicketId, new WaitingCustomer(_ticketIdToNumber[e.TicketId], e.Timestamp));
 
         public void Handle(CustomerAssignedToCounter e)
@@ -50,12 +49,12 @@ namespace QuerySide.Views.QueueStatus
             _waitingCustomersByTicketId.Remove(e.TicketId);
         }
 
-        public void Handle(OutOfLineCustomerAssignedToCounter e) => 
+        public void Handle(OutOfLineCustomerAssignedToCounter e) =>
             CounterStatusWith(e.CounterId).SetServingTicket(_ticketIdToNumber[e.TicketId], e.Timestamp);
 
         public void Handle(CustomerServedByCounter e) => _ticketIdToNumber.Remove(e.TicketId);
 
-        private CounterStatus CounterStatusWith(int counterId) => 
+        private CounterStatus CounterStatusWith(int counterId) =>
             _counterStatuses.First(cs => cs.CounterNumber == counterId);
     }
 }

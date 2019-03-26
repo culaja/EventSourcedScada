@@ -9,7 +9,7 @@ namespace Common.Messaging
         /// </summary>
         /// <remarks>Setter is exposed only for deserialization purposes.</remarks>
         Guid AggregateRootId { get; }
-        
+
         /// <summary>
         /// Represents topic which can be used for easy filtering in event store for specific aggregates.
         /// </summary>
@@ -26,7 +26,7 @@ namespace Common.Messaging
         /// </summary>
         /// <remarks>Setter is exposed only for deserialization purposes.</remarks>
         ulong Number { get; }
-        
+
         /// <summary>
         /// Timestamp when event was for specific aggregate root.
         /// </summary>
@@ -42,7 +42,7 @@ namespace Common.Messaging
         /// Can be called just once when number is not set.
         /// </summary>
         IDomainEvent SetNumber(ulong number);
-        
+
         /// <summary>
         /// Can be called just once when timestamp is not set.
         /// </summary>

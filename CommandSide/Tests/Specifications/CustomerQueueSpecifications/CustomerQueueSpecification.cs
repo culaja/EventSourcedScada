@@ -12,9 +12,9 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications
         where T : ICommand
     {
         protected ICustomerQueueRepository CustomerQueueRepository => (ICustomerQueueRepository) AggregateRepository;
-        
+
         protected CustomerQueueSpecification(Guid aggregateRootId) : base(
-            new CustomerQueueInMemoryRepository(new DomainEventMessageBusAggregator()), 
+            new CustomerQueueInMemoryRepository(new DomainEventMessageBusAggregator()),
             () => new CustomerQueue(aggregateRootId))
         {
         }

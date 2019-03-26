@@ -16,7 +16,7 @@ namespace Shared.TicketIssuer.Events
             LastTicketNumber = lastTicketNumber;
             LastOutOfLineTicketNumber = lastOutOfLineTicketNumber;
         }
-        
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             foreach (var item in base.GetEqualityComponents()) yield return item;

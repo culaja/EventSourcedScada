@@ -18,7 +18,7 @@ namespace CommandSide.Domain.Queueing.Configuring
 
         public static CounterDetails CounterDetailsFrom(CounterId counterId, CounterName counterName)
             => new CounterDetails(counterId, counterName);
-        
+
         public bool IsTheSameCounterWithDifferentNameAs(CounterDetails counterDetails) =>
             IsTheSameCounterAs(counterDetails) && HasDifferentNameThan(counterDetails);
 

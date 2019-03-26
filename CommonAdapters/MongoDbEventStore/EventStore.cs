@@ -12,7 +12,7 @@ namespace CommonAdapters.MongoDbEventStore
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IMongoCollection<PersistedEvent> _mongoCollection;
-        
+
         private readonly AggregateEventNumberTracker _aggregateEventNumberTracker = new AggregateEventNumberTracker();
 
         public EventStore(DatabaseContext databaseContext)
@@ -20,7 +20,7 @@ namespace CommonAdapters.MongoDbEventStore
             _databaseContext = databaseContext;
             _mongoCollection = databaseContext.GetCollectionFor<PersistedEvent>();
         }
-        
+
         public IDomainEvent Append(IDomainEvent e)
         {
             e.SetNumber(_aggregateEventNumberTracker.AllocateNextEventNumberFor(e.AggregateTopicName));
@@ -43,9 +43,9 @@ namespace CommonAdapters.MongoDbEventStore
         private IDomainEvent PrepareDomainEvent(PersistedEvent pe) =>
             UpdateEventNumberForEventAggregate(
                 ConvertPersistedEventToDomainEventWithoutErrorCheck(pe));
-        
+
         private static IDomainEvent ConvertPersistedEventToDomainEventWithoutErrorCheck(PersistedEvent pe) =>
-            ((DomainEvent)pe.Payload.Deserialize().Value)
+            ((DomainEvent) pe.Payload.Deserialize().Value)
             .SetVersion(pe.AggregateRootVersion)
             .SetNumber(pe.Number)
             .SetTimestamp(pe.Timestamp);

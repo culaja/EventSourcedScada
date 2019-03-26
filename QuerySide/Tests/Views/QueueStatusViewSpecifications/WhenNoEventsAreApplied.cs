@@ -9,8 +9,8 @@ namespace QuerySide.Tests.Views.QueueStatusViewSpecifications
 {
     public sealed class WhenNoEventsAreApplied : ViewSpecification<QueueStatusView>
     {
-        private readonly DateTime _lastCashedTime = DateTime.Now; 
-        
+        private readonly DateTime _lastCashedTime = DateTime.Now;
+
         protected override IEnumerable<IDomainEvent> WhenApplied()
         {
             yield break;

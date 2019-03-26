@@ -18,8 +18,8 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.CloseCoun
         {
         }
 
-        protected override CloseCounter CommandToExecute => new CloseCounter(Counter2Id); 
-        
+        protected override CloseCounter CommandToExecute => new CloseCounter(Counter2Id);
+
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;

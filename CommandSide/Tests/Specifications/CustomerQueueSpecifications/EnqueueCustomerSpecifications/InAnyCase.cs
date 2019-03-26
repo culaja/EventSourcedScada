@@ -17,7 +17,7 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.EnqueueCu
         }
 
         protected override EnqueueCustomer CommandToExecute => new EnqueueCustomer(Customer1TicketId);
-        
+
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;

@@ -13,7 +13,7 @@ namespace CommandSide.Domain
         {
             _id = id;
         }
-        
+
         public static TicketId NewTicketId() => new TicketId(NewGuid());
         public static TicketId TicketIdFrom(Guid guid) => new TicketId(guid);
 

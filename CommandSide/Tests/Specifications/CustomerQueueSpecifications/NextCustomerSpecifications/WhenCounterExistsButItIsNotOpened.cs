@@ -16,8 +16,8 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.NextCusto
         {
         }
 
-        protected override NextCustomer CommandToExecute => new NextCustomer(Counter1Id); 
-        
+        protected override NextCustomer CommandToExecute => new NextCustomer(Counter1Id);
+
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;

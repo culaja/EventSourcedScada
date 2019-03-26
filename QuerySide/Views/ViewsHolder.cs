@@ -20,13 +20,13 @@ namespace QuerySide.Views
             .AddOne(typeof(QueueStatusView), new QueueStatusView())
             .AddOne(typeof(QueueHistoryView), new QueueHistoryView())
             .ToImmutable();
-        
+
         private readonly ImmutableDictionary<Type, IGroupView> _viewGroups = ImmutableDictionary.CreateBuilder<Type, IGroupView>()
             .AddOne(typeof(AssignedCustomerGroupView), new AssignedCustomerGroupView())
             .ToImmutable();
 
         public IView View<T>() where T : IView => _views[typeof(T)];
-        
+
         public IGroupView GroupView<T>() where T : IGroupView => _viewGroups[typeof(T)];
 
         public Nothing Apply(IDomainEvent e)

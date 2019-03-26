@@ -15,7 +15,7 @@ namespace CommandSide.Domain.Queueing
         {
             _name = name;
         }
-        
+
         public CounterDetails ToCounterDetails() => new CounterDetails(Id, _name);
 
         public bool AreYou(CounterId id) => Id == id;
@@ -33,7 +33,7 @@ namespace CommandSide.Domain.Queueing
         }
 
         public bool CanOpen() => !_isOpened;
-        
+
         public bool CanClose() => !CanOpen();
 
         public Result<Maybe<Customer>> CanServeCustomer() => _isOpened.OnBoth(

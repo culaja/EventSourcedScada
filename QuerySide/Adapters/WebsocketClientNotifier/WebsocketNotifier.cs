@@ -12,7 +12,7 @@ namespace QuerySide.Adapters.WebsocketClientNotifier
         private WebSocketServer _server;
         private Action _newClientCallback = () => { };
         private readonly OpenedSocketsHub _socketHub = new OpenedSocketsHub();
-        
+
         public void StartClientNotifier(Action newClientCallback)
         {
             _server = new WebSocketServer("ws://localhost");

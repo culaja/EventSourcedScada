@@ -8,9 +8,9 @@ namespace CommandSide.Domain.Queueing
         public static readonly CanOpenCounterResult CounterCanBeOpened = new CanOpenCounterResult(nameof(CounterCanBeOpened));
         public static readonly CanOpenCounterResult CounterCantBeOpened = new CanOpenCounterResult(nameof(CounterCantBeOpened));
         public static readonly CanOpenCounterResult CounterIsAlreadyOpened = new CanOpenCounterResult(nameof(CounterIsAlreadyOpened));
-        
+
         public static CanOpenCounterResult CounterCantBeOpenedBecauseOfError(string failureReason) => new CanOpenCounterResult(nameof(CounterCantBeOpened), failureReason);
-        
+
         private readonly string _state;
         public string FailureReason { get; }
 
@@ -19,7 +19,7 @@ namespace CommandSide.Domain.Queueing
             _state = state;
             FailureReason = failureReason;
         }
-        
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return _state;

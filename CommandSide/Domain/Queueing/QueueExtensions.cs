@@ -12,8 +12,8 @@ namespace CommandSide.Domain.Queueing
             queue.MaybeFirst().Map(_ => whenQueueNotEmptyCallback()).Unwrap(
                 _ => NotAtAll,
                 () => NotAtAll);
-        
+
         public static IReadOnlyList<Guid> AllTicketIds(this Queue<Customer> queue) =>
-            queue.Select(c => (Guid)(TicketId) c).ToList();
+            queue.Select(c => (Guid) (TicketId) c).ToList();
     }
 }

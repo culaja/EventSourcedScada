@@ -17,14 +17,14 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.SetCounte
         }
 
         protected override SetCounterConfiguration CommandToExecute => new SetCounterConfiguration(ThreeCounterConfiguration);
-        
+
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;
         }
 
         public override CommandHandler<SetCounterConfiguration> When() => new SetConfigurationHandler(CustomerQueueRepository);
-        
+
         [Fact]
         public void returns_success() => Result.IsSuccess.Should().BeTrue();
 

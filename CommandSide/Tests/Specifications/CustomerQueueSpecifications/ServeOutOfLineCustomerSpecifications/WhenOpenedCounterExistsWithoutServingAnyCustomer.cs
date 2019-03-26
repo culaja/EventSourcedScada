@@ -17,7 +17,7 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.ServeOutO
         }
 
         protected override ServeOutOfLineCustomer CommandToExecute => new ServeOutOfLineCustomer(Counter1Id, Customer1TicketId);
-        
+
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;

@@ -13,7 +13,7 @@ namespace Shared.CustomerQueue.Events
         {
             TicketId = ticketId;
         }
-        
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             foreach (var item in base.GetEqualityComponents()) yield return item;

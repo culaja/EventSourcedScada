@@ -11,12 +11,12 @@ namespace QuerySide.Views.AssigningCustomer
         {
             _number = number;
         }
-        
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             yield return _number;
         }
-        
+
         public override string ToString() => _number.ToString();
 
         public static implicit operator int(CounterNumber id) => id._number;

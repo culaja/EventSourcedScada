@@ -28,7 +28,7 @@ namespace CommandSide.Tests.IntegrationTests.EventStore
         {
             _runner.Dispose();
         }
-        
+
         [Fact]
         public void _1()
         {
@@ -38,11 +38,11 @@ namespace CommandSide.Tests.IntegrationTests.EventStore
             _eventStore.Append(Counter1Opened.SetAnyVersionAndTimestamp());
             _eventStore.Append(Counter1Closed.SetAnyVersionAndTimestamp());
             _eventStore.Append(Customer1Enqueued.SetAnyVersionAndTimestamp());
-            
-           
-            var allEvents =  _eventStore.LoadAllFor<CustomerQueueSubscription>().ToList();
 
-            ListsAreEquivalent(allEvents, 
+
+            var allEvents = _eventStore.LoadAllFor<CustomerQueueSubscription>().ToList();
+
+            ListsAreEquivalent(allEvents,
                 SingleCustomerQueueCreated,
                 Counter1Added,
                 Counter1Removed,

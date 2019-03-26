@@ -16,14 +16,14 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications.SetOpenTim
         }
 
         protected override SetOpenTimes CommandToExecute => new SetOpenTimes(AllOpenTimes);
-        
+
         public override IEnumerable<TicketIssuerEvent> Given()
         {
             yield return SingleTicketIssuerCreated;
         }
 
         public override CommandHandler<SetOpenTimes> When() => new SetOpenTimesHandler(TicketIssuerRepository);
-        
+
         [Fact]
         public void returns_success() => Result.IsSuccess.Should().BeTrue();
 

@@ -16,7 +16,7 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications.ResetSpeci
         }
 
         protected override ResetTicketIssuer CommandToExecute => new ResetTicketIssuer();
-        
+
         public override IEnumerable<TicketIssuerEvent> Given()
         {
             yield return SingleTicketIssuerCreated;

@@ -9,6 +9,7 @@ namespace Shared.TicketIssuer.Events
         public DayOfWeek DayOfWeek { get; }
         public TimeOfDay BeginTimestamp { get; }
         public TimeOfDay EndTimestamp { get; }
+
         public OpenTimeAdded(
             Guid aggregateRootId,
             DayOfWeek dayOfWeek,
@@ -19,7 +20,7 @@ namespace Shared.TicketIssuer.Events
             BeginTimestamp = beginTimestamp;
             EndTimestamp = endTimestamp;
         }
-        
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             foreach (var item in base.GetEqualityComponents()) yield return item;

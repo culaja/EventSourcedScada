@@ -22,7 +22,7 @@ namespace CommandSide.Adapters.InMemory
             ExecuteTransformerAndPurgeEvents(
                 MaybeFirst.Unwrap(
                     customerQueue => customerQueue,
-                    () =>  AddNew(NewCustomerQueueFrom(NewGuid())).Value),
+                    () => AddNew(NewCustomerQueueFrom(NewGuid())).Value),
                 transformer);
     }
 }

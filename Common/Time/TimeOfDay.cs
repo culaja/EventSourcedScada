@@ -14,7 +14,7 @@ namespace Common.Time
             {
                 throw new TimeOfDayCantBeGreaterThanDayException(timespan);
             }
-            
+
             Timespan = timespan;
         }
 
@@ -22,17 +22,17 @@ namespace Common.Time
         {
             return new TimeOfDay(timeSpan);
         }
-        
+
         public static TimeOfDay TimeOfDayFromHour(int hour) => new TimeOfDay(FromHours(hour));
-        
+
         public static TimeOfDay TimeOfDayFrom(DateTime dateTime) => new TimeOfDay(dateTime.TimeOfDay);
 
         public bool IsTimeBeforeAnother(TimeOfDay otherTime) => Timespan.CompareTo(otherTime.Timespan) < 0;
-        
+
         public bool IsTimeAfterAnother(TimeOfDay otherTime) => Timespan.CompareTo(otherTime.Timespan) > 0;
-        
+
         public bool IsTimeEqualOrAfterAnother(TimeOfDay otherTime) => Timespan.CompareTo(otherTime.Timespan) >= 0;
-        
+
         public bool IsTimeEqualOrBeforeAnother(TimeOfDay otherTime) => Timespan.CompareTo(otherTime.Timespan) <= 0;
 
         protected override IEnumerable<object> GetEqualityComponents()

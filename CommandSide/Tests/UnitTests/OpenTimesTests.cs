@@ -12,7 +12,7 @@ namespace CommandSide.Tests.UnitTests
         [Fact]
         public void when_valid_open_times_provided_should_contain_2_items()
             => OpenTimesFrom(new List<OpenTime> {OpenTimeMonday, OpenTimeTuesday}).Count.Should().Be(2);
-        
+
         [Fact]
         public void when_valid_open_times_for_same_day_provided_should_contain_2_items()
             => OpenTimesFrom(new List<OpenTime> {OpenTimeMonday, OpenTimeMonday2}).Count.Should().Be(2);

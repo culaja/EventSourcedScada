@@ -17,8 +17,8 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.SetCounte
         {
         }
 
-        protected override SetCounterConfiguration CommandToExecute =>  new SetCounterConfiguration(TwoCounterConfiguration);
-        
+        protected override SetCounterConfiguration CommandToExecute => new SetCounterConfiguration(TwoCounterConfiguration);
+
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;
@@ -26,7 +26,7 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.SetCounte
         }
 
         public override CommandHandler<SetCounterConfiguration> When() => new SetConfigurationHandler(CustomerQueueRepository);
-        
+
         [Fact]
         public void returns_success() => Result.IsSuccess.Should().BeTrue();
 
@@ -35,7 +35,7 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.SetCounte
 
         [Fact]
         public void Counter1_is_not_removed() => ProducedEvents.Should().NotContain(Counter1Removed);
-        
+
         [Fact]
         public void Counter2_is_not_removed() => ProducedEvents.Should().NotContain(Counter2Removed);
 

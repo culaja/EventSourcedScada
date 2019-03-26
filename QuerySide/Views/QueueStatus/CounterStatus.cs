@@ -14,7 +14,7 @@ namespace QuerySide.Views.QueueStatus
         IHandle<CounterNameChanged>
     {
         public StatusInternal Status { get; private set; }
-        public int LastTicketNumber { get; private set;}
+        public int LastTicketNumber { get; private set; }
         public DateTime LastTicketCallTimestamp { get; private set; }
         public string AliasName { get; private set; }
         public int CounterNumber { get; }
@@ -32,11 +32,11 @@ namespace QuerySide.Views.QueueStatus
             AliasName = aliasName;
             CounterNumber = counterNumber;
         }
-        
+
         public static CounterStatus NewCounterWith(int number, string alias) => new CounterStatus(
             Closed,
-            0, 
-            MinValue, 
+            0,
+            MinValue,
             alias,
             number);
 
@@ -63,7 +63,7 @@ namespace QuerySide.Views.QueueStatus
         {
             AliasName = e.NewCounterName;
         }
-        
+
         public enum StatusInternal
         {
             Open,

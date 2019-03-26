@@ -4,7 +4,7 @@ using Shared.CustomerQueue.Events;
 
 namespace QuerySide.Views.QueueHistory
 {
-    public sealed class Ticket:
+    public sealed class Ticket :
         IHandle<CustomerAssignedToCounter>,
         IHandle<OutOfLineCustomerAssignedToCounter>,
         IHandle<CustomerServedByCounter>

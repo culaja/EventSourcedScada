@@ -9,6 +9,6 @@ namespace Ports.EventStore
 
         IEnumerable<IDomainEvent> LoadAll();
 
-        IEnumerable<IDomainEvent> LoadAllFor<T>() where T: IAggregateEventSubscription, new();
+        IEnumerable<IDomainEvent> LoadAllFor<T>() where T : IAggregateEventSubscription, new();
     }
 }

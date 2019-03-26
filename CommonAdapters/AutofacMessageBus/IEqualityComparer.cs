@@ -3,7 +3,7 @@ using Common.Messaging;
 
 namespace CommonAdapters.AutofacMessageBus
 {
-    public sealed class MessageHandlerComparer: IEqualityComparer<IMessageHandler>
+    public sealed class MessageHandlerComparer : IEqualityComparer<IMessageHandler>
     {
         public bool Equals(IMessageHandler x, IMessageHandler y) =>
             x.GetType() == y.GetType();

@@ -17,7 +17,7 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications.IssueATick
         }
 
         protected override IssueATicket CommandToExecute => new IssueATicket(TicketNumber1);
-        
+
         public override IEnumerable<TicketIssuerEvent> Given()
         {
             yield return SingleTicketIssuerCreated;

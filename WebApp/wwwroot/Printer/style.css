@@ -1,6 +1,4 @@
-.container {
-    margin: 20px;
-}
+.container { margin: 20px; }
 
 .heading {
     background-color: gainsboro;
@@ -47,6 +45,4 @@ h3 {
 }
 
 
-#collapseTicketIssuing .form-row {
-    margin-bottom: 10px;
-}
+#collapseTicketIssuing .form-row { margin-bottom: 10px; }

@@ -22,9 +22,9 @@ namespace QuerySide.Tests.Views.AssignedCustomerGroupViewSpecifications
             yield return new CustomerAssignedToCounter(CustomerQueueViewsTestValues.CustomerQueueId, CustomerQueueViewsTestValues.Ticket1Id, CustomerQueueViewsTestValues.Counter1Id);
             yield return new CustomerEnqueued(CustomerQueueViewsTestValues.CustomerQueueId, CustomerQueueViewsTestValues.Ticket4Id);
         }
-        
+
         [Fact]
-        public void waiting_customer_count_is_3() => 
+        public void waiting_customer_count_is_3() =>
             GroupView.GenerateViewFor(CustomerQueueViewsTestValues.Counter1Id.ToCounterId()).WaitingCustomerCount.Should().Be(3);
     }
 }

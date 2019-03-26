@@ -20,7 +20,7 @@ namespace CommonAdapters.AutofacMessageBus
             _assembliesWithMessageTypes = assembliesWithMessageTypes;
             _assembliesWithMessageHandlerTypes = assembliesWithMessageHandlerTypes.ToArray();
         }
-        
+
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<AutofacLocalMessageBus>()
@@ -32,7 +32,7 @@ namespace CommonAdapters.AutofacMessageBus
 
         private void RegisterMessageHandlersForAllMessages(ContainerBuilder builder)
         {
-            var allMessageTypes =_assembliesWithMessageTypes
+            var allMessageTypes = _assembliesWithMessageTypes
                 .SelectMany(assembly => assembly.GetTypes())
                 .Where(typeof(IMessage).IsAssignableFrom)
                 .Select(messageType => RegisterMessageHandlersForMessageType(builder, messageType))

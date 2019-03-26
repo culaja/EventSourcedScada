@@ -6,47 +6,47 @@ using Common.Messaging;
 
 namespace CommonAdapters.AutofacMessageBus
 {
-	public sealed class AutofacLocalMessageBus : IDomainEventBus, ICommandBus
-	{
-		private readonly AutofacMessageResolver _messageResolver;
-		private readonly object _syncObject = new object();
-		
-		public AutofacLocalMessageBus(
-			IComponentContext componentContext)
-		{
-			_messageResolver = new AutofacMessageResolver(componentContext);
-		}
+    public sealed class AutofacLocalMessageBus : IDomainEventBus, ICommandBus
+    {
+        private readonly AutofacMessageResolver _messageResolver;
+        private readonly object _syncObject = new object();
 
-		public IReadOnlyList<IMessage> DispatchAll(IReadOnlyList<IMessage> messages) => messages
-			.Select(Dispatch)
-			.ToList();
+        public AutofacLocalMessageBus(
+            IComponentContext componentContext)
+        {
+            _messageResolver = new AutofacMessageResolver(componentContext);
+        }
 
-		public IMessage Dispatch(IMessage message)
-		{
-			DispatchMessageToAllRegisteredHandlers(message);
-			return message;
-		}
+        public IReadOnlyList<IMessage> DispatchAll(IReadOnlyList<IMessage> messages) => messages
+            .Select(Dispatch)
+            .ToList();
 
-		public Result Execute(ICommand c) => DispatchMessageToAllRegisteredHandlers(c);
-		
-		public Nothing ScheduleOneWayCommand(ICommand c)
-		{
-			DispatchMessageToAllRegisteredHandlers(c);
-			return Nothing.NotAtAll;
-		}
+        public IMessage Dispatch(IMessage message)
+        {
+            DispatchMessageToAllRegisteredHandlers(message);
+            return message;
+        }
 
-		private Result DispatchMessageToAllRegisteredHandlers(IMessage message)
-		{
-			lock (_syncObject)
-			{
-				return Result.Combine(
-					_messageResolver
-						.GetMessageHandlersFor(message)
-						.Select(handler => DispatchTo(message, handler))
-						.ToArray());	
-			}
-		}
+        public Result Execute(ICommand c) => DispatchMessageToAllRegisteredHandlers(c);
 
-		private Result DispatchTo(IMessage message, IMessageHandler messageHandler) => messageHandler.Handle(message);
-	}
+        public Nothing ScheduleOneWayCommand(ICommand c)
+        {
+            DispatchMessageToAllRegisteredHandlers(c);
+            return Nothing.NotAtAll;
+        }
+
+        private Result DispatchMessageToAllRegisteredHandlers(IMessage message)
+        {
+            lock (_syncObject)
+            {
+                return Result.Combine(
+                    _messageResolver
+                        .GetMessageHandlersFor(message)
+                        .Select(handler => DispatchTo(message, handler))
+                        .ToArray());
+            }
+        }
+
+        private Result DispatchTo(IMessage message, IMessageHandler messageHandler) => messageHandler.Handle(message);
+    }
 }

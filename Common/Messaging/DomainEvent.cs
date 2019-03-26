@@ -8,22 +8,22 @@ namespace Common.Messaging
     {
         public Guid AggregateRootId { get; }
         public string AggregateTopicName { get; }
-        
+
         [JsonIgnore]
         public ulong Version { get; private set; }
 
         [JsonIgnore]
         public ulong Number { get; private set; }
-        
+
         [JsonIgnore]
         public DateTime Timestamp { get; private set; }
-        
+
         protected DomainEvent(Guid aggregateRootId, string aggregateTopicName)
         {
             AggregateRootId = aggregateRootId;
             AggregateTopicName = aggregateTopicName;
         }
-        
+
         public IDomainEvent SetVersion(ulong version)
         {
             (Version == 0).OnBoth(
@@ -47,7 +47,7 @@ namespace Common.Messaging
             (Timestamp == default(DateTime)).OnBoth(
                 () => Timestamp = timestamp.ToUniversalTime(),
                 () => throw new InvalidOperationException($"Timestamp already set to {Timestamp} and you want to set it to {timestamp}"));
-            
+
             return this;
         }
 

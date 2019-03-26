@@ -8,9 +8,9 @@ namespace QuerySide.Tests.ViewInfrastructure.TestValues
         IHandle<TextLineAdded>
     {
         public static ChapterGroupView NewChapterViewGroup => new ChapterGroupView();
-        
+
         private readonly Dictionary<Id, string> _chapterToTextLine = new Dictionary<Id, string>();
-        
+
         public void Handle(TextLineAdded e)
         {
             _chapterToTextLine.Add(e.Name, e.TextLine);

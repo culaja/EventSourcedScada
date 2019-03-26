@@ -16,7 +16,7 @@ namespace WebApp.Middlewares
         {
             _next = next;
         }
-        
+
         public async Task Invoke(HttpContext context)
         {
             try
@@ -42,9 +42,9 @@ namespace WebApp.Middlewares
             switch (exception)
             {
                 case var ex when ex is BadRequestException:
-                    return new Tuple<HttpStatusCode, string>(BadRequest, SerializeObject(new { error = exception.Message }));
+                    return new Tuple<HttpStatusCode, string>(BadRequest, SerializeObject(new {error = exception.Message}));
                 default:
-                    return new Tuple<HttpStatusCode, string>(InternalServerError, SerializeObject(new { error = "Internal server error, please contact your administrator." }));
+                    return new Tuple<HttpStatusCode, string>(InternalServerError, SerializeObject(new {error = "Internal server error, please contact your administrator."}));
             }
         }
     }

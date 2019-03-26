@@ -8,7 +8,7 @@ namespace QuerySide.Tests.Views
     public abstract class GroupViewSpecification<T> where T : IGroupView, new()
     {
         protected T GroupView { get; } = new T();
-        
+
         protected GroupViewSpecification()
         {
             WhenApplied().Map(GroupView.Apply);

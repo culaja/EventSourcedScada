@@ -18,7 +18,7 @@ namespace QuerySide.Services.EventHandlers
             _viewHolder = viewHolder;
             _clientNotifier = clientNotifier;
         }
-        
+
         public override Result Handle(TicketIssuerEvent e)
         {
             _viewHolder.Apply(e);

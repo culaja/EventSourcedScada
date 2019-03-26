@@ -66,7 +66,7 @@ namespace Common
         {
             if (baseMaybe.HasValue)
             {
-                return Maybe<K>.From((K)baseMaybe.Value);
+                return Maybe<K>.From((K) baseMaybe.Value);
             }
 
             return Maybe<K>.None;

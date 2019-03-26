@@ -17,7 +17,7 @@ namespace QuerySide.Services
 
         public QuerySideInitializer(
             IEventStore eventStore,
-            ViewsHolder viewHolder, 
+            ViewsHolder viewHolder,
             IDomainEventBus domainEventBus,
             IClientNotifier clientNotifier)
         {

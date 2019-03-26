@@ -18,7 +18,7 @@ namespace QuerySide.Views.Configuring
         public IReadOnlyList<CounterConfiguration> Counters => new List<CounterConfiguration>(_countersById.Values);
 
         public IReadOnlyList<OpenTimeConfiguration> OpenTimes => _openTimeConfigurations;
-        
+
         public void Handle(CounterAdded e)
         {
             _countersById.Add(e.CounterId, new CounterConfiguration(e.CounterId, e.CounterName));

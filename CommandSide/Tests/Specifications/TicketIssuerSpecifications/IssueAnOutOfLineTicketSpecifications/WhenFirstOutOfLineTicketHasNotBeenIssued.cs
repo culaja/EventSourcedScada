@@ -16,7 +16,7 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications.IssueAnOut
         }
 
         protected override IssueAnOutOfLineTicket CommandToExecute => new IssueAnOutOfLineTicket(Counter1Id);
-        
+
         public override IEnumerable<TicketIssuerEvent> Given()
         {
             yield return SingleTicketIssuerCreated;
@@ -32,6 +32,5 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications.IssueAnOut
         [Fact]
         public void produced_out_of_line_ticket_issued_event_for_ticket_10k() =>
             ProducedEvents.Should().Contain(OutOfLineTicket10kIssuedForCounter1);
-
     }
 }

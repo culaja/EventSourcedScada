@@ -12,9 +12,9 @@ namespace CommandSide.Tests.Specifications.TicketIssuerSpecifications
         where T : ICommand
     {
         protected ITicketIssuerRepository TicketIssuerRepository => (ITicketIssuerRepository) AggregateRepository;
-        
+
         protected TicketIssuerSpecification(Guid aggregateRootId) : base(
-            new TicketIssuerInMemoryRepository(new DomainEventMessageBusAggregator()), 
+            new TicketIssuerInMemoryRepository(new DomainEventMessageBusAggregator()),
             () => new TicketIssuer(aggregateRootId))
         {
         }

@@ -16,7 +16,7 @@ namespace Shared.CustomerQueue.Events
             TicketId = ticketId;
             CounterId = counterId;
         }
-        
+
         protected override IEnumerable<object> GetEqualityComponents()
         {
             foreach (var item in base.GetEqualityComponents()) yield return item;

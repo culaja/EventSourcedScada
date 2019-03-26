@@ -15,7 +15,7 @@ namespace WebApp.Controllers
         {
             _commandBus = commandBus;
         }
-        
+
         [HttpPost]
         [Route(nameof(IssueATicket))]
         public IActionResult IssueATicket(int ticketNumber) => _commandBus

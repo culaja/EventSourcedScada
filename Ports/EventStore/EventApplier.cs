@@ -8,9 +8,9 @@ namespace Ports.EventStore
 {
     public static class EventApplier
     {
-        public static int ApplyAllTo<T, TK, TL>(this IEventStore eventStore, IRepository<T, TK> repository) 
-            where T : AggregateRoot 
-            where TK : IAggregateRootCreated 
+        public static int ApplyAllTo<T, TK, TL>(this IEventStore eventStore, IRepository<T, TK> repository)
+            where T : AggregateRoot
+            where TK : IAggregateRootCreated
             where TL : IAggregateEventSubscription, new() => eventStore
             .LoadAllFor<TL>()
             .Select(domainEvent => HandleBasedOnType(domainEvent, repository))
@@ -18,9 +18,9 @@ namespace Ports.EventStore
 
         private static IDomainEvent HandleBasedOnType<T, Tk>(
             IDomainEvent domainEvent,
-            IRepository<T, Tk> repository) 
+            IRepository<T, Tk> repository)
             where T : AggregateRoot
-            where Tk: IAggregateRootCreated
+            where Tk : IAggregateRootCreated
         {
             switch (domainEvent)
             {
@@ -44,7 +44,7 @@ namespace Ports.EventStore
             aggregateRoot.ApplyFrom(e);
             return aggregateRoot.ToOkResult();
         }
-        
+
         private static Nothing CheckAggregateRootVersionAgainst<T>(this T aggregateRoot, IDomainEvent e) where T : AggregateRoot
         {
             var expectedVersion = aggregateRoot.Version + 1;

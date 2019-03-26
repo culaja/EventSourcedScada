@@ -23,7 +23,7 @@ namespace CommandSide.Tests.UnitTests
         {
             TimeOfDayFrom(Parse("9:00")).Should().Be(Time_09);
         }
-        
+
         [Fact]
         public void time_of_day_is_parsed_correctly_for_24_hrs()
         {

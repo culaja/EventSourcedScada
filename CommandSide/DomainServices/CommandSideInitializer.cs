@@ -34,13 +34,13 @@ namespace CommandSide.DomainServices
         private Nothing ReconstructAllAggregates()
         {
             WriteLine($"Reconstructing aggregates from event store ...\t\t\t{Now}");
-            
+
             var totalEventsAppliedForCustomerQueue = _eventStore.ApplyAllTo<CustomerQueue, CustomerQueueCreated, CustomerQueueSubscription>(_customerQueueRepository);
             WriteLine($"Aggregate {nameof(CustomerQueue)} reconstructed. (Total applied events: {totalEventsAppliedForCustomerQueue})\t{Now}");
-            
+
             var totalEventsAppliedForTicketIssuer = _eventStore.ApplyAllTo<TicketIssuer, TicketIssuerCreated, TicketIssuerSubscription>(_ticketIssuerRepository);
             WriteLine($"Aggregate {nameof(TicketIssuer)} reconstructed. (Total applied events: {totalEventsAppliedForTicketIssuer})\t{Now}");
-            
+
             return NotAtAll;
         }
     }

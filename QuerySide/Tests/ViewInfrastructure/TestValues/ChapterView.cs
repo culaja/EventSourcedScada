@@ -6,9 +6,9 @@ namespace QuerySide.Tests.ViewInfrastructure.TestValues
         IHandle<TextLineAdded>
     {
         public string LastTextLine { get; private set; }
-        
+
         public static ChapterView NewChapterView => new ChapterView();
-        
+
         public void Handle(TextLineAdded e)
         {
             LastTextLine = e.TextLine;

@@ -1,6 +1,4 @@
-.container {
-    margin: 20px;
-}
+.container { margin: 20px; }
 
 .heading {
     background-color: gainsboro;
@@ -46,20 +44,12 @@ h3 {
     margin-bottom: 20px !important;
 }
 
-.configuration {
-    visibility: hidden;
-}
+.configuration { visibility: hidden; }
 
-.configuration.active {
-    visibility: visible;
-}
+.configuration.active { visibility: visible; }
 
 .configurationCounterDetails .form-row, .configurationOpenTimes .form-row .counterManagement,
 #collapseOpenCloseCounter .form-row,
-#collapseCustomerManagement .form-row {
-    margin-bottom: 10px;
-}
+#collapseCustomerManagement .form-row { margin-bottom: 10px; }
 
-#collapseSystemManagement .row, #collapseSystemManagement #systemInfo {
-    padding-top: 10px;
-}
+#collapseSystemManagement .row, #collapseSystemManagement #systemInfo { padding-top: 10px; }

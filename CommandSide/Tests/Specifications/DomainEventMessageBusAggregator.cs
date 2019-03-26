@@ -8,8 +8,8 @@ namespace CommandSide.Tests.Specifications
     {
         private readonly List<IDomainEvent> _producedEvents = new List<IDomainEvent>();
         public IReadOnlyList<IDomainEvent> ProducedEvents => _producedEvents;
-        
-        public IReadOnlyList<IMessage> DispatchAll(IReadOnlyList<IMessage> messages) => 
+
+        public IReadOnlyList<IMessage> DispatchAll(IReadOnlyList<IMessage> messages) =>
             messages.Select(Dispatch).ToList();
 
         public IMessage Dispatch(IMessage message)

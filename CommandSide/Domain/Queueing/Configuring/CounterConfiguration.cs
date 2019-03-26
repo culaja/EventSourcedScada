@@ -13,22 +13,22 @@ namespace CommandSide.Domain.Queueing.Configuring
         {
             _items = new HashSet<CounterDetails>(items).ToList();
         }
-        
+
         public static CounterConfiguration EmptyCounterConfiguration => new CounterConfiguration(new List<CounterDetails>());
-        
+
         public CounterConfiguration IsolateCountersToAdd(CounterConfiguration counterConfiguration) => new CounterConfiguration(
             _items.Where(counterConfiguration.DoesntContain).ToList());
 
         private bool DoesntContain(CounterDetails counterDetails) =>
             _items.All(counterDetails.IsNotTheSameCounterAs);
-        
-        public IReadOnlyList<CounterId> IsolateCounterIdsToRemove(CounterConfiguration counterConfiguration) => 
+
+        public IReadOnlyList<CounterId> IsolateCounterIdsToRemove(CounterConfiguration counterConfiguration) =>
             counterConfiguration.Where(DoesntContain).Select(cd => cd.Id).ToList();
 
         public CounterConfiguration IsolateCountersDetailsWhereNameDiffers(CounterConfiguration counterConfiguration) => new CounterConfiguration(
             _items.Where(counterConfiguration.HasTheSameCounterWithDifferentNameAs).ToList());
 
-        private bool HasTheSameCounterWithDifferentNameAs(CounterDetails counterDetails) => 
+        private bool HasTheSameCounterWithDifferentNameAs(CounterDetails counterDetails) =>
             _items.Any(counterDetails.IsTheSameCounterWithDifferentNameAs);
 
         protected override IEnumerable<object> GetEqualityComponents()

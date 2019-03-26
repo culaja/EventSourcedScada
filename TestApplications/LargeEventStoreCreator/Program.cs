@@ -79,7 +79,7 @@ namespace LargeEventStoreCreator
 
             _numberOfCommandsExecuted++;
             if (_numberOfCommandsExecuted % 1000 == 0) Console.WriteLine(_numberOfCommandsExecuted);
-            
+
             return NotAtAll;
         }
     }

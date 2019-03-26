@@ -17,7 +17,7 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.RemoveWai
         }
 
         protected override RemoveWaitingCustomers CommandToExecute => new RemoveWaitingCustomers();
-        
+
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;

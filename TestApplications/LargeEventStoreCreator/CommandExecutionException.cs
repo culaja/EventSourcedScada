@@ -6,7 +6,6 @@ namespace LargeEventStoreCreator
     {
         public CommandExecutionException(string error) : base(error)
         {
-            
         }
     }
 }
