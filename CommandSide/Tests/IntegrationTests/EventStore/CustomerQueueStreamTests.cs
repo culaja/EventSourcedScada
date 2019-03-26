@@ -33,22 +33,12 @@ namespace CommandSide.Tests.IntegrationTests.EventStore
         public void _1()
         {
             _eventStore.Append(SingleCustomerQueueCreated.SetAnyVersionAndTimestamp());
-            _eventStore.Append(Counter1Added.SetAnyVersionAndTimestamp());
-            _eventStore.Append(Counter1Removed.SetAnyVersionAndTimestamp());
-            _eventStore.Append(Counter1Opened.SetAnyVersionAndTimestamp());
-            _eventStore.Append(Counter1Closed.SetAnyVersionAndTimestamp());
-            _eventStore.Append(Customer1Enqueued.SetAnyVersionAndTimestamp());
 
 
             var allEvents = _eventStore.LoadAllFor<CustomerQueueSubscription>().ToList();
 
             ListsAreEquivalent(allEvents,
-                SingleCustomerQueueCreated,
-                Counter1Added,
-                Counter1Removed,
-                Counter1Opened,
-                Counter1Closed,
-                Customer1Enqueued);
+                SingleCustomerQueueCreated);
         }
 
         private static void ListsAreEquivalent(IReadOnlyList<IDomainEvent> a, params IDomainEvent[] b)

@@ -1,12 +1,9 @@
 using CommandSide.CommandSidePorts.Repositories;
 using CommandSide.Domain.Queueing;
-using CommandSide.Domain.TicketIssuing;
 using Common;
 using Ports.EventStore;
 using Shared.CustomerQueue;
 using Shared.CustomerQueue.Events;
-using Shared.TicketIssuer;
-using Shared.TicketIssuer.Events;
 using static System.Console;
 using static System.DateTime;
 using static Common.Nothing;
@@ -17,16 +14,13 @@ namespace CommandSide.DomainServices
     {
         private readonly IEventStore _eventStore;
         private readonly ICustomerQueueRepository _customerQueueRepository;
-        private readonly ITicketIssuerRepository _ticketIssuerRepository;
 
         public CommandSideInitializer(
             IEventStore eventStore,
-            ICustomerQueueRepository customerQueueRepository,
-            ITicketIssuerRepository ticketIssuerRepository)
+            ICustomerQueueRepository customerQueueRepository)
         {
             _eventStore = eventStore;
             _customerQueueRepository = customerQueueRepository;
-            _ticketIssuerRepository = ticketIssuerRepository;
         }
 
         public Nothing Initialize() => ReconstructAllAggregates();
@@ -37,9 +31,6 @@ namespace CommandSide.DomainServices
 
             var totalEventsAppliedForCustomerQueue = _eventStore.ApplyAllTo<CustomerQueue, CustomerQueueCreated, CustomerQueueSubscription>(_customerQueueRepository);
             WriteLine($"Aggregate {nameof(CustomerQueue)} reconstructed. (Total applied events: {totalEventsAppliedForCustomerQueue})\t{Now}");
-
-            var totalEventsAppliedForTicketIssuer = _eventStore.ApplyAllTo<TicketIssuer, TicketIssuerCreated, TicketIssuerSubscription>(_ticketIssuerRepository);
-            WriteLine($"Aggregate {nameof(TicketIssuer)} reconstructed. (Total applied events: {totalEventsAppliedForTicketIssuer})\t{Now}");
 
             return NotAtAll;
         }

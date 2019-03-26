@@ -8,7 +8,6 @@ namespace AutofacApplicationWrapUp.CommandSide
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<StandardTicketIdGenerator>().As<ITicketIdGenerator>();
             builder.RegisterType<StandardLocalTimeProvider>().As<ILocalTimeProvider>();
         }
     }
