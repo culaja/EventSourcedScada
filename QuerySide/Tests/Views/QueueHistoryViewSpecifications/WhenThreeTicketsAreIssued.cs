@@ -29,7 +29,7 @@ namespace QuerySide.Tests.Views.QueueHistoryViewSpecifications
             .Should().BeEquivalentTo(CustomerQueueViewsTestValues.Ticket1IssuedTimestamp, CustomerQueueViewsTestValues.Ticket2IssuedTimestamp, CustomerQueueViewsTestValues.Ticket3IssuedTimestamp);
 
         [Fact]
-        public void waiting_customer_count_is_0_1_and_3() => View.TicketHistory.Select(t => t.WaitingCustomerCount)
+        public void waiting_customer_count_is_0_1_and_2() => View.TicketHistory.Select(t => t.WaitingCustomerCount)
             .Should().BeEquivalentTo(0, 1, 2);
     }
 }

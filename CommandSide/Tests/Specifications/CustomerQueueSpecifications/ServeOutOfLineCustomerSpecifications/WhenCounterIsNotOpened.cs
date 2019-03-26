@@ -23,6 +23,7 @@ namespace CommandSide.Tests.Specifications.CustomerQueueSpecifications.ServeOutO
         public override IEnumerable<CustomerQueueEvent> Given()
         {
             yield return SingleCustomerQueueCreated;
+            yield return Counter1Added;
         }
 
         public override CommandHandler<ServeOutOfLineCustomer> When() => new ServeOutOfLineCustomerHandler(CustomerQueueRepository);
