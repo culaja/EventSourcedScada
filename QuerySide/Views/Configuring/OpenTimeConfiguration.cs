@@ -1,11 +1,14 @@
 using System;
 using System.Collections.Generic;
 using Common;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace QuerySide.Views.Configuring
 {
     public sealed class OpenTimeConfiguration : ValueObject<OpenTimeConfiguration>
     {
+        [JsonConverter(typeof(StringEnumConverter))]
         public DayOfWeek Day { get; }
         public TimeSpan BeginTimestamp { get; }
         public TimeSpan EndTimestamp { get; }
