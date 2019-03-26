@@ -1,39 +1,42 @@
 using System;
 using Common;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using QuerySide.QueryCommon;
 using Shared.CustomerQueue.Events;
 using static System.DateTime;
 using static Common.Nothing;
-using static QuerySide.Views.QueueStatus.CounterStatus.StatusInternal;
+using static QuerySide.Views.QueueStatus.CounterStatusDetails.StatusInternal;
 
 namespace QuerySide.Views.QueueStatus
 {
-    public sealed class CounterStatus :
+    public sealed class CounterStatusDetails :
         IHandle<CounterOpened>,
         IHandle<CounterClosed>,
         IHandle<CounterNameChanged>
     {
-        public StatusInternal Status { get; private set; }
+        [JsonConverter(typeof(StringEnumConverter))]
+        public StatusInternal CounterStatus { get; private set; }
         public int LastTicketNumber { get; private set; }
         public DateTime LastTicketCallTimestamp { get; private set; }
         public string AliasName { get; private set; }
         public int CounterNumber { get; }
 
-        public CounterStatus(
+        public CounterStatusDetails(
             StatusInternal status,
             int lastTicketNumber,
             DateTime lastTicketCallTimestamp,
             string aliasName,
             int counterNumber)
         {
-            Status = status;
+            CounterStatus = status;
             LastTicketNumber = lastTicketNumber;
             LastTicketCallTimestamp = lastTicketCallTimestamp;
             AliasName = aliasName;
             CounterNumber = counterNumber;
         }
 
-        public static CounterStatus NewCounterWith(int number, string alias) => new CounterStatus(
+        public static CounterStatusDetails NewCounterStatusDetailsWith(int number, string alias) => new CounterStatusDetails(
             Closed,
             0,
             MinValue,
@@ -51,12 +54,12 @@ namespace QuerySide.Views.QueueStatus
 
         public void Handle(CounterOpened _)
         {
-            Status = Open;
+            CounterStatus = Open;
         }
 
         public void Handle(CounterClosed _)
         {
-            Status = Closed;
+            CounterStatus = Closed;
         }
 
         public void Handle(CounterNameChanged e)

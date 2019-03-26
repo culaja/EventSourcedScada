@@ -19,8 +19,8 @@ namespace QuerySide.Views.QueueHistory
 
         public IReadOnlyList<Ticket> TicketHistory => _ticketById.Values.OrderBy(t => t.DrawTime).ToList();
 
-        public void Handle(TicketIssued e) => _ticketById.Add(e.TicketId, new Ticket(e.TicketId, e.TicketNumber, e.Timestamp, _waitingCustomerCount++));
-        public void Handle(OutOfLineTicketIssued e) => _ticketById.Add(e.TicketId, new Ticket(e.TicketId, e.TicketNumber, e.Timestamp, _waitingCustomerCount));
+        public void Handle(TicketIssued e) => _ticketById.Add(e.TicketId, new Ticket(e.TicketNumber, e.Timestamp, _waitingCustomerCount++));
+        public void Handle(OutOfLineTicketIssued e) => _ticketById.Add(e.TicketId, new Ticket(e.TicketNumber, e.Timestamp, _waitingCustomerCount));
 
         public void Handle(CustomerAssignedToCounter e)
         {

@@ -9,7 +9,6 @@ namespace QuerySide.Views.QueueHistory
         IHandle<OutOfLineCustomerAssignedToCounter>,
         IHandle<CustomerServedByCounter>
     {
-        public Guid TicketId { get; }
         public int TicketNumber { get; }
         public DateTime DrawTime { get; }
         public int? CounterNumber { get; private set; }
@@ -19,12 +18,10 @@ namespace QuerySide.Views.QueueHistory
         public int WaitingCustomerCount { get; }
 
         public Ticket(
-            Guid ticketId,
             int ticketNumber,
             DateTime drawTime,
             int waitingCustomerCount)
         {
-            TicketId = ticketId;
             TicketNumber = ticketNumber;
             DrawTime = drawTime;
             WaitingCustomerCount = waitingCustomerCount;
