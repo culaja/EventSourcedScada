@@ -1,4 +1,6 @@
-﻿using Common;
+﻿using CommandSide.Domain.Queueing;
+using CommandSide.Domain.Queueing.Commands;
+using Common;
 using Common.Messaging;
 using Microsoft.AspNetCore.Mvc;
 using QuerySide.Views;
@@ -19,5 +21,15 @@ namespace WebApp.Controllers
             _commandBus = commandBus;
             _viewHolder = viewHolder;
         }
+
+        [HttpPost]
+        [Route(nameof(AddCounter))]
+        public IActionResult AddCounter(string counterId) => _commandBus
+            .Execute(new AddCounter(counterId.ToCounterId()))
+            .ToActionResult();
+
+        [HttpGet]
+        [Route(nameof(GetCounter))]
+        public IActionResult GetCounter() => Ok(_viewHolder.View<CountersAddedView>());
     }
 }

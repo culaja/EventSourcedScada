@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Immutable;
+using System.ComponentModel;
 using Common;
 using Common.Messaging;
 using QuerySide.QueryCommon;
@@ -9,8 +10,14 @@ namespace QuerySide.Views
 {
     public sealed class ViewsHolder
     {
-        private readonly ImmutableDictionary<Type, View> _views = ImmutableDictionary.CreateBuilder<Type, View>()
-            .ToImmutable();
+        private static ImmutableDictionary<Type, View> Init()
+        {
+            var builder = ImmutableDictionary.CreateBuilder<Type, View>();
+            builder.Add(typeof(CountersAddedView), new CountersAddedView());
+            return builder.ToImmutable();
+        }
+        
+        private readonly ImmutableDictionary<Type, View> _views = Init();
 
         private readonly ImmutableDictionary<Type, IGroupView> _viewGroups = ImmutableDictionary.CreateBuilder<Type, IGroupView>()
             .ToImmutable();
