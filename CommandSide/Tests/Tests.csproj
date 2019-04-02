@@ -24,4 +24,8 @@
       <ProjectReference Include="..\Adapters\InMemory\InMemory.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Specifications\RemoteSpecifications\AddCounterSpecifications" />
+    </ItemGroup>
+
 </Project>

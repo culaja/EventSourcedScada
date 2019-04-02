@@ -8,7 +8,7 @@ namespace AutofacApplicationWrapUp.CommandSide
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<CustomerQueueInMemoryRepository>().As<ICustomerQueueRepository>().SingleInstance();
+            builder.RegisterType<RemoteRepository>().As<IRemoteRepository>().SingleInstance();
         }
     }
 }

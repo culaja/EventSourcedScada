@@ -2,16 +2,16 @@ using Common;
 using Common.Messaging;
 using QuerySide.QuerySidePorts;
 using QuerySide.Views;
-using Shared.CustomerQueue;
+using Shared.Remote;
 
 namespace QuerySide.Services.EventHandlers
 {
-    public sealed class ViewRefreshFromCustomerQueueEventHandler : EventHandler<CustomerQueueEvent>
+    public sealed class ViewRefreshFromRemoteEventHandler : EventHandler<RemoteEvent>
     {
         private readonly ViewsHolder _viewHolder;
         private readonly IClientNotifier _clientNotifier;
 
-        public ViewRefreshFromCustomerQueueEventHandler(
+        public ViewRefreshFromRemoteEventHandler(
             ViewsHolder viewHolder,
             IClientNotifier clientNotifier)
         {
@@ -19,7 +19,7 @@ namespace QuerySide.Services.EventHandlers
             _clientNotifier = clientNotifier;
         }
 
-        public override Result Handle(CustomerQueueEvent e)
+        public override Result Handle(RemoteEvent e)
         {
             _viewHolder.Apply(e);
             _viewHolder.ForEachView(_clientNotifier.NotifyAll);

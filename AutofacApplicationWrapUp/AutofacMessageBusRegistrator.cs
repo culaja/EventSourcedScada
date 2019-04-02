@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Reflection;
 using Autofac;
-using CommandSide.Domain.Queueing;
-using CommandSide.DomainServices.Queueing.EventHandlers;
+using CommandSide.Domain.RemoteDomain;
+using CommandSide.DomainServices.RemoteHandlers.EventHandlers;
 using CommonAdapters.AutofacMessageBus;
 using QuerySide.Services;
 using QuerySide.Services.EventHandlers;
-using Shared.CustomerQueue;
-using Shared.TicketIssuer;
+using Shared.Remote;
 using Module = Autofac.Module;
 
 namespace AutofacApplicationWrapUp
@@ -19,8 +18,7 @@ namespace AutofacApplicationWrapUp
             builder.RegisterModule(new AutofacMessagingRegistrator(
                 new List<Assembly>
                 {
-                    CustomerQueueSharedEventAssembly,
-                    TicketIssuerSharedEventAssembly,
+                    RemoteSharedEventAssembly,
                     CommandSideEventAssembly,
                     QuerySideEventAssembly
                 },
@@ -31,16 +29,14 @@ namespace AutofacApplicationWrapUp
                 }));
         }
 
-        private static Assembly CustomerQueueSharedEventAssembly => typeof(CustomerQueueEvent).Assembly;
+        private static Assembly RemoteSharedEventAssembly => typeof(RemoteEvent).Assembly;
 
-        private static Assembly TicketIssuerSharedEventAssembly => typeof(TicketIssuerEvent).Assembly;
-
-        private static Assembly CommandSideEventAssembly => typeof(CustomerQueue).Assembly;
+        private static Assembly CommandSideEventAssembly => typeof(Remote).Assembly;
 
         private static Assembly QuerySideEventAssembly => typeof(NewClientConnected).Assembly;
 
-        private static Assembly CommandSideMessageHandlerAssembly => typeof(CustomerQueuePersistenceHandler).Assembly;
+        private static Assembly CommandSideMessageHandlerAssembly => typeof(RemotePersistenceHandler).Assembly;
 
-        private static Assembly QuerySideMessageHandlerAssembly => typeof(ViewRefreshFromCustomerQueueEventHandler).Assembly;
+        private static Assembly QuerySideMessageHandlerAssembly => typeof(ViewRefreshFromRemoteEventHandler).Assembly;
     }
 }

@@ -34,7 +34,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "QuerySideServices", "QueryS
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CommonAdapters", "CommonAdapters", "{63E2ED40-9260-4E8A-8EC4-F333FB51F6A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.CustomerQueue", "Shared.CustomerQueue\Shared.CustomerQueue.csproj", "{64FE6D46-E4A6-4ACE-ADCA-1004346F4D3D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared.Remote", "Shared.Remote\Shared.Remote.csproj", "{64FE6D46-E4A6-4ACE-ADCA-1004346F4D3D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Views", "QuerySide\Views\Views.csproj", "{A0C0FF46-043F-44E1-A1AB-38B756F5D5C7}"
 EndProject

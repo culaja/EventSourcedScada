@@ -22,7 +22,6 @@ namespace AutofacApplicationWrapUp
 
         private void RegisterCommandSideModules(ContainerBuilder builder)
         {
-            builder.RegisterModule<StandardPortsRegistrator>();
             builder.RegisterModule<RepositoryRegistrator>();
             builder.RegisterModule<CommandSideServicesRegistrator>();
         }

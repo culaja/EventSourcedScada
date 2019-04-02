@@ -6,13 +6,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\Shared.CustomerQueue\Shared.CustomerQueue.csproj" />
       <ProjectReference Include="..\..\Common\Common.csproj" />
-      <ProjectReference Include="..\..\Shared.TicketIssuer\Shared.TicketIssuer.csproj" />
+      <ProjectReference Include="..\..\Shared.Remote\Shared.Remote.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="NullGuard.Fody" Version="1.8.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="RemoteDomain\Commands" />
     </ItemGroup>
 
 </Project>
