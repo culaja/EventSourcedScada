@@ -13,9 +13,9 @@ namespace CommandSide.Domain.RemoteDomain
         public static Remote NewRemoteFrom(
             Guid id)
         {
-            var customerQueue = new Remote(id);
-            customerQueue.ApplyChange(new RemoteCreated(customerQueue.Id));
-            return customerQueue;
+            var remote = new Remote(id);
+            remote.ApplyChange(new RemoteCreated(remote.Id));
+            return remote;
         }
 
         private Remote Apply(RemoteCreated _) => this;

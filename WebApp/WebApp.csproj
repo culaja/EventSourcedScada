@@ -21,4 +21,10 @@
       <ProjectReference Include="..\CommandSide\Domain\Domain.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\Printer\Index.html" />
+      <_ContentIncludedByDefault Remove="wwwroot\Printer\printer_scripts.js" />
+      <_ContentIncludedByDefault Remove="wwwroot\Printer\style.css" />
+    </ItemGroup>
+
 </Project>

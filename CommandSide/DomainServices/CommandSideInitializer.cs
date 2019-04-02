@@ -13,14 +13,14 @@ namespace CommandSide.DomainServices
     public sealed class CommandSideInitializer
     {
         private readonly IEventStore _eventStore;
-        private readonly IRemoteRepository _customerQueueRepository;
+        private readonly IRemoteRepository _remoteRepository;
 
         public CommandSideInitializer(
             IEventStore eventStore,
-            IRemoteRepository customerQueueRepository)
+            IRemoteRepository remoteRepository)
         {
             _eventStore = eventStore;
-            _customerQueueRepository = customerQueueRepository;
+            _remoteRepository = remoteRepository;
         }
 
         public Nothing Initialize() => ReconstructAllAggregates();
@@ -29,8 +29,8 @@ namespace CommandSide.DomainServices
         {
             WriteLine($"Reconstructing aggregates from event store ...\t\t\t{Now}");
 
-            var totalEventsAppliedForCustomerQueue = _eventStore.ApplyAllTo<Remote, RemoteCreated, RemoteSubscription>(_customerQueueRepository);
-            WriteLine($"Aggregate {nameof(Remote)} reconstructed. (Total applied events: {totalEventsAppliedForCustomerQueue})\t{Now}");
+            var totalEventsAppliedForRemote = _eventStore.ApplyAllTo<Remote, RemoteCreated, RemoteSubscription>(_remoteRepository);
+            WriteLine($"Aggregate {nameof(Remote)} reconstructed. (Total applied events: {totalEventsAppliedForRemote})\t{Now}");
 
             return NotAtAll;
         }

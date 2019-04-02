@@ -15,7 +15,7 @@ namespace CommandSide.Adapters.InMemory
         {
         }
 
-        protected override Remote CreateInternalFrom(RemoteCreated customerQueueCreated) =>
-            new Remote(customerQueueCreated.AggregateRootId);
+        protected override Remote CreateInternalFrom(RemoteCreated remoteCreated) =>
+            new Remote(remoteCreated.AggregateRootId);
     }
 }

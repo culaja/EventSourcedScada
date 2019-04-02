@@ -8,12 +8,12 @@ using Shared.Remote.Events;
 
 namespace CommandSide.Tests.Specifications.RemoteSpecifications
 {
-    public abstract class CustomerQueueSpecification<T> : Specification<Remote, RemoteCreated, RemoteEvent, T>
+    public abstract class RemoteSpecification<T> : Specification<Remote, RemoteCreated, RemoteEvent, T>
         where T : ICommand
     {
-        protected IRemoteRepository CustomerQueueRepository => (IRemoteRepository) AggregateRepository;
+        protected IRemoteRepository RemoteRepository => (IRemoteRepository) AggregateRepository;
 
-        protected CustomerQueueSpecification(Guid aggregateRootId) : base(
+        protected RemoteSpecification(Guid aggregateRootId) : base(
             new RemoteRepository(new DomainEventMessageBusAggregator()),
             () => new Remote(aggregateRootId))
         {
