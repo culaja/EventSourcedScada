@@ -27,7 +27,7 @@ namespace CommandSide.Tests.Specifications.RemoteSpecifications.AddAnalogSpecifi
         public override CommandHandler<AddAnalog> When() => new AddAnalogHandler(RemoteRepository);
 
         [Fact]
-        public void returns_success() => Result.IsSuccess.Should().BeFalse();
+        public void returns_failure() => Result.IsFailure.Should().BeTrue();
 
         [Fact]
         public void doesnt_produce_analog_added() =>

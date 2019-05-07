@@ -1,11 +1,7 @@
-using System;
 using CommandSide.CommandSidePorts.Repositories;
 using CommandSide.Domain.RemoteDomain;
-using Common;
 using Common.Messaging;
 using Shared.Remote.Events;
-using static System.Guid;
-using static CommandSide.Domain.RemoteDomain.Remote;
 
 namespace CommandSide.Adapters.InMemory
 {
