@@ -14,10 +14,13 @@ namespace CommandSide.Tests.Specifications.RemoteSpecifications
         
         public static readonly PointName Analog1Name = PointNameFrom("analog1");
         public static readonly PointCoordinate Analog1Coordinate = PointCoordinateFrom(1);
+        public static readonly PointCoordinate NewAnalog1Coordinate = PointCoordinateFrom(1001);
         public static readonly AnalogAdded Analog1Added = new AnalogAdded(Remote1Id, Analog1Name, Analog1Coordinate);
+        public static readonly AnalogCoordinateUpdated Analog1CoordinateUpdated = new AnalogCoordinateUpdated(Remote1Id, Analog1Name, Analog1Coordinate, NewAnalog1Coordinate);
         
         public static readonly PointName Analog2Name = PointNameFrom("analog2");
         public static readonly PointCoordinate Analog2Coordinate = PointCoordinateFrom(2);
+        public static readonly PointCoordinate NewAnalog2Coordinate = PointCoordinateFrom(1002);
         public static readonly AnalogAdded Analog2Added = new AnalogAdded(Remote1Id, Analog2Name, Analog2Coordinate);
     }
 }

@@ -3,7 +3,7 @@ using Common;
 
 namespace CommandSide.Domain.RemoteDomain
 {
-    public sealed class PointName : ValueObject<PointName>
+    public sealed class PointName : Id
     {
         private readonly string _pointName;
 

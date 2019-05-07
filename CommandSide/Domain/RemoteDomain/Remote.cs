@@ -7,8 +7,11 @@ namespace CommandSide.Domain.RemoteDomain
 {
     public sealed class Remote : AggregateRoot
     {
+        private readonly Analogs _analogPoints;
+        
         public Remote(Guid id) : base(id)
         {
+            _analogPoints = new Analogs(id);
         }
 
         public static Remote NewRemoteFrom(
@@ -21,22 +24,20 @@ namespace CommandSide.Domain.RemoteDomain
 
         private Remote Apply(RemoteCreated _) => this;
 
-        private readonly HashSet<PointName> _analogPoints = new HashSet<PointName>();
+        public Result<Remote> AddAnalog(PointName pointName, PointCoordinate pointCoordinate) =>
+            _analogPoints.GenerateAnalogAddedFor(pointName, pointCoordinate)
+                .OnSuccess(e => ApplyChange(e))
+                .ToTypedResult(this);
 
-        public Result<Remote> AddAnalog(PointName pointName, PointCoordinate pointCoordinate)
-        {
-            if (!_analogPoints.Contains(pointName))
-            {
-                ApplyChange(new AnalogAdded(Id, pointName, pointCoordinate));
-                return Result.Ok(this);
-            }
-            
-            return Result.Fail<Remote>($"Analog point with name {pointName} already exists.");
-        }
+        private void Apply(AnalogAdded e) => 
+            _analogPoints.Add(e.PointName.ToPointName(), e.PointCoordinate.ToPointCoordinate());
 
-        private void Apply(AnalogAdded e)
-        {
-            _analogPoints.Add(e.PointName.ToPointName());
-        }
+        public Result<Remote> UpdateAnalogCoordinate(PointName pointName, PointCoordinate newPointCoordinate) =>
+            _analogPoints.GenerateAnalogCoordinateUpdatedWith(pointName, newPointCoordinate)
+                .OnSuccess(maybeEvent => maybeEvent.Map(ApplyChange))
+                .ToTypedResult(this);
+
+        private void Apply(AnalogCoordinateUpdated e) =>
+            _analogPoints.UpdateCoordinate(e.PointName.ToPointName(), e.NewPointCoordinate.ToPointCoordinate());
     }
 }

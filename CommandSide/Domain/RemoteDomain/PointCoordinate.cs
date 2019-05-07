@@ -14,7 +14,7 @@ namespace CommandSide.Domain.RemoteDomain
 
         protected override IEnumerable<object> GetEqualityComponents()
         {
-            yield break;
+            yield return _coordinate;
         }
 
         public static PointCoordinate PointCoordinateFrom(int coordinate)

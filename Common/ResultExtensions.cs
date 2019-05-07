@@ -301,7 +301,7 @@ namespace Common
 
         public static Result<T> ToOkResult<T>(this T t) => Result.Ok(t);
 
-        public static Result<K> ToOkResult<T, K>(this T t, Func<T, K> transformFunc) => Result.Ok(transformFunc(t));
+        public static Result<K> ToOkResult<T, K>(this T _, K value) => Result.Ok(value);
 
         public static Result<T> ToFailResult<T>(this T t, string error) => Result.Fail<T>(error);
 
