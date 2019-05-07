@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using CommandSide.Domain.RemoteDomain.Commands;
 using CommandSide.DomainServices.RemoteHandlers.CommandHandlers;
@@ -20,8 +19,8 @@ namespace CommandSide.Tests.Specifications.RemoteSpecifications.UpdateAnalogCoor
         
         public override IEnumerable<RemoteEvent> Given()
         {
-            yield return Remote1Created;
-            yield return Analog1Added;
+            yield return Apply(Remote1Created);
+            yield return Apply(Analog1Added);
         }
 
         public override CommandHandler<UpdateAnalogCoordinate> When() => new UpdateAnalogCoordinateHandler(RemoteRepository);

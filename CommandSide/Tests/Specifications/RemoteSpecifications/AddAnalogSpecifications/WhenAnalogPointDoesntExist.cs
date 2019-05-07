@@ -18,7 +18,7 @@ namespace CommandSide.Tests.Specifications.RemoteSpecifications.AddAnalogSpecifi
         protected override AddAnalog CommandToExecute => new AddAnalog(Remote1Id, Analog1Name, Analog1Coordinate);
         public override IEnumerable<RemoteEvent> Given()
         {
-            yield return Remote1Created;
+            yield return Apply(Remote1Created);
         }
 
         public override CommandHandler<AddAnalog> When() => new AddAnalogHandler(RemoteRepository);

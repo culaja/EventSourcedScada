@@ -3,7 +3,6 @@ using CommandSide.Domain.RemoteDomain;
 using Common;
 using Ports.EventStore;
 using Shared.Remote;
-using Shared.Remote.Events;
 using static System.Console;
 using static System.DateTime;
 using static Common.Nothing;
@@ -29,7 +28,8 @@ namespace CommandSide.DomainServices
         {
             WriteLine($"Reconstructing aggregates from event store ...\t\t\t{Now}");
 
-            var totalEventsAppliedForRemote = _eventStore.ApplyAllTo<Remote, RemoteCreated, RemoteSubscription>(_remoteRepository);
+            var totalEventsAppliedForRemote = _eventStore.LoadAllFor<RemoteSubscription>().ApplyAllTo(_remoteRepository);
+            
             WriteLine($"Aggregate {nameof(Remote)} reconstructed. (Total applied events: {totalEventsAppliedForRemote})\t{Now}");
 
             return NotAtAll;

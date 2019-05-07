@@ -21,9 +21,9 @@ namespace CommandSide.Tests.Specifications.RemoteSpecifications.UpdateAnalogCoor
         
         public override IEnumerable<RemoteEvent> Given()
         {
-            yield return Remote1Created;
-            yield return Analog1Added;
-            yield return Analog1CoordinateUpdated;
+            yield return Apply(Remote1Created);
+            yield return Apply(Analog1Added);
+            yield return Apply(Analog1CoordinateUpdated);
         }
 
         public override CommandHandler<UpdateAnalogCoordinate> When() => new UpdateAnalogCoordinateHandler(RemoteRepository);

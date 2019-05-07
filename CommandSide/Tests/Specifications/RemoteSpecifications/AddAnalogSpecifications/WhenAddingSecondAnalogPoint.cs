@@ -4,7 +4,6 @@ using CommandSide.DomainServices.RemoteHandlers.CommandHandlers;
 using Common.Messaging;
 using FluentAssertions;
 using Shared.Remote;
-using Shared.Remote.Events;
 using Xunit;
 using static CommandSide.Tests.Specifications.RemoteSpecifications.RemoteTestValues;
 
@@ -19,8 +18,8 @@ namespace CommandSide.Tests.Specifications.RemoteSpecifications.AddAnalogSpecifi
         protected override AddAnalog CommandToExecute => new AddAnalog(Remote1Id, Analog2Name, Analog2Coordinate);
         public override IEnumerable<RemoteEvent> Given()
         {
-            yield return Remote1Created;
-            yield return Analog1Added;
+            yield return Apply(Remote1Created);
+            yield return Apply(Analog1Added);
         }
 
         public override CommandHandler<AddAnalog> When() => new AddAnalogHandler(RemoteRepository);

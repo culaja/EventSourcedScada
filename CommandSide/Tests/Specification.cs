@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using CommandSide.Tests.Specifications;
 using Common;
 using Common.Messaging;
+using Ports.EventStore;
 
 namespace CommandSide.Tests
 {
@@ -12,6 +13,8 @@ namespace CommandSide.Tests
         where TK : IDomainEvent
         where TL : ICommand
     {
+        private ulong _appliedEventVersion;
+        
         public IRepository<T, TJ> AggregateRepository { get; }
 
         protected Specification(
@@ -20,9 +23,7 @@ namespace CommandSide.Tests
         {
             AggregateRepository = aggregateRepository;
 
-            var aggregateRoot = aggregateRootCreator();
-            AggregateRepository.AddNew(aggregateRoot);
-            foreach (var e in Given()) aggregateRoot.ApplyFrom(e);
+            Given().Map(e => e as IDomainEvent).ApplyAllTo(AggregateRepository);
 
             When().Handle(CommandToExecute)
                 .OnBoth(r =>
@@ -35,6 +36,8 @@ namespace CommandSide.Tests
         protected abstract TL CommandToExecute { get; }
 
         protected IReadOnlyList<IDomainEvent> ProducedEvents => ((DomainEventMessageBusAggregator) AggregateRepository.DomainEventBus).ProducedEvents;
+
+        protected TK Apply(TK e) => (TK)e.SetVersion(++_appliedEventVersion);
 
         protected Result Result { get; private set; }
         public abstract IEnumerable<TK> Given();

@@ -1,5 +1,5 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using Common;
 using Common.Messaging;
 using static Common.Nothing;
@@ -8,13 +8,11 @@ namespace Ports.EventStore
 {
     public static class EventApplier
     {
-        public static int ApplyAllTo<T, TK, TL>(this IEventStore eventStore, IRepository<T, TK> repository)
+        public static int ApplyAllTo<T, TK>(this IEnumerable<IDomainEvent> events, IRepository<T, TK> repository)
             where T : AggregateRoot
-            where TK : IAggregateRootCreated
-            where TL : IAggregateEventSubscription, new() => eventStore
-            .LoadAllFor<TL>()
-            .Select(domainEvent => HandleBasedOnType(domainEvent, repository))
-            .Count();
+            where TK : IAggregateRootCreated => events
+            .Map(domainEvent => HandleBasedOnType(domainEvent, repository))
+            .Count;
 
         private static IDomainEvent HandleBasedOnType<T, Tk>(
             IDomainEvent domainEvent,
