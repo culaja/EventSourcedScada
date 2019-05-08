@@ -1,3 +1,5 @@
+using System;
+
 namespace Common
 {
     /// <summary>
@@ -6,6 +8,12 @@ namespace Common
     public class Nothing
     {
         public static readonly Nothing NotAtAll = new Nothing();
+
+        public static Nothing ToNothing(Action action)
+        {
+            action();
+            return NotAtAll;
+        }
 
         public override string ToString() => "Nothing";
     }
