@@ -20,7 +20,9 @@ namespace CommandSide.Adapters.InMemory
 
         public IDomainEventBus DomainEventBus { get; }
 
-        protected bool ContainsIndex(object key) => _uniqueIndexes.ContainsIndex(key);
+        protected Result ContainsIndex(object key) => _uniqueIndexes.ContainsIndex(key).OnBoth(
+            () => Result.Fail($"{typeof(T).Name} repository already contains item with key '{key}'"),
+            () => Result.Ok());
 
         protected void AddNewIndex(object key, T value) => _uniqueIndexes.AddIndex(key, value);
 
@@ -31,9 +33,11 @@ namespace CommandSide.Adapters.InMemory
 
         protected abstract T CreateInternalFrom(Tk aggregateRootCreated);
 
-        protected virtual bool ContainsKey(T aggregateRoot)
+        protected virtual Result ContainsKey(T aggregateRoot)
         {
-            return false;
+            return _cache.ContainsKey(aggregateRoot.Id).OnBoth(
+                () => Result.Fail<T>($"AggregateRoot with id '{aggregateRoot.Id}' already exists in Aggregate '{typeof(T).Name}'."),
+                Result.Ok);
         }
 
         protected virtual void AddedNew(T aggregateRoot)
@@ -46,16 +50,15 @@ namespace CommandSide.Adapters.InMemory
             return AddNew(aggregateRoot);
         }
 
-        public Result<T> AddNew(T aggregateRoot)
-        {
-            if (_cache.ContainsKey(aggregateRoot.Id) || ContainsKey(aggregateRoot))
-            {
-                return Result.Fail<T>($"AggregateRoot with id '{aggregateRoot.Id}' already exists in Aggregate '{typeof(T).Name}'.");
-            }
+        public Result<T> AddNew(T aggregateRoot) =>
+            ContainsKey(aggregateRoot)
+                .OnSuccess(() => AddNewInternal(aggregateRoot));
 
+        private T AddNewInternal(T aggregateRoot)
+        {
             _cache.Add(aggregateRoot.Id, aggregateRoot);
             AddedNew(aggregateRoot);
-            return Result.Ok(PurgeAllEvents(aggregateRoot));
+            return PurgeAllEvents(aggregateRoot);
         }
 
         public Result<T> BorrowBy(Guid aggregateRootId, Func<T, Result<T>> transformer) => ReadAggregateFromCash(aggregateRootId)

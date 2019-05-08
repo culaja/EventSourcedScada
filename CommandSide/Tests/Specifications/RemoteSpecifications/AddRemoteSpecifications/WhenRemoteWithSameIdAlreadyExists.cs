@@ -11,7 +11,7 @@ using static CommandSide.Tests.Specifications.RemoteSpecifications.RemoteTestVal
 
 namespace CommandSide.Tests.Specifications.RemoteSpecifications.AddRemoteSpecifications
 {
-    public sealed class WhenRemoteAlreadyExists : RemoteSpecification<AddRemote>
+    public sealed class WhenRemoteWithSameIdAlreadyExists : RemoteSpecification<AddRemote>
     {
         protected override AddRemote CommandToExecute => new AddRemote(Remote1Id, Remote1Name);
         

@@ -15,7 +15,7 @@ namespace QuerySide.Adapters.WebsocketClientNotifier
 
         public void StartClientNotifier(Action newClientCallback)
         {
-            _server = new WebSocketServer("ws://localhost");
+            _server = new WebSocketServer("ws://localhost:5002");
             _newClientCallback = newClientCallback;
             _server.AddWebSocketService("/ClientHub", () => new Connection(OnConnectionOpened, OnConnectionClosed));
             _server.Start();

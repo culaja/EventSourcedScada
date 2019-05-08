@@ -26,6 +26,10 @@ namespace CommandSide.Adapters.InMemory
             AddNewIndex(aggregateRoot.RemoteName, aggregateRoot);
         }
 
+        protected override Result ContainsKey(Remote aggregateRoot) => 
+            base.ContainsKey(aggregateRoot)
+                .OnSuccess(() => ContainsIndex(aggregateRoot.RemoteName));
+
         public Result BorrowBy(RemoteName remoteName, Func<Remote, Result<Remote>> transformer) =>
             MaybeReadIndex(remoteName)
                 .OnSuccess(remote => ExecuteTransformerAndPurgeEvents(remote, transformer));
