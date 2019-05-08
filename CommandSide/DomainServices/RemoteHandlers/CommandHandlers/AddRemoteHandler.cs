@@ -16,6 +16,6 @@ namespace CommandSide.DomainServices.RemoteHandlers.CommandHandlers
         }
 
         public override Result Handle(AddRemote c) => _remoteRepository
-            .AddNew(NewRemoteFrom(c.RemoteId));
+            .AddNew(NewRemoteFrom(c.RemoteId, c.RemoteName));
     }
 }

@@ -13,9 +13,8 @@ namespace CommandSide.Tests.Specifications.RemoteSpecifications
     {
         protected IRemoteRepository RemoteRepository => (IRemoteRepository) AggregateRepository;
 
-        protected RemoteSpecification(Guid aggregateRootId) : base(
-            new RemoteRepository(new DomainEventMessageBusAggregator()),
-            () => new Remote(aggregateRootId))
+        protected RemoteSpecification() : base(
+            new RemoteRepository(new DomainEventMessageBusAggregator()))
         {
         }
     }

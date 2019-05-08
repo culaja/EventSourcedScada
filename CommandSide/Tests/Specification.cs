@@ -18,8 +18,7 @@ namespace CommandSide.Tests
         public IRepository<T, TJ> AggregateRepository { get; }
 
         protected Specification(
-            IRepository<T, TJ> aggregateRepository,
-            Func<T> aggregateRootCreator)
+            IRepository<T, TJ> aggregateRepository)
         {
             AggregateRepository = aggregateRepository;
 

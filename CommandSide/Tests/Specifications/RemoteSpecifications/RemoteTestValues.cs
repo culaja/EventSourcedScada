@@ -3,14 +3,16 @@ using CommandSide.Domain.RemoteDomain;
 using Shared.Remote.Events;
 using static CommandSide.Domain.RemoteDomain.PointCoordinate;
 using static CommandSide.Domain.RemoteDomain.PointName;
+using static CommandSide.Domain.RemoteDomain.RemoteName;
 
 namespace CommandSide.Tests.Specifications.RemoteSpecifications
 {
     public static class RemoteTestValues
     {
         public static readonly Guid Remote1Id = new Guid();
+        public static readonly RemoteName Remote1Name = RemoteNameFrom("remote1");
         
-        public static RemoteCreated Remote1Created => new RemoteCreated(Remote1Id);
+        public static RemoteCreated Remote1Created => new RemoteCreated(Remote1Id, Remote1Name);
         
         public static readonly PointName Analog1Name = PointNameFrom("analog1");
         public static readonly PointCoordinate Analog1Coordinate = PointCoordinateFrom(1);

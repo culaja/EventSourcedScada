@@ -11,11 +11,7 @@ namespace CommandSide.Tests.Specifications.RemoteSpecifications.AddRemoteSpecifi
 {
     public sealed class WhenRemoteDoesntExist : RemoteSpecification<AddRemote>
     {
-        public WhenRemoteDoesntExist() : base(Remote1Id)
-        {
-        }
-
-        protected override AddRemote CommandToExecute => new AddRemote(Remote1Id);
+        protected override AddRemote CommandToExecute => new AddRemote(Remote1Id, Remote1Name);
         
         public override IEnumerable<RemoteEvent> Given()
         {

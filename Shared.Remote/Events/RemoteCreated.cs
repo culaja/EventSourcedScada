@@ -5,8 +5,13 @@ namespace Shared.Remote.Events
 {
     public sealed class RemoteCreated : RemoteEvent, IAggregateRootCreated
     {
-        public RemoteCreated(Guid aggregateRootId) : base(aggregateRootId)
+        public string RemoteName { get; }
+
+        public RemoteCreated(
+            Guid aggregateRootId,
+            string remoteName) : base(aggregateRootId)
         {
+            RemoteName = remoteName;
         }
     }
 }

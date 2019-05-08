@@ -11,10 +11,6 @@ namespace CommandSide.Tests.Specifications.RemoteSpecifications.AddAnalogSpecifi
 {
     public sealed class WhenAnalogPointDoesntExist : RemoteSpecification<AddAnalog>
     {
-        public WhenAnalogPointDoesntExist() : base(Remote1Id)
-        {
-        }
-
         protected override AddAnalog CommandToExecute => new AddAnalog(Remote1Id, Analog1Name, Analog1Coordinate);
         public override IEnumerable<RemoteEvent> Given()
         {

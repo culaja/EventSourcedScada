@@ -11,10 +11,6 @@ namespace CommandSide.Tests.Specifications.RemoteSpecifications.AddAnalogSpecifi
 {
     public sealed class WhenAddingSecondAnalogPoint : RemoteSpecification<AddAnalog>
     {
-        public WhenAddingSecondAnalogPoint() : base(Remote1Id)
-        {
-        }
-
         protected override AddAnalog CommandToExecute => new AddAnalog(Remote1Id, Analog2Name, Analog2Coordinate);
         public override IEnumerable<RemoteEvent> Given()
         {

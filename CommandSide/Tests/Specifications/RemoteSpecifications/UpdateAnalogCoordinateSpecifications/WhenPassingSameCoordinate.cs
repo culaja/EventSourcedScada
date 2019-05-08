@@ -13,10 +13,6 @@ namespace CommandSide.Tests.Specifications.RemoteSpecifications.UpdateAnalogCoor
 {
     public sealed class WhenPassingSameCoordinate : RemoteSpecification<UpdateAnalogCoordinate>
     {
-        public WhenPassingSameCoordinate() : base(Remote1Id)
-        {
-        }
-
         protected override UpdateAnalogCoordinate CommandToExecute => new UpdateAnalogCoordinate(Remote1Id, Analog1Name, NewAnalog1Coordinate);
         
         public override IEnumerable<RemoteEvent> Given()
