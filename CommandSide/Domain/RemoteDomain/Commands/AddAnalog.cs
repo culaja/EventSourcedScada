@@ -1,20 +1,19 @@
-using System;
 using Common.Messaging;
 
 namespace CommandSide.Domain.RemoteDomain.Commands
 {
     public sealed class AddAnalog : ICommand
     {
-        public Guid RemoteId { get; }
+        public RemoteName RemoteName { get; }
         public PointName PointName { get; }
         public PointCoordinate PointCoordinate { get; }
 
         public AddAnalog(
-            Guid remoteId,
+            RemoteName remoteName,
             PointName pointName, 
             PointCoordinate pointCoordinate)
         {
-            RemoteId = remoteId;
+            RemoteName = remoteName;
             PointName = pointName;
             PointCoordinate = pointCoordinate;
         }

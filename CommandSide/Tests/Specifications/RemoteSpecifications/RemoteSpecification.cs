@@ -1,4 +1,3 @@
-using System;
 using CommandSide.Adapters.InMemory;
 using CommandSide.CommandSidePorts.Repositories;
 using CommandSide.Domain.RemoteDomain;

@@ -13,7 +13,7 @@ namespace CommandSide.Tests.Specifications.RemoteSpecifications.AddAnalogSpecifi
 {
     public sealed class WhenAnalogPointAlreadyExists : RemoteSpecification<AddAnalog>
     {
-        protected override AddAnalog CommandToExecute => new AddAnalog(Remote1Id, Analog1Name, Analog1Coordinate);
+        protected override AddAnalog CommandToExecute => new AddAnalog(Remote1Name, Analog1Name, Analog1Coordinate);
         public override IEnumerable<RemoteEvent> Given()
         {
             yield return Apply(Remote1Created);

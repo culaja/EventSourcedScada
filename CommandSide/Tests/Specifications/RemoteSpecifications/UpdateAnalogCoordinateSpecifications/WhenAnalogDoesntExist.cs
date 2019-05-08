@@ -13,7 +13,7 @@ namespace CommandSide.Tests.Specifications.RemoteSpecifications.UpdateAnalogCoor
 {
     public sealed class WhenAnalogDoesntExist : RemoteSpecification<UpdateAnalogCoordinate>
     {
-        protected override UpdateAnalogCoordinate CommandToExecute => new UpdateAnalogCoordinate(Remote1Id, Analog2Name, NewAnalog2Coordinate);
+        protected override UpdateAnalogCoordinate CommandToExecute => new UpdateAnalogCoordinate(Remote1Name, Analog2Name, NewAnalog2Coordinate);
         
         public override IEnumerable<RemoteEvent> Given()
         {

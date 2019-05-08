@@ -6,12 +6,13 @@ namespace CommandSide.Domain.RemoteDomain
 {
     public sealed class Remote : AggregateRoot
     {
-        private readonly RemoteName _remoteName;
         private readonly Analogs _analogPoints;
+        
+        public RemoteName RemoteName { get; }
         
         public Remote(Guid id, RemoteName remoteName) : base(id)
         {
-            _remoteName = remoteName;
+            RemoteName = remoteName;
             _analogPoints = new Analogs(id);
         }
 

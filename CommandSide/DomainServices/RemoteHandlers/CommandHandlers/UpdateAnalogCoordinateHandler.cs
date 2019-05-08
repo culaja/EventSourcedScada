@@ -15,6 +15,6 @@ namespace CommandSide.DomainServices.RemoteHandlers.CommandHandlers
         }
 
         public override Result Handle(UpdateAnalogCoordinate c) => _remoteRepository
-            .BorrowBy(c.RemoteId, r => r.UpdateAnalogCoordinate(c.PointName, c.NewPointCoordinate));
+            .BorrowBy(c.RemoteName, r => r.UpdateAnalogCoordinate(c.PointName, c.NewPointCoordinate));
     }
 }

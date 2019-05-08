@@ -1,20 +1,19 @@
-using System;
 using Common.Messaging;
 
 namespace CommandSide.Domain.RemoteDomain.Commands
 {
     public sealed class UpdateAnalogCoordinate : ICommand
     {
-        public Guid RemoteId { get; }
+        public RemoteName RemoteName { get; }
         public PointName PointName { get; }
         public PointCoordinate NewPointCoordinate { get; }
 
         public UpdateAnalogCoordinate(
-            Guid remoteId,
+            RemoteName remoteName,
             PointName pointName,
             PointCoordinate newPointCoordinate)
         {
-            RemoteId = remoteId;
+            RemoteName = remoteName;
             PointName = pointName;
             NewPointCoordinate = newPointCoordinate;
         }
